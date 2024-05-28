@@ -1,5 +1,11 @@
 {
-  "require": {
-    "ext-mysqli": "*"
-  }
+  "name": "flowcharm/flow-phone",
+  "type": "project",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Flowcharm\\FlowPhone\\": "src/"
+    }
+  },
+  "require": {}
 }
