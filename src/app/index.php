@@ -100,51 +100,7 @@
 <body>
 
 <div class="container">
-    <?php
-    $servername = "localhost"; // change this to your server name
-    $username = "root"; // change this to your username
-    $password = "rootpassword"; // change this to your password
-    $dbname = "flowphone"; // change this to your database name
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    $sql = "SELECT id, brand, model, screen_size, storage, price, os, ratings, image_url FROM phones";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        // Output data of each row
-        while($row = $result->fetch_assoc()) {
-            echo "<div class='card'>";
-            echo "<img src='" . $row["image_url"] . "' alt='" . $row["brand"] . " " . $row["model"] . "'>";
-            echo "<div class='card-body'>";
-            echo "<div class='left-column'>";
-            echo "<h3>" . $row["brand"] . " " . $row["model"] . "</h3>";
-            echo "<p>Screen Size: " . $row["screen_size"] . " in</p>";
-            echo "<p>Storage: " . $row["storage"] . " GB</p>";
-            echo "<p>OS: " . $row["os"] . "</p>";
-            echo "<p class='stars'>" . str_repeat('★', $row["ratings"]) . str_repeat('☆', 5 - $row["ratings"]) . "</p>";
-            echo "</div>";
-            echo "<div class='right-column'>";
-            echo "<p class='price'>€" . $row["price"] . "</p>";
-            echo "<p class='taxes'>Taxes Included</p>";
-            echo "<div class='button-container'>";
-            echo "<button class='addCart' onclick='buyProduct(" . $row["id"] . ")'>Add to Cart</button>";
-            echo "</div>";
-            echo "</div>";
-            echo "</div>";
-            echo "</div>";
-        }
-    } else {
-        echo "0 results";
-    }
-    $conn->close();
-    ?>
+        
 </div>
 
 <script>
