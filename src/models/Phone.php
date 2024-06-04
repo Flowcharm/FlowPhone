@@ -12,7 +12,7 @@ class Phone {
         private int $ram_gb,
         private int $storage_gb,
         private int $camera_mp,
-        private int $price_eur,
+        private float $price_eur,
         private string $os,
         private int $ratings,
         private string $image_url
@@ -39,7 +39,7 @@ class Phone {
         return $this->storage_gb;
     }
 
-    public function getPriceEur(): int {
+    public function getPriceEur(): float {
         return $this->price_eur;
     }
 
@@ -52,7 +52,24 @@ class Phone {
     }
 
     public function getImageUrl(): string {
-        return $this->image_url;
+        // return $this->image_url;
+        return "/public/" . $this->image_url;
+    }
+
+    public function getReleaseYear(): int {
+        return $this->release_year;
+    }
+
+    public function getBatteryCapacityMah(): int {
+        return $this->battery_capacity_mah;
+    }
+
+    public function getRamGb(): int {
+        return $this->ram_gb;
+    }
+
+    public function getCameraMp(): int {
+        return $this->camera_mp;
     }
 }
 ?>
