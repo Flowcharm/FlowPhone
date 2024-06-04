@@ -1,7 +1,36 @@
 <?php
 declare(strict_types=1);
 
-class Phone {
+class PhoneBasicInfo {
+    public function __construct(
+        private int $id,
+        private string $brand,
+        private string $model
+    )
+    { }
+
+    public function getId(): int {
+        return $this->id;
+    }
+
+    public function getBrand(): string {
+        return $this->brand;
+    }
+
+    public function getModel(): string {
+        return $this->model;
+    }
+
+    public function toArray(): array {
+        return [
+            "id" => $this->id,
+            "brand" => $this->brand,
+            "model" => $this->model
+        ];
+    }
+}
+
+class Phone { 
     public function __construct(
         private int $id,
         private string $brand,
@@ -71,5 +100,22 @@ class Phone {
     public function getCameraMp(): int {
         return $this->camera_mp;
     }
+
+    public function toArray(): array {
+        return [
+            "id" => $this->id,
+            "brand" => $this->brand,
+            "model" => $this->model,
+            "release_year" => $this->release_year,
+            "screen_size_inch" => $this->screen_size_inch,
+            "battery_capacity_mah" => $this->battery_capacity_mah,
+            "ram_gb" => $this->ram_gb,
+            "storage_gb" => $this->storage_gb,
+            "camera_mp" => $this->camera_mp,
+            "price_eur" => $this->price_eur,
+            "os" => $this->os,
+            "ratings" => $this->ratings,
+            "image_url" => $this->image_url
+        ];
+    }
 }
-?>

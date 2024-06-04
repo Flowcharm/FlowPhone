@@ -46,31 +46,82 @@ class PhoneRepository implements IPhoneRepository {
         );
     }
 
-    public function getAllPhones(): array {
+    public function getAllPhones(?int $limit = null, ?int $offset = null): array
+    {
         $sql = "SELECT id, brand, model, release_year, screen_size, battery_capacity, ram, storage, camera_mp, price, os, ratings, image_url FROM phones";
+        $params = [];
+        if ($limit !== null) {
+            $sql .= " LIMIT ?";
+            $params[] = $limit; 
+            if ($offset !== null) {
+                $sql .= " OFFSET ?";
+                $params[] = $offset;
+            }
+        } 
 
-        $result = $this->connection->query($sql);
+        $stmt = $this->connection->prepare($sql);
+        if (count($params) > 0) {
+            $stmt->bind_param(str_repeat("i", count($params)), ...$params);
+        }
+
+        $stmt->execute();
+        $stmt->bind_result($id, $brand, $model, $release_year, $screen_size, $battery_capacity, $ram, $storage, $camera, $price, $os, $ratings, $image_url);
 
         $phones = [];
+        while ($stmt->fetch()) {
+            $screen_size = (float) $screen_size;
+            $price = (int) $price;
 
-        while ($row = $result->fetch_assoc()) {
-            $phone = new Phone(
-                (int)$row['id'],
-                $row['brand'],
-                $row['model'],
-                (int)$row['release_year'],
-                (float)$row['screen_size'],
-                (int)$row['battery_capacity'],
-                (int)$row['ram'],
-                (int)$row['storage'],
-                (int)$row['camera_mp'],
-                (float)$row['price'],
-                $row['os'],
-                (int)$row['ratings'],
-                $row['image_url']
+            $phones[] = new Phone(
+                $id,
+                $brand,
+                $model,
+                $release_year,
+                $screen_size,
+                $battery_capacity,
+                $ram,
+                $storage,
+                $camera,
+                $price,
+                $os,
+                $ratings,
+                $image_url
             );
-            $phones[] = $phone;
         }
+        $stmt->close();
+
+        return $phones;
+    }
+
+    public function getAllPhonesBasicInfo(?int $limit = null, ?int $offset = null): array {
+        $sql = "SELECT id, brand, model FROM phones";
+        $params = [];
+        if ($limit !== null) {
+            $sql .= " LIMIT ?";
+            $params[] = $limit; 
+            if ($offset !== null) {
+                $sql .= " OFFSET ?";
+                $params[] = $offset;
+            }
+        } 
+
+        $stmt = $this->connection->prepare($sql);
+        if (count($params) > 0) {
+            $stmt->bind_param(str_repeat("i", count($params)), ...$params);
+        }
+
+        $stmt->execute();
+        $stmt->bind_result($id, $brand, $model);
+
+        $phones = [];
+        while ($stmt->fetch()) {
+            $phones[] = new PhoneBasicInfo(
+                $id,
+                $brand,
+                $model
+            );
+        }
+        $stmt->close();
 
         return $phones;
     }
