@@ -1,9 +1,28 @@
+<?php
+require_once '../repositories/Phone_repository.php';
+
+// TODO
+$user = "root";
+$password = "1234";
+$database = "flowphone";
+$host = "localhost";
+$port = 3360;
+
+$connection = new mysqli($host, $user, $password, $database, $port);
+
+$phoneRepository = new PhoneRepository($connection);
+
+$phones = $phoneRepository->getAllPhones();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phone Shop</title>
+    <?php // TODO: include_once "..\includes\common_head.php";
+    ?>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -35,7 +54,7 @@
         .card img {
             width: 100%;
             height: 200px;
-            object-fit: cover;
+            object-fit: contain;
         }
         .card-body {
             display: flex;
@@ -100,7 +119,29 @@
 <body>
 
 <div class="container">
-        
+    <?php if (empty($phones)): ?>
+        <h1>No phones available</h1>
+    <?php else: foreach ($phones as $phone): ?>
+        <div class='card'>
+            <img src='<?= $phone->getImageUrl() ?>' alt='<?= $phone->getBrand() . " " . $phone->getModel() ?>'>
+            <div class='card-body'>
+                <div class='left-column'>
+                    <h3><?= $phone->getBrand() . " " . $phone->getModel() ?></h3>
+                    <p>Screen Size: <?= $phone->getScreenSizeInch() ?> in</p>
+                    <p>Storage: <?= $phone->getStorageGb() ?> GB</p>
+                    <p>OS: <?= $phone->getOs() ?></p>
+                    <p class='stars'><?= str_repeat('★', $phone->getRatings()) . str_repeat('☆', 5 - $phone->getRatings()) ?></p>
+                </div>
+                <div class='right-column'>
+                    <p class='price'>€<?= $phone->getPriceEur() ?></p>
+                    <p class='taxes'>Taxes Included</p>
+                    <div class='button-container'>
+                        <button class='addCart' onclick='buyProduct(<?= $phone->getId() ?>)'>Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; endif; ?>
 </div>
 
 <script>

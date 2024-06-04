@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 include_once "../repositories/phone_repository.php";
 
+// TODO
 $user = "root";
 $password = "1234";
 $database = "flowphone";
@@ -15,7 +16,7 @@ $phoneRepository = new PhoneRepository($connection);
 
 $phone = $phoneRepository->getPhoneById(2);
 
-$title = $phone->getBrand() . " " . $phone->getModel();
+$title = $phone->getBrand() . " " . $phone->getModel()." | FlowPhone";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +24,8 @@ $title = $phone->getBrand() . " " . $phone->getModel();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?></title>
-    <?php /* include "..\includes\common_head.php"; */ ?>
+    <?php // TODO: include_once "..\includes\common_head.php"; 
+    ?>
 </head>
 <body>
     <h1><?= $title ?></h1>

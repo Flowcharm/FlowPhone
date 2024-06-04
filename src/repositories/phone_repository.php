@@ -45,5 +45,34 @@ class PhoneRepository implements IPhoneRepository {
             $image_url
         );
     }
+
+    public function getAllPhones(): array {
+        $sql = "SELECT id, brand, model, release_year, screen_size, battery_capacity, ram, storage, camera_mp, price, os, ratings, image_url FROM phones";
+
+        $result = $this->connection->query($sql);
+
+        $phones = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $phone = new Phone(
+                (int)$row['id'],
+                $row['brand'],
+                $row['model'],
+                (int)$row['release_year'],
+                (float)$row['screen_size'],
+                (int)$row['battery_capacity'],
+                (int)$row['ram'],
+                (int)$row['storage'],
+                (int)$row['camera_mp'],
+                (float)$row['price'],
+                $row['os'],
+                (int)$row['ratings'],
+                $row['image_url']
+            );
+            $phones[] = $phone;
+        }
+
+        return $phones;
+    }
 }
 ?>
