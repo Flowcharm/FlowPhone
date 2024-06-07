@@ -1,5 +1,5 @@
 <?php
-require_once '../repositories/Phone_repository.php';
+require_once '../repositories/phone_repository.php';
 
 // TODO
 $user = "root";

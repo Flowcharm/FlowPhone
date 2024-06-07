@@ -8,43 +8,52 @@ class PhoneController {
         private PhoneRepository $phoneRepository
     ) { }
 
-    public function handleRequest(array $params) {
+    public function handleRequest(array $params): array | Phone {
+        $phones = [];
+
         if (isset($params["basic"]) && $params["basic"] !== "false") {
-            return $this->getAllPhonesBasicInfo($params);
+            $phones = $this->getAllPhonesBasicInfo($params);
         } else if (isset($params["id"])) {
-            return $this->getPhoneById($params["id"]);
+            $phones[] = $this->getPhoneById((int)$params["id"]);
+        } else {
+            $phones = $this->getAllPhones($params);
         }         
-        return $this->getAllPhones($params);
+        
+        $response = [];
+
+        if (empty($phones)) {
+            return $response;
+        }
+
+        foreach ($phones as $phone) {
+            $response[] = $phone->toArray();
+        }
+
+        return count($response) === 1 ? $response[0] : $response;
     }
 
-    private function getPhoneById($id) {
+    public function getPhoneById(int $id) {
         if (!is_numeric($id)) {
             throw new InvalidArgumentException("Phone id must be a number");
         }
         $phone = $this->phoneRepository->getPhoneById((int)$id);
-        return $phone ? $phone->toArray() : null;
+        return $phone ? $phone : null;
     }
 
-    private function getAllPhones($params) {
+    public function getAllPhones(array $params) {
         list($limit, $offset) = $this->validateLimitAndOffset($params);
 
         $phones = $this->phoneRepository->getAllPhones($limit, $offset);
-        $phonesArray = [];
-        foreach ($phones as $phone) {
-            $phonesArray[] = $phone->toArray();
-        }
-        return $phonesArray;
+
+        return $phones;
     }
 
-    private function getAllPhonesBasicInfo($params) {
+    public function getAllPhonesBasicInfo(array $params) {
         list($limit, $offset) = $this->validateLimitAndOffset($params);
 
         $phones = $this->phoneRepository->getAllPhonesBasicInfo($limit, $offset);
-        $phonesArray = [];
-        foreach ($phones as $phone) {
-            $phonesArray[] = $phone->toArray();
-        }
-        return $phonesArray;
+        
+        return $phones;
     }
     
     private function validateLimitAndOffset(array $params): array {
