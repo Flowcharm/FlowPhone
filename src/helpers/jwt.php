@@ -7,7 +7,7 @@ require_once __DIR__ . "/../helpers/get_env.php";
 
 function generateJwt($payload)
 {
-    $jwt = \Firebase\JWT\JWT::encode($payload, env("JWT_SECRET"), 'RS256');
+    $jwt = \Firebase\JWT\JWT::encode($payload, env("JWT_SECRET"), 'HS256');
     return $jwt;
 }
 

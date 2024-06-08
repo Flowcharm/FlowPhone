@@ -18,7 +18,7 @@
             <input type="text" name="name" placeholder="Juan">
             <input type="email" name="email" placeholder="example@email.com">
             <input type="password" name="password" placeholder="*****">
-            <input type="submit" value="Register">
+            <input type="submit" id="register-form-submit" value="Register">
         </form>
         <div class="action-links">
             <a href="./login.php">Already have an account? log in!</a>

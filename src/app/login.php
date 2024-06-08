@@ -17,7 +17,7 @@
         <form id="login-form">
             <input type="email" name="email" placeholder="example@email.com" required>
             <input type="password" name="password" placeholder="*****" required>
-            <input type="submit" value="Log in">
+            <input type="submit" id="login-form-submit" value="Log in">
         </form>
         <a href="/src/app/api/google-oauth.php" class="google-oauth">
             Log in with Google

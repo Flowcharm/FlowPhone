@@ -24,22 +24,25 @@ class User
 
     function send_verify_email(IMail_Manager $mailManager)
     {
-        $jwt = generateJwt($this->id);
+        $payload = array("id" => $this->id);
+        $jwt = generateJwt($payload);
 
-        $baseUrl = getEnv("BASE_URL");
+        $baseUrl = env("BASE_URL");
         $url = "$baseUrl/src/app/verify.php?token=$jwt";
 
-        $mailManager->send($this->email, "Verify your email", "Please verify your email by clicking the link below: <a href=\"$url\">$url</a>");
+        $mailManager->sendMail($this->email, "Verify your email", "Please verify your email by clicking the link below: <a href=\"$url\">$url</a>");
     }
 
     function send_forgot_password_email(IMail_Manager $mailManager)
     {
-        $jwt = generateJwt($this->id);
+        $payload = array("id" => $this->id);
 
-        $baseUrl = getEnv("BASE_URL");
+        $jwt = generateJwt($payload);
+
+        $baseUrl = env("BASE_URL");
         $url = "$baseUrl/src/app/reset-password.php?token=$jwt";
 
-        $mailManager->send($this->email, "Reset your password", "Please reset your password by clicking the link below: <a href=\"$url\">$url</a>");
+        $mailManager->sendMail($this->email, "Reset your password", "Please reset your password by clicking the link below: <a href=\"$url\">$url</a>");
     }
 
     function verify()

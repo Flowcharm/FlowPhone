@@ -2,6 +2,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 
 require_once __DIR__ . "/../interfaces/mail_manager_interface.php";
+require_once __DIR__ . "/../helpers/get_env.php";
 
 class Mail_Manager implements IMail_Manager
 {
@@ -31,10 +32,9 @@ class Mail_Manager implements IMail_Manager
         $client->isSMTP();
         $client->Host = $this->host;
         $client->SMTPAuth = $this->smtp_auth;
+        $client->Port = $this->port;
         $client->Username = $this->username;
         $client->Password = $this->password;
-        $client->SMTPSecure = $this->smtp_secure;
-        $client->Port = $this->port;
 
         $this->client = $client;
     }
@@ -47,7 +47,7 @@ class Mail_Manager implements IMail_Manager
             $this->init_client();
         }
 
-        $this->client->setFrom($this->username, 'Mailer');
+        $this->client->setFrom(env("NO_REPLY_MAIL"), 'FlowPhone');
         $this->client->addAddress($to);
         $this->client->isHTML($isHtml);
         $this->client->Subject = $subject;
