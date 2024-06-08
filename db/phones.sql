@@ -1,13 +1,10 @@
-/*
-DROP DATABASE IF EXISTS flowphone;
-CREATE DATABASE flowphone;
-*/
+CREATE DATABASE IF NOT EXISTS flowphone;
 
 USE flowphone;
--- Create a table named 'phones'
+
 CREATE TABLE
-    phones (
-        id INT PRIMARY KEY,
+    IF NOT EXISTS phones (
+        id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
         brand VARCHAR(50),
         model VARCHAR(50),
         release_year INT,
@@ -20,6 +17,59 @@ CREATE TABLE
         os VARCHAR(50), -- Operating System
         ratings INT, -- Ratings out of 5
         image_url VARCHAR(255) -- Image URL
+    );
+
+CREATE TABLE
+    IF NOT EXISTS reviews (
+        id INT PRIMARY KEY,
+        phone_id INT,
+        author VARCHAR(100),
+        review TEXT,
+        rating INT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (phone_id) REFERENCES phones (id)
+    );
+
+CREATE TABLE
+    IF NOT EXISTS users (
+        id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+        name VARCHAR(50),
+        email VARCHAR(100) UNIQUE,
+        password VARCHAR(100),
+        isVerified BOOLEAN DEFAULT FALSE,
+        isGoogleAccount BOOLEAN DEFAULT FALSE
+    );
+
+CREATE TABLE
+    IF NOT EXISTS users_adress (
+        id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+        user_id INT UNSIGNED,
+        address VARCHAR(255),
+        city VARCHAR(100),
+        state VARCHAR(100),
+        country VARCHAR(100),
+        zipcode VARCHAR(10),
+        FOREIGN KEY (user_id) REFERENCES users (id)
+    );
+
+CREATE TABLE
+    IF NOT EXISTS carts (
+        id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+        user_id INT UNSIGNED,
+        phone_id INT UNSIGNED,
+        quantity INT,
+        FOREIGN KEY (user_id) REFERENCES users (id),
+        FOREIGN KEY (phone_id) REFERENCES phones (id)
+    );
+
+CREATE TABLE
+    IF NOT EXISTS cards_details (
+        id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+        user_id INT UNSIGNED,
+        card_number VARCHAR(16),
+        expiry_date DATE,
+        cvv INT,
+        FOREIGN KEY (user_id) REFERENCES users (id)
     );
 
 -- Insert 20 records into the 'phones' table

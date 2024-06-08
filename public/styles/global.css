@@ -1,0 +1,14 @@
+:root{
+  --font-color: #343a40;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+}
+
+html {
+  color: var(--font-color);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
