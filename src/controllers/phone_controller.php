@@ -8,20 +8,24 @@ class PhoneController {
         private PhoneRepository $phoneRepository
     ) { }
 
-    public function handleRequest(array $params): array | Phone {
+    public function handle_request(array $params): array | Phone {
         $phones = [];
 
         if (isset($params["basic"]) && $params["basic"] !== "false") {
-            $phones = $this->getAllPhonesBasicInfo($params);
+            $phones = $this->get_all_basic_info($params);
         } else if (isset($params["id"])) {
-            $phones[] = $this->getPhoneById((int)$params["id"]);
+            if (isset($params["similar"]) && $params["similar"] !== "false") {
+                $phones = $this->phoneRepository->get_similar((int)$params["id"], (int) ($params["limit"] ?? 3));
+            } else {
+                $phones[] = $this->get_by_id((int)$params["id"]);
+            }
         } else {
-            $phones = $this->getAllPhones($params);
+            $phones = $this->get_all($params);
         }         
         
         $response = [];
 
-        if (empty($phones)) {
+        if (empty($phones) || count($phones) === 0) {
             return $response;
         }
 
@@ -29,34 +33,88 @@ class PhoneController {
             $response[] = $phone->toArray();
         }
 
-        return count($response) === 1 ? $response[0] : $response;
+        if (count($response) === 1 && isset($params["id"])) {
+            return $response[0];
+        }
+        return $response;
     }
 
-    public function getPhoneById(int $id) {
+    public function get_by_id(int $id) {
         if (!is_numeric($id)) {
             throw new InvalidArgumentException("Phone id must be a number");
         }
-        $phone = $this->phoneRepository->getPhoneById((int)$id);
+
+        if (!$id) {
+            throw new InvalidArgumentException("Phone id cannot be empty");
+        }
+
+        $phone = $this->phoneRepository->get_by_id((int)$id);
         return $phone ? $phone : null;
     }
 
-    public function getAllPhones(array $params) {
-        list($limit, $offset) = $this->validateLimitAndOffset($params);
+    public function get_all(array $params) {
+        list($limit, $offset, $brand, $min_price, $max_price, $search) = $this->validate_search_params($params);
 
-        $phones = $this->phoneRepository->getAllPhones($limit, $offset);
+        $phones = $this->phoneRepository->get_all($limit, $offset, $brand, $min_price, $max_price, $search);
 
         return $phones;
     }
 
-    public function getAllPhonesBasicInfo(array $params) {
-        list($limit, $offset) = $this->validateLimitAndOffset($params);
+    public function get_all_basic_info(array $params) {
+        list($limit, $offset) = $this->validate_limit_offset($params);
 
-        $phones = $this->phoneRepository->getAllPhonesBasicInfo($limit, $offset);
+        $phones = $this->phoneRepository->get_all_basic_info($limit, $offset);
         
         return $phones;
     }
-    
-    private function validateLimitAndOffset(array $params): array {
+
+    public function get_similar(int $id, int $limit) {
+        if (!is_numeric($id)) {
+            throw new InvalidArgumentException("Phone id must be a number");
+        }
+        if (!is_numeric($limit)) {
+            throw new InvalidArgumentException("Limit must be a number");
+        }
+        $phones = $this->phoneRepository->get_similar((int)$id, (int)$limit);
+        return $phones;
+    }
+
+    private function validate_search_params(array $params): array {
+        list($limit, $offset) = $this->validate_limit_offset($params);
+        $brand = null;
+        $min_price = null;
+        $max_price = null;
+        $search = null;
+
+        if (isset($params["brand"])) {
+            $brand = $params["brand"];
+        }
+
+        if (isset($params["min_price"])) {
+            $min_price = (int)$params["min_price"];
+            if ($min_price < 0) {
+                throw new InvalidArgumentException("Min price must be a positive number");
+            }
+        }
+
+        if (isset($params["max_price"])) {
+            $max_price = (int)$params["max_price"];
+            if ($max_price < 0) {
+                throw new InvalidArgumentException("Max price must be a positive number");
+            }
+            if ($min_price && $max_price < $min_price) {
+                throw new InvalidArgumentException("Max price must be greater than min price");
+            }
+        }
+
+        if (isset($params["search"])) {
+            $search = $params["search"];
+        }
+
+        return [$limit, $offset, $brand, $min_price, $max_price, $search];
+    }
+
+    private function validate_limit_offset(array $params): array {
         $limit = null;
         if (isset($params["limit"])) {
             $limit = (int)$params["limit"];

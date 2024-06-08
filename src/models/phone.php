@@ -5,27 +5,33 @@ class PhoneBasicInfo {
     public function __construct(
         private int $id,
         private string $brand,
-        private string $model
+        private string $model,
+        private string $image_url
     )
     { }
 
-    public function getId(): int {
+    public function get_id(): int {
         return $this->id;
     }
 
-    public function getBrand(): string {
+    public function get_brand(): string {
         return $this->brand;
     }
 
-    public function getModel(): string {
+    public function get_model(): string {
         return $this->model;
+    }
+
+    public function get_image_url(): string {
+        return "/public/" . $this->image_url;
     }
 
     public function toArray(): array {
         return [
             "id" => $this->id,
             "brand" => $this->brand,
-            "model" => $this->model
+            "model" => $this->model,
+            "image_url" => $this->image_url
         ];
     }
 }
@@ -48,27 +54,27 @@ class Phone {
     )
     { }
 
-    public function getId(): int {
+    public function get_id(): int {
         return $this->id;
     }
 
-    public function getBrand(): string {
+    public function get_brand(): string {
         return $this->brand;
     }
 
-    public function getModel(): string {
+    public function get_model(): string {
         return $this->model;
     }
 
-    public function getScreenSizeInch(): float {
+    public function get_sreen_size_inch(): float {
         return $this->screen_size_inch;
     }
 
-    public function getStorageGb(): int {
+    public function get_storage_gb(): int {
         return $this->storage_gb;
     }
 
-    public function getPriceEur(): float {
+    public function get_price_eur(): float {
         return $this->price_eur;
     }
 
@@ -76,28 +82,28 @@ class Phone {
         return $this->os;
     }
 
-    public function getRatings(): int {
+    public function get_ratings(): int {
         return $this->ratings;
     }
 
-    public function getImageUrl(): string {
+    public function get_image_url(): string {
         // return $this->image_url;
         return "/public/" . $this->image_url;
     }
 
-    public function getReleaseYear(): int {
+    public function get_release_year(): int {
         return $this->release_year;
     }
 
-    public function getBatteryCapacityMah(): int {
+    public function get_battery_capacity_mah(): int {
         return $this->battery_capacity_mah;
     }
 
-    public function getRamGb(): int {
+    public function get_ram_gb(): int {
         return $this->ram_gb;
     }
 
-    public function getCameraMp(): int {
+    public function get_camera_mp(): int {
         return $this->camera_mp;
     }
 

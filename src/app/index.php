@@ -12,7 +12,7 @@ $connection = new mysqli($host, $user, $password, $database, $port);
 
 $phoneRepository = new PhoneRepository($connection);
 
-$phones = $phoneRepository->getAllPhones();
+$phones = $phoneRepository->get_all();
 
 ?>
 <!DOCTYPE html>
@@ -123,20 +123,20 @@ $phones = $phoneRepository->getAllPhones();
         <h1>No phones available</h1>
     <?php else: foreach ($phones as $phone): ?>
         <div class='card'>
-            <img src='<?= $phone->getImageUrl() ?>' alt='<?= $phone->getBrand() . " " . $phone->getModel() ?>'>
+            <img src='<?= $phone->get_image_url() ?>' alt='<?= $phone->get_brand() . " " . $phone->get_model() ?>'>
             <div class='card-body'>
                 <div class='left-column'>
-                    <h3><?= $phone->getBrand() . " " . $phone->getModel() ?></h3>
-                    <p>Screen Size: <?= $phone->getScreenSizeInch() ?> in</p>
-                    <p>Storage: <?= $phone->getStorageGb() ?> GB</p>
+                    <h3><?= $phone->get_brand() . " " . $phone->get_model() ?></h3>
+                    <p>Screen Size: <?= $phone->get_sreen_size_inch() ?> in</p>
+                    <p>Storage: <?= $phone->get_storage_gb() ?> GB</p>
                     <p>OS: <?= $phone->getOs() ?></p>
-                    <p class='stars'><?= str_repeat('★', $phone->getRatings()) . str_repeat('☆', 5 - $phone->getRatings()) ?></p>
+                    <p class='stars'><?= str_repeat('★', $phone->get_ratings()) . str_repeat('☆', 5 - $phone->get_ratings()) ?></p>
                 </div>
                 <div class='right-column'>
-                    <p class='price'>€<?= $phone->getPriceEur() ?></p>
+                    <p class='price'>€<?= $phone->get_price_eur() ?></p>
                     <p class='taxes'>Taxes Included</p>
                     <div class='button-container'>
-                        <button class='addCart' onclick='buyProduct(<?= $phone->getId() ?>)'>Add to Cart</button>
+                        <button class='addCart' onclick='buyProduct(<?= $phone->get_id() ?>)'>Add to Cart</button>
                     </div>
                 </div>
             </div>

@@ -14,7 +14,7 @@ export const getPhone = async (id) => {
     const response = await fetch(API_URL);
     const data = await response.json();
 
-    return data;
+    return data.data;
 }
 
 export const getPhones = async ({ offset, limit, basic } = {}) => {
@@ -26,7 +26,7 @@ export const getPhones = async ({ offset, limit, basic } = {}) => {
     const response = await fetch(API_URL);
     const data = await response.json();
 
-    return data;
+    return data.data;
 }
 
 export const getBasicPhonesInfo = async ({ offset, limit } = {}) => {

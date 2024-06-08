@@ -23,7 +23,7 @@ try {
     if (!isset($id)) {
         throw new Exception("Phone id is required", 400);
     }
-    $phone = $phoneController->getPhoneById((int)$id);
+    $phone = $phoneController->get_by_id((int)$id);
     if (!$phone) {
         throw new Exception("Phone not found", 404);
     }
@@ -32,7 +32,7 @@ try {
     die($e->getMessage());
 }
 
-$phoneName = $phone->getBrand() . " " . $phone->getModel();
+$phoneName = $phone->get_brand() . " " . $phone->get_model();
 $title = $phoneName . " - FlowPhone";
 ?>
 <!DOCTYPE html>
@@ -50,22 +50,22 @@ $title = $phoneName . " - FlowPhone";
     ?>
     <main class="phone">
         <div class="hero">
-            <img src="<?= $phone->getImageUrl() ?>" alt="<?= $phoneName ?>" class="hero__image">
+            <img src="<?= $phone->get_image_url() ?>" alt="<?= $phoneName ?>" class="hero__image">
             <div class="hero__title">
                 <h1 class="hero__name"><?= $phoneName ?></h1>
                 <div class="hero__stars">
-                    <?php for ($i = 0; $i < $phone->getRatings(); $i++): ?>
+                    <?php for ($i = 0; $i < $phone->get_ratings(); $i++): ?>
                         <span class="hero__star star filled"><?php include "..\includes\icons\star.php"; ?></span>
                     <?php endfor; ?>
-                    <?php for ($i = $phone->getRatings(); $i < 5; $i++): ?>
+                    <?php for ($i = $phone->get_ratings(); $i < 5; $i++): ?>
                         <span class="hero__star star"><?php include "../includes/icons/star.php"; ?></span>
                     <?php endfor; ?>
-                    <span class="hero__rating"><?= $phone->getRatings(); ?></span>
+                    <span class="hero__rating"><?= $phone->get_ratings(); ?></span>
                 </div>
             </div>
         </div>
         <div class="action-btns">
-            <p>Price: <span><?= $phone->getPriceEur() ?>€</span></p>
+            <p>Price: <span><?= $phone->get_price_eur() ?>€</span></p>
             <button type="button" class="card">Buy</button>
             <button type="button" class="card">
                 <span class="action-btns__icon action-btns__icon-car">
@@ -77,13 +77,13 @@ $title = $phoneName . " - FlowPhone";
         <div class="info-section">
             <h2 class="section-title">Specifications</h2>
             <ul class="info-list">
-                <li>Brand <?= $phone->getBrand() ?></li>
-                <li>Model <?= $phone->getModel() ?></li>
-                <li>Release year <?= $phone->getReleaseYear() ?></li>
-                <li>Screen size <?= $phone->getScreenSizeInch() ?> inches</li>
-                <li>Battery capacity <?= $phone->getBatteryCapacityMah() ?> mAh</li>
-                <li>RAM <?= $phone->getRamGb() ?> GB</li>
-                <li>Storage <?= $phone->getStorageGb() ?> GB</li>
+                <li>Brand <?= $phone->get_brand() ?></li>
+                <li>Model <?= $phone->get_model() ?></li>
+                <li>Release year <?= $phone->get_release_year() ?></li>
+                <li>Screen size <?= $phone->get_sreen_size_inch() ?> inches</li>
+                <li>Battery capacity <?= $phone->get_battery_capacity_mah() ?> mAh</li>
+                <li>RAM <?= $phone->get_ram_gb() ?> GB</li>
+                <li>Storage <?= $phone->get_storage_gb() ?> GB</li>
                 <li>OS <?= $phone->getOs() ?></li>
             </ul>
             <a href="#comparator">Show more details...</a>
@@ -141,31 +141,31 @@ $title = $phoneName . " - FlowPhone";
                     <tbody class="table-product__body">
                         <tr>
                             <td>Brand</td>
-                            <td><?= $phone->getBrand() ?></td>
+                            <td><?= $phone->get_brand() ?></td>
                         </tr>
                         <tr>
                             <td>Model</td>
-                            <td><?= $phone->getModel() ?></td>
+                            <td><?= $phone->get_model() ?></td>
                         </tr>
                         <tr>
                             <td>Release Year</td>
-                            <td><?= $phone->getReleaseYear() ?></td>
+                            <td><?= $phone->get_release_year() ?></td>
                         </tr>
                         <tr>
                             <td>Screen Size</td>
-                            <td><?= $phone->getScreenSizeInch() ?> pulgadas</td>
+                            <td><?= $phone->get_sreen_size_inch() ?> pulgadas</td>
                         </tr>
                         <tr>
                             <td>Battery Capacity</td>
-                            <td><?= $phone->getBatteryCapacityMah() ?> mAh</td>
+                            <td><?= $phone->get_battery_capacity_mah() ?> mAh</td>
                         </tr>
                         <tr>
                             <td>RAM</td>
-                            <td><?= $phone->getRamGb() ?> GB</td>
+                            <td><?= $phone->get_ram_gb() ?> GB</td>
                         </tr>
                         <tr>
                             <td>Storage</td>
-                            <td><?= $phone->getStorageGb() ?> GB</td>
+                            <td><?= $phone->get_storage_gb() ?> GB</td>
                         </tr>
                         <tr>
                             <td>Operating System</td>
@@ -173,11 +173,11 @@ $title = $phoneName . " - FlowPhone";
                         </tr>
                         <tr>
                             <td>Rating</td>
-                            <td><?= $phone->getRatings() ?></td>
+                            <td><?= $phone->get_ratings() ?></td>
                         </tr>
                         <tr>
                             <td>Price</td>
-                            <td><?= $phone->getPriceEur() ?>€</td>
+                            <td><?= $phone->get_price_eur() ?>€</td>
                         </tr>
                     </tbody>
                 </table>

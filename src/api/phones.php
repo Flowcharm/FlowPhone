@@ -18,9 +18,9 @@ $phoneController = new PhoneController($phoneRepository);
 header('Content-Type: application/json');
 try {
     $params = $_GET;
-    $response = $phoneController->handleRequest($params);
+    $response = $phoneController->handle_request($params);
 
-    echo json_encode($response ?? []);
+    echo json_encode(["data" => $response ?? [], "error" => null]);
 } catch (Exception $e) {
     $code = 500;
     if ($e instanceof InvalidArgumentException) {
@@ -30,7 +30,7 @@ try {
     }
 
     http_response_code($code);
-    echo json_encode(["error" => $e->getMessage(), "code" => $code]);
+    echo json_encode(["error" => $e->getMessage()]);
 }
 
 ?>
