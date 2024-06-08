@@ -1,3 +1,20 @@
+<?php
+require_once '../repositories/phone_repository.php';
+
+// TODO
+$user = "root";
+$password = "1234";
+$database = "flowphone";
+$host = "localhost";
+$port = 3360;
+
+$connection = new mysqli($host, $user, $password, $database, $port);
+
+$phoneRepository = new PhoneRepository($connection);
+
+$phones = $phoneRepository->get_all();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +29,6 @@
 <body>
 
     <div class="container">
-
     </div>
 
 </body>

@@ -103,7 +103,7 @@ VALUES
         799.00,
         'iOS',
         5,
-        'https://example.com/images/iphone13.jpg'
+        'images/phones/apple_iphone13.webp'
     ),
     (
         2,
@@ -118,7 +118,7 @@ VALUES
         799.99,
         'Android',
         4,
-        'https://example.com/images/galaxy_s21.jpg'
+        'images/phones/samsung_galaxyS21.webp'
     ),
     (
         3,
@@ -133,7 +133,7 @@ VALUES
         599.00,
         'Android',
         4,
-        'https://example.com/images/pixel6.jpg'
+        'images/phones/google_pixel6.webp'
     ),
     (
         4,
@@ -148,7 +148,7 @@ VALUES
         1069.00,
         'Android',
         5,
-        'https://example.com/images/oneplus_9_pro.jpg'
+        'images/phones/oneplus_9pro.webp'
     ),
     (
         5,
@@ -163,7 +163,7 @@ VALUES
         699.00,
         'iOS',
         4,
-        'https://example.com/images/iphone12.jpg'
+        'images/phones/apple_iphone12.webp'
     ),
     (
         6,
@@ -178,7 +178,7 @@ VALUES
         999.99,
         'Android',
         5,
-        'https://example.com/images/galaxy_note20.jpg'
+        'images/phones/samsung_galaxynote20.webp'
     ),
     (
         7,
@@ -193,7 +193,7 @@ VALUES
         699.00,
         'Android',
         4,
-        'https://example.com/images/pixel5.jpg'
+        'images/phones/google_pixel5.webp'
     ),
     (
         8,
@@ -208,7 +208,7 @@ VALUES
         749.00,
         'Android',
         4,
-        'https://example.com/images/oneplus_8t.jpg'
+        'images/phones/oneplus_8t.webp'
     ),
     (
         9,
@@ -223,7 +223,7 @@ VALUES
         399.00,
         'iOS',
         3,
-        'https://example.com/images/iphone_se.jpg'
+        'images/phones/apple_iphonese.webp'
     ),
     (
         10,
@@ -238,7 +238,7 @@ VALUES
         499.99,
         'Android',
         4,
-        'https://example.com/images/galaxy_a52.jpg'
+        'images/phones/samsung_galaxya52.webp'
     ),
     (
         11,
@@ -253,7 +253,7 @@ VALUES
         1299.99,
         'Android',
         5,
-        'https://example.com/images/xperia_1_iii.jpg'
+        'images/phones/sony_xperia1iii.webp'
     ),
     (
         12,
@@ -268,7 +268,7 @@ VALUES
         599.00,
         'Android',
         4,
-        'https://example.com/images/lg_velvet.jpg'
+        'images/phones/lg_velvet.webp'
     ),
     (
         13,
@@ -283,7 +283,7 @@ VALUES
         899.00,
         'Android',
         5,
-        'https://example.com/images/p40_pro.jpg'
+        'images/phones/huawei_p40pro.webp'
     ),
     (
         14,
@@ -298,7 +298,7 @@ VALUES
         749.00,
         'Android',
         4,
-        'https://example.com/images/mi_11.jpg'
+        'images/phones/xiaomi_mi11.webp'
     ),
     (
         15,
@@ -313,7 +313,7 @@ VALUES
         599.00,
         'iOS',
         4,
-        'https://example.com/images/iphone11.jpg'
+        'images/phones/apple_iphone11.webp'
     ),
     (
         16,
@@ -328,7 +328,7 @@ VALUES
         749.99,
         'Android',
         4,
-        'https://example.com/images/galaxy_s10.jpg'
+        'images/phones/samsung_galaxys10.webp'
     ),
     (
         17,
@@ -343,7 +343,7 @@ VALUES
         799.00,
         'Android',
         3,
-        'https://example.com/images/pixel4.jpg'
+        'images/phones/google_pixel4.webp'
     ),
     (
         18,
@@ -358,7 +358,7 @@ VALUES
         669.00,
         'Android',
         4,
-        'https://example.com/images/oneplus_7_pro.jpg'
+        'images/phones/oneplus_7pro.webp'
     ),
     (
         19,
@@ -373,7 +373,7 @@ VALUES
         1099.00,
         'Android',
         5,
-        'https://example.com/images/mate_30_pro.jpg'
+        'images/phones/huawei_mate30pro.webp'
     ),
     (
         20,
@@ -388,5 +388,5 @@ VALUES
         199.00,
         'Android',
         4,
-        'https://example.com/images/redmi_note_10.jpg'
+        'images/phones/xiaomi_redminote10.webp'
     );
