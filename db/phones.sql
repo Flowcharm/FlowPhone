@@ -1,3 +1,4 @@
+/* DROP DATABASE IF EXISTS flowphone; */
 CREATE DATABASE IF NOT EXISTS flowphone;
 
 USE flowphone;
@@ -22,7 +23,7 @@ CREATE TABLE
 CREATE TABLE
     IF NOT EXISTS reviews (
         id INT PRIMARY KEY,
-        phone_id INT,
+        phone_id INT UNSIGNED,
         author VARCHAR(100),
         review TEXT,
         rating INT,

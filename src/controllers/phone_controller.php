@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-require_once "../repositories/phone_repository.php";
+require_once __DIR__."/../repositories/phone_repository.php";
 
 class PhoneController {
     public function __construct(
-        private PhoneRepository $phoneRepository
+        private PhoneRepository $phone_repository
     ) { }
 
     public function handle_request(array $params): array | Phone {
@@ -15,7 +15,7 @@ class PhoneController {
             $phones = $this->get_all_basic_info($params);
         } else if (isset($params["id"])) {
             if (isset($params["similar"]) && $params["similar"] !== "false") {
-                $phones = $this->phoneRepository->get_similar((int)$params["id"], (int) ($params["limit"] ?? 3));
+                $phones = $this->phone_repository->get_similar((int)$params["id"], (int) ($params["limit"] ?? 3));
             } else {
                 $phones[] = $this->get_by_id((int)$params["id"]);
             }
@@ -25,7 +25,7 @@ class PhoneController {
         
         $response = [];
 
-        if (empty($phones) || count($phones) === 0) {
+        if (empty($phones) || count($phones) === 0 || $phones[0] === null) {
             return $response;
         }
 
@@ -48,14 +48,19 @@ class PhoneController {
             throw new InvalidArgumentException("Phone id cannot be empty");
         }
 
-        $phone = $this->phoneRepository->get_by_id((int)$id);
+        $phone = $this->phone_repository->get_by_id((int)$id);
+
+        if (!$phone) {
+            throw new InvalidArgumentException("Phone not found");
+        }
+
         return $phone ? $phone : null;
     }
 
     public function get_all(array $params) {
         list($limit, $offset, $brand, $min_price, $max_price, $search) = $this->validate_search_params($params);
 
-        $phones = $this->phoneRepository->get_all($limit, $offset, $brand, $min_price, $max_price, $search);
+        $phones = $this->phone_repository->get_all($limit, $offset, $brand, $min_price, $max_price, $search);
 
         return $phones;
     }
@@ -63,7 +68,7 @@ class PhoneController {
     public function get_all_basic_info(array $params) {
         list($limit, $offset) = $this->validate_limit_offset($params);
 
-        $phones = $this->phoneRepository->get_all_basic_info($limit, $offset);
+        $phones = $this->phone_repository->get_all_basic_info($limit, $offset);
         
         return $phones;
     }
@@ -75,7 +80,7 @@ class PhoneController {
         if (!is_numeric($limit)) {
             throw new InvalidArgumentException("Limit must be a number");
         }
-        $phones = $this->phoneRepository->get_similar((int)$id, (int)$limit);
+        $phones = $this->phone_repository->get_similar((int)$id, (int)$limit);
         return $phones;
     }
 

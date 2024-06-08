@@ -1,10 +1,11 @@
-export const API_PATH = '/src/api/phones.php';
+export const API_PATH = '/src/app/api/phones.php';
 
 export const API_PARAMS = {
     id: 'id',
     offset: 'offset',
     limit: 'limit',
     basic: 'basic',
+    similar: 'similar',
 }
 
 export const getPhone = async (id) => {

@@ -1,20 +1,21 @@
 <?php
 declare(strict_types=1);
 
-include_once "../repositories/phone_repository.php";
-include_once "../controllers/phone_controller.php";
+require_once __DIR__."/../models/db_manager.php";
+require_once __DIR__."/../repositories/phone_repository.php";
+require_once __DIR__."/../controllers/phone_controller.php";
+require_once __DIR__."/../helpers/get_env.php";
 
-// TODO
 $user = "root";
 $password = "1234";
 $database = "flowphone";
 $host = "localhost";
 $port = 3360;
 
-$connection = new mysqli($host, $user, $password, $database, $port);
+$db = new Db_Manager(env("DB_HOST"), env("DB_USER"), env("DB_PASSWORD"), env("DB_NAME"));
 
-$phoneRepository = new PhoneRepository($connection);
-$phoneController = new PhoneController($phoneRepository);
+$phone_repository = new PhoneRepository($db);
+$phone_controller = new PhoneController($phone_repository);
 
 $phone = null;
 
@@ -23,7 +24,7 @@ try {
     if (!isset($id)) {
         throw new Exception("Phone id is required", 400);
     }
-    $phone = $phoneController->get_by_id((int)$id);
+    $phone = $phone_controller->get_by_id((int)$id);
     if (!$phone) {
         throw new Exception("Phone not found", 404);
     }
@@ -41,9 +42,9 @@ $title = $phoneName . " - FlowPhone";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?></title>
-    <?php include_once "..\includes\common_head.php"; 
-    ?>
+    <?php include_once "..\includes\common_head.php"; ?>
     <link rel="stylesheet" href="/public/styles/phone-page.css">
+    <script type="module" src="/public/js/phone.js" defer></script>
 </head>
 <body>
     <?php // TODO: include_once "..\includes\nav.php"; 
@@ -251,10 +252,5 @@ $title = $phoneName . " - FlowPhone";
     </section>
     <?php // TODO: include_once "..\includes\footer.php";
     ?>    
-    <script type="module">
-        import { main } from "/public/js/phone.js";
-        const phone = <?= json_encode($phone->toArray()) ?>;
-        main({ principalPhone: phone });
-    </script>
 </body>
 </html>

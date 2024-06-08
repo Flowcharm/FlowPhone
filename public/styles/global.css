@@ -1,11 +1,13 @@
 :root{
   --font-color: #343a40;
+  --second-font-color: #6c757d;
+  --background-color: #f8f9fa;
 }
 
 body {
   margin: 0;
   padding: 0;
-  background-color: #f8f9fa;
+  background-color: var(--background-color);
 }
 
 html {

@@ -1,9 +1,3 @@
-export const setupDropdownToggle = (dropdownToggle, dropdownMenu) => {
-    dropdownToggle.addEventListener("click", () => {
-        dropdownMenu.classList.toggle("show");
-    });
-}
-
 export const createDropdownOption = (phone, handleClick) => {
     const liOption = document.createElement("li");
     liOption.textContent = `${phone.brand} ${phone.model}`;
