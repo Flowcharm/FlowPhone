@@ -4,22 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar sesión</title>
+    <title>Log in</title>
+    <link rel="stylesheet" href="/public/styles/login-register.css">
+    <script src="/public/js/login.js" defer type="module"></script>
     <?php include_once "../includes/common_head.php" ?>
 </head>
 
 <body>
 
     <div class="login">
-        <h2>Iniciar sesión</h2>
-        <form action="">
-            <input type="text" placeholder="example@email.com">
-            <input type="password" placeholder="Contraseña">
-            <input type="submit" value="Iniciar sesión">
+        <h1>Log in</h1>
+        <form id="login-form">
+            <input type="email" name="email" placeholder="example@email.com" required>
+            <input type="password" name="password" placeholder="*****" required>
+            <input type="submit" value="Log in">
         </form>
-        <button>Iniciar sesión con google</button>
-        <a href="./forgot.php">¿Olvidaste tu contraseña?</a>
-        <a href="./register.php">¿No tienes cuenta? ¡Regístrate!</a>
+        <a href="/src/app/api/google-oauth.php" class="google-oauth">
+            Log in with Google
+            <?php include "../includes/icons/google.php" ?>
+        </a>
+        <div class="action-links">
+            <a href="./forgot-password.php">Forgot your password?</a>
+            <a href="./register.php">Don't have an account? Sign up!</a>
+        </div>
     </div>
 
 </body>

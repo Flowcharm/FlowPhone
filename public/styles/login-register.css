@@ -1,0 +1,86 @@
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-size: 36px;
+  text-align: center;
+}
+
+.google-oauth {
+  display: flex;
+  text-decoration: none;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+
+.google-oauth svg {
+  width: 20px;
+  height: auto;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  padding: 10px;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid black;
+  font-size: 18px;
+}
+
+a {
+  font-size: 18px;
+  color: var(--font-color);
+}
+
+button,
+.google-oauth,
+input[type="submit"] {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: lightgray;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  transition: transform 0.2s ease-out;
+}
+
+button:hover,
+.google-oauth:hover,
+input[type="submit"]:hover {
+  transform: scale(1.05);
+}
+
+button:active,
+.google-oauth:active,
+input[type="submit"]:active {
+  transform: scale(0.95);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.action-links {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
