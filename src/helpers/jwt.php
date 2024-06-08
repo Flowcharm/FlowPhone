@@ -3,7 +3,7 @@
 use Firebase\JWT\Key;
 
 require __DIR__ . '/../../vendor/autoload.php';
-require_once __DIR__ . "/../helpers/get_env.php";
+require_once __DIR__ . "/../helpers/env.php";
 
 function generateJwt($payload)
 {

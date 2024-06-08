@@ -21,8 +21,8 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS reviews (
-        id INT PRIMARY KEY,
-        phone_id INT,
+        id INT UNSIGNED PRIMARY KEY,
+        phone_id INT UNSIGNED,
         author VARCHAR(100),
         review TEXT,
         rating INT,
@@ -60,16 +60,6 @@ CREATE TABLE
         quantity INT,
         FOREIGN KEY (user_id) REFERENCES users (id),
         FOREIGN KEY (phone_id) REFERENCES phones (id)
-    );
-
-CREATE TABLE
-    IF NOT EXISTS cards_details (
-        id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-        user_id INT UNSIGNED,
-        card_number VARCHAR(16),
-        expiry_date DATE,
-        cvv INT,
-        FOREIGN KEY (user_id) REFERENCES users (id)
     );
 
 -- Insert 20 records into the 'phones' table

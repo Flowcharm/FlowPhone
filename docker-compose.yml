@@ -9,7 +9,9 @@ services:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_TCP_PORT: ${DB_PORT}
+      MYSQL_UNIX_PORT: ${DB_PORT}
     volumes:
-      - data:/var/lib/mysql
+      - ./mysql:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "${DB_PORT}:3306"

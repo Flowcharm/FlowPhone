@@ -11,7 +11,6 @@
 </head>
 
 <body>
-
     <div class="login">
         <h1>Log in</h1>
         <form id="login-form">
@@ -25,10 +24,9 @@
         </a>
         <div class="action-links">
             <a href="./forgot-password.php">Forgot your password?</a>
-            <a href="./register.php">Don't have an account? Sign up!</a>
+            <a href="./register.php">Don't have an account? Register!</a>
         </div>
     </div>
-
 </body>
 
 </html>

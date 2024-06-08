@@ -1,8 +1,7 @@
 <?php
 require_once __DIR__ . "/../interfaces/mail_manager_interface.php";
 require_once __DIR__ . "/../helpers/jwt.php";
-require_once __DIR__ . "/../helpers/get_env.php";
-require_once __DIR__ . "/../helpers/bcrypt.php";
+require_once __DIR__ . "/../helpers/env.php";
 
 class User
 {
@@ -17,9 +16,7 @@ class User
     {
         $this->name = $name;
         $this->email = $email;
-
-        $hashed_password = hashPassword($password);
-        $this->password = $hashed_password;
+        $this->password = $password;
     }
 
     function send_verify_email(IMail_Manager $mailManager)
@@ -28,7 +25,7 @@ class User
         $jwt = generateJwt($payload);
 
         $baseUrl = env("BASE_URL");
-        $url = "$baseUrl/src/app/verify.php?token=$jwt";
+        $url = "$baseUrl/src/app/api/verify.php?token=$jwt";
 
         $mailManager->sendMail($this->email, "Verify your email", "Please verify your email by clicking the link below: <a href=\"$url\">$url</a>");
     }
@@ -62,8 +59,17 @@ class User
 
     function set_password($password)
     {
-        $hashed_password = hashPassword($password);
-        $this->password = $hashed_password;
+        $this->password = $password;
+    }
+
+    function set_isVerified($isVerified)
+    {
+        $this->isVerified = $isVerified;
+    }
+
+    function set_isGoogleAccount($isGoogleAccount)
+    {
+        $this->isGoogleAccount = $isGoogleAccount;
     }
 
     function get_id()

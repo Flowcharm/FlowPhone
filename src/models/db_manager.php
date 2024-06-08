@@ -7,15 +7,17 @@ class Db_Manager implements IDb_Manager
     protected $user;
     protected $password;
     protected $dbName;
+    protected $port;
 
     private $connection;
 
-    function __construct($host, $user, $password, $dbName)
+    function __construct($host, $user, $password, $dbName, $port)
     {
         $this->host = $host;
         $this->user = $user;
         $this->password = $password;
         $this->dbName = $dbName;
+        $this->port = $port;
     }
 
     // Destructor to close the database connection when the object is destroyed
@@ -32,7 +34,7 @@ class Db_Manager implements IDb_Manager
             return $this->connection;
         }
 
-        $conn = mysqli_connect($this->host, $this->user, $this->password, $this->dbName);
+        $conn = mysqli_connect($this->host, $this->user, $this->password, $this->dbName, (int) $this->port);
 
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());

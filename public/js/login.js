@@ -25,12 +25,13 @@ form.addEventListener("submit", async (e) => {
     if (json.error) {
       vanillaToast.error(json.error);
     } else {
+      vanillaToast.success("Login successful!");
       window.location = "/src/app/";
     }
   } catch (error) {
     console.log(error);
     vanillaToast.error("Something went wrong...");
+  } finally {
+    submit.disabled = false;
   }
-
-  submit.disabled = false;
 });

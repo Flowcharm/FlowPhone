@@ -38,7 +38,7 @@ form.addEventListener("submit", async (event) => {
   } catch (error) {
     console.log(error);
     vanillaToast.error("Something went wrong...");
+  } finally {
+    submit.disabled = false;
   }
-
-  submit.disabled = false;
 });

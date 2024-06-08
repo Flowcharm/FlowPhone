@@ -2,7 +2,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 
 require_once __DIR__ . "/../interfaces/mail_manager_interface.php";
-require_once __DIR__ . "/../helpers/get_env.php";
+require_once __DIR__ . "/../helpers/env.php";
 
 class Mail_Manager implements IMail_Manager
 {
