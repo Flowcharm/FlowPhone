@@ -213,6 +213,93 @@ class PhoneRepository implements IPhoneRepository {
         return $phones;
     }
 
+    public function insert(Phone $phone): Phone|null {
+        $connection = $this->db_manager->connect();
+
+        $sql = "INSERT INTO phones (brand, model, release_year, screen_size, battery_capacity, ram, storage, camera_mp, price, os, ratings, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    
+        $stmt = $connection->prepare($sql);
+
+        $brand = $phone->get_brand();
+        $model = $phone->get_model();
+        $release_year = $phone->get_release_year();
+        $screen_size = $phone->get_screen_size_inch(); // float
+        $battery_capacity = $phone->get_battery_capacity_mah(); // int
+        $ram = $phone->get_ram_gb();
+        $storage = $phone->get_storage_gb();
+        $camera_mp = $phone->get_camera_mp();
+        $price = $phone->get_price_eur(); // float
+        $os = $phone->get_os();
+        $ratings = $phone->get_ratings();
+        $image_url = $phone->get_image_url();
+
+        $types = "ssidiiiidsis";
+        $stmt->bind_param($types, $brand, $model, $release_year, $screen_size, $battery_capacity, $ram, $storage, $camera_mp, $price, $os, $ratings, $image_url);
+
+        $stmt->execute();
+
+        $stmt->close();
+
+        $phone->set_id($connection->insert_id);
+
+        return $phone;
+    }
+
+    public function update(Phone $phone): Phone|null {
+        $connection = $this->db_manager->connect();
+
+        $sql = "UPDATE phones SET brand = ?, model = ?, release_year = ?, screen_size = ?, battery_capacity = ?, ram = ?, storage = ?, camera_mp = ?, price = ?, os = ?, ratings = ?, image_url = ? WHERE id = ?";
+    
+        $stmt = $connection->prepare($sql);
+
+        $brand = $phone->get_brand();
+        $model = $phone->get_model();
+        $release_year = $phone->get_release_year();
+        $screen_size = $phone->get_screen_size_inch(); // float
+        $battery_capacity = $phone->get_battery_capacity_mah(); // int
+        $ram = $phone->get_ram_gb();
+        $storage = $phone->get_storage_gb();
+        $camera_mp = $phone->get_camera_mp();
+        $price = $phone->get_price_eur(); // float
+        $os = $phone->get_os();
+        $ratings = $phone->get_ratings();
+        $image_url = $phone->get_image_url();
+        $id = $phone->get_id();
+
+        $types = "ssidiiiidsis";
+        $stmt->bind_param($types, $brand, $model, $release_year, $screen_size, $battery_capacity, $ram, $storage, $camera_mp, $price, $os, $ratings, $image_url, $id);
+
+        $stmt->execute();
+
+        $stmt->close();
+
+        if ($connection->affected_rows === 0) {
+            return null;
+        }
+        return $phone;
+    }
+
+    public function delete($id): Phone|null{
+        $connection = $this->db_manager->connect();
+
+        $sql = "DELETE FROM phones WHERE id = ?";
+
+        $phone = $this->get_by_id($id);
+        if ($phone === null) {
+            return null;
+        }
+
+        $stmt = $connection->prepare($sql);
+        
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->close();
+
+        if ($connection->affected_rows === 0) {
+            return null;
+        }
+        return $phone;
+    }
 
 }
 ?>

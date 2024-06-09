@@ -1,4 +1,8 @@
-export const API_PATH = '/src/app/api/phones.php';
+export const API_PATH = '/src/app/api/phones/';
+export const API_GET_PATH = API_PATH;
+export const API_DELETE_PATH = `${API_PATH}delete.php`;
+export const API_UPDATE_PATH = `${API_PATH}update.php`;
+export const API_CREATE_PATH = `${API_PATH}create.php`;
 
 export const API_PARAMS = {
     id: 'id',
@@ -13,7 +17,7 @@ export const API_PARAMS = {
 };
 
 export const getPhone = async id => {
-    const API_URL = new URL(API_PATH, window.location.origin);
+    const API_URL = new URL(API_GET_PATH, window.location.origin);
     API_URL.searchParams.set(API_PARAMS.id, id);
 
     const response = await fetch(API_URL);
@@ -32,7 +36,7 @@ export const getPhones = async ({
     minPrice,
     maxPrice,
 } = {}) => {
-    const API_URL = new URL(API_PATH, window.location.origin);
+    const API_URL = new URL(API_GET_PATH, window.location.origin);
     if (offset) API_URL.searchParams.set(API_PARAMS.offset, offset);
     if (limit) API_URL.searchParams.set(API_PARAMS.limit, limit);
     if (basic) API_URL.searchParams.set(API_PARAMS.basic, basic);

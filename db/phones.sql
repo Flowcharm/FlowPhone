@@ -31,12 +31,10 @@ CREATE TABLE
         FOREIGN KEY (phone_id) REFERENCES phones (id)
     );
 
-CREATE TYPE user_role AS ENUM ('admin', 'user');
-
 CREATE TABLE
     IF NOT EXISTS users (
         id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-        role user_role DEFAULT 'user',
+        user_role ENUM ('admin', 'user') DEFAULT 'user',
         name VARCHAR(50),
         email VARCHAR(100) UNIQUE,
         password VARCHAR(100),
@@ -107,7 +105,7 @@ VALUES
         799.00,
         'iOS',
         5,
-        'images/phones/apple_iphone13.webp'
+        '/images/phones/apple_iphone13.webp'
     ),
     (
         2,
@@ -122,7 +120,7 @@ VALUES
         799.99,
         'Android',
         4,
-        'images/phones/samsung_galaxyS21.webp'
+        '/images/phones/samsung_galaxyS21.webp'
     ),
     (
         3,
@@ -137,7 +135,7 @@ VALUES
         599.00,
         'Android',
         4,
-        'images/phones/google_pixel6.webp'
+        '/images/phones/google_pixel6.webp'
     ),
     (
         4,
@@ -152,7 +150,7 @@ VALUES
         1069.00,
         'Android',
         5,
-        'images/phones/oneplus_9pro.webp'
+        '/images/phones/oneplus_9pro.webp'
     ),
     (
         5,
@@ -167,7 +165,7 @@ VALUES
         699.00,
         'iOS',
         4,
-        'images/phones/apple_iphone12.webp'
+        '/images/phones/apple_iphone12.webp'
     ),
     (
         6,
@@ -182,7 +180,7 @@ VALUES
         999.99,
         'Android',
         5,
-        'images/phones/samsung_galaxynote20.webp'
+        '/images/phones/samsung_galaxynote20.webp'
     ),
     (
         7,
@@ -197,7 +195,7 @@ VALUES
         699.00,
         'Android',
         4,
-        'images/phones/google_pixel5.webp'
+        '/images/phones/google_pixel5.webp'
     ),
     (
         8,
@@ -212,7 +210,7 @@ VALUES
         749.00,
         'Android',
         4,
-        'images/phones/oneplus_8t.webp'
+        '/images/phones/oneplus_8t.webp'
     ),
     (
         9,
@@ -227,7 +225,7 @@ VALUES
         399.00,
         'iOS',
         3,
-        'images/phones/apple_iphonese.webp'
+        '/images/phones/apple_iphonese.webp'
     ),
     (
         10,
@@ -242,7 +240,7 @@ VALUES
         499.99,
         'Android',
         4,
-        'images/phones/samsung_galaxya52.webp'
+        '/images/phones/samsung_galaxya52.webp'
     ),
     (
         11,
@@ -257,7 +255,7 @@ VALUES
         1299.99,
         'Android',
         5,
-        'images/phones/sony_xperia1iii.webp'
+        '/images/phones/sony_xperia1iii.webp'
     ),
     (
         12,
@@ -272,7 +270,7 @@ VALUES
         599.00,
         'Android',
         4,
-        'images/phones/lg_velvet.webp'
+        '/images/phones/lg_velvet.webp'
     ),
     (
         13,
@@ -287,7 +285,7 @@ VALUES
         899.00,
         'Android',
         5,
-        'images/phones/huawei_p40pro.webp'
+        '/images/phones/huawei_p40pro.webp'
     ),
     (
         14,
@@ -302,7 +300,7 @@ VALUES
         749.00,
         'Android',
         4,
-        'images/phones/xiaomi_mi11.webp'
+        '/images/phones/xiaomi_mi11.webp'
     ),
     (
         15,
@@ -317,7 +315,7 @@ VALUES
         599.00,
         'iOS',
         4,
-        'images/phones/apple_iphone11.webp'
+        '/images/phones/apple_iphone11.webp'
     ),
     (
         16,
@@ -332,7 +330,7 @@ VALUES
         749.99,
         'Android',
         4,
-        'images/phones/samsung_galaxys10.webp'
+        '/images/phones/samsung_galaxys10.webp'
     ),
     (
         17,
@@ -347,7 +345,7 @@ VALUES
         799.00,
         'Android',
         3,
-        'images/phones/google_pixel4.webp'
+        '/images/phones/google_pixel4.webp'
     ),
     (
         18,
@@ -362,7 +360,7 @@ VALUES
         669.00,
         'Android',
         4,
-        'images/phones/oneplus_7pro.webp'
+        '/images/phones/oneplus_7pro.webp'
     ),
     (
         19,
@@ -377,7 +375,7 @@ VALUES
         1099.00,
         'Android',
         5,
-        'images/phones/huawei_mate30pro.webp'
+        '/images/phones/huawei_mate30pro.webp'
     ),
     (
         20,
@@ -392,5 +390,5 @@ VALUES
         199.00,
         'Android',
         4,
-        'images/phones/xiaomi_redminote10.webp'
+        '/images/phones/xiaomi_redminote10.webp'
     );

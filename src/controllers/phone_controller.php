@@ -4,18 +4,16 @@ declare(strict_types=1);
 require_once __DIR__."/../repositories/phone_repository.php";
 
 class PhoneController {
-    public function __construct(
-        private PhoneRepository $phone_repository
-    ) { }
+    public function __construct(private PhoneRepository $phone_repository) { }
 
-    public function handle_request(array $params): array | Phone {
+    public function handle_get_request(array $params): array | Phone {
         $phones = [];
 
         if (isset($params["basic"]) && $params["basic"] !== "false") {
             $phones = $this->get_all_basic_info($params);
         } else if (isset($params["id"])) {
             if (isset($params["similar"]) && $params["similar"] !== "false") {
-                $phones = $this->phone_repository->get_similar((int)$params["id"], (int) ($params["limit"] ?? 3));
+                $phones = $this->get_similar((int)$params["id"], (int)($params["limit"] ?? 3));
             } else {
                 $phones[] = $this->get_by_id((int)$params["id"]);
             }
@@ -39,7 +37,85 @@ class PhoneController {
         return $response;
     }
 
-    public function get_by_id(int $id) {
+    public function handle_post_request(array $params): Phone {
+        // TODO: Validate permissions
+        
+        $phone = new Phone(
+            id: null,
+            brand: $params["brand"],
+            model: $params["model"],
+            release_year: (int)$params["release_year"],
+            screen_size_inch: (float)$params["screen_size_inch"],
+            battery_capacity_mah: (int)$params["battery_capacity_mah"],
+            ram_gb: (int)$params["ram_gb"],
+            storage_gb: (int)$params["storage_gb"],
+            camera_mp: (int)$params["camera_mp"],
+            price_eur: (float)$params["price_eur"],
+            os: $params["os"],
+            ratings: (int)$params["ratings"],
+            image_url: $params["image_url"]
+        );
+
+        $phone = $this->phone_repository->insert($phone);
+        if (!$phone->get_id()) {
+            throw new Exception("Phone not inserted");
+        }
+
+        return $phone;
+    }
+
+    public function handle_put_request(array $params): Phone {
+        // TODO: Validate permissions
+
+        if (!isset($params["id"])) {
+            throw new InvalidArgumentException("Phone id is required");
+        }
+
+        $phone = $this->phone_repository->get_by_id((int)$params["id"]);
+        if (!$phone) {
+            throw new InvalidArgumentException("Phone not found");
+        }
+
+        $phone = new Phone(
+            id: $phone->get_id(),
+            brand: $params["brand"] ?? $phone->get_brand(),
+            model: $params["model"] ?? $phone->get_model(),
+            release_year: (int)($params["release_year"] ?? $phone->get_release_year()),
+            screen_size_inch: (float)($params["screen_size_inch"] ?? $phone->get_screen_size_inch()),
+            battery_capacity_mah: (int)($params["battery_capacity_mah"] ?? $phone->get_battery_capacity_mah()),
+            ram_gb: (int)($params["ram_gb"] ?? $phone->get_ram_gb()),
+            storage_gb: (int)($params["storage_gb"] ?? $phone->get_storage_gb()),
+            camera_mp: (int)($params["camera_mp"] ?? $phone->get_camera_mp()),
+            price_eur: (float)($params["price_eur"] ?? $phone->get_price_eur()),
+            os: $params["os"] ?? $phone->get_os(),
+            ratings: (int)($params["ratings"] ?? $phone->get_ratings()),
+            image_url: $params["image_url"] ?? $phone->get_image_url()
+        );
+
+        $phone = $this->phone_repository->update($phone);
+        if (!$phone) {
+            throw new Exception("Phone not updated");
+        }
+
+        return $phone;
+    }
+
+    public function handle_delete_request(array $params): Phone {
+        // TODO: Validate permissions
+
+        if (!isset($params["id"])) {
+            throw new InvalidArgumentException("Phone id is required");
+        }
+
+        $phone = $this->phone_repository->delete((int)$params["id"]);
+        if (!$phone) {
+            throw new Exception("Phone not deleted");
+        }
+
+        return $phone;
+    }
+
+    public function get_by_id(int $id): Phone {
         if (!is_numeric($id)) {
             throw new InvalidArgumentException("Phone id must be a number");
         }
@@ -48,36 +124,29 @@ class PhoneController {
             throw new InvalidArgumentException("Phone id cannot be empty");
         }
 
-        $phone = $this->phone_repository->get_by_id((int)$id);
-
+        $phone = $this->phone_repository->get_by_id($id);
         if (!$phone) {
             throw new InvalidArgumentException("Phone not found");
         }
 
-        return $phone ? $phone : null;
+        return $phone;
     }
 
-    public function get_all(array $params) {
-        list($limit, $offset, $brand, $min_price, $max_price, $search) = $this->validate_search_params($params);
-
-        $phones = $this->phone_repository->get_all($limit, $offset, $brand, $min_price, $max_price, $search);
-
-        return $phones;
+    public function get_all(array $params): array {
+        [$limit, $offset, $brand, $min_price, $max_price, $search] = $this->validate_search_params($params);
+        return $this->phone_repository->get_all($limit, $offset, $brand, $min_price, $max_price, $search);
     }
 
-    public function get_all_basic_info(array $params) {
-        list($limit, $offset) = $this->validate_limit_offset($params);
-
-        $phones = $this->phone_repository->get_all_basic_info($limit, $offset);
-        
-        return $phones;
+    public function get_all_basic_info(array $params): array {
+        [$limit, $offset] = $this->validate_limit_offset($params);
+        return $this->phone_repository->get_all_basic_info($limit, $offset);
     }
 
     public function get_similar(int $id, int $limit) {
         if (!is_numeric($id)) {
             throw new InvalidArgumentException("Phone id must be a number");
         }
-        if (!is_numeric($limit)) {
+        if (isset($limit) && !is_numeric($limit)) {
             throw new InvalidArgumentException("Limit must be a number");
         }
         $phones = $this->phone_repository->get_similar((int)$id, (int)$limit);
@@ -85,7 +154,7 @@ class PhoneController {
     }
 
     private function validate_search_params(array $params): array {
-        list($limit, $offset) = $this->validate_limit_offset($params);
+        [$limit, $offset] = $this->validate_limit_offset($params);
         $brand = null;
         $min_price = null;
         $max_price = null;
@@ -102,18 +171,13 @@ class PhoneController {
             }
         }
 
-        if (isset($params["max_price"])) {
-            $max_price = (int)$params["max_price"];
+        if ($max_price !== null) {
             if ($max_price < 0) {
                 throw new InvalidArgumentException("Max price must be a positive number");
             }
             if ($min_price && $max_price < $min_price) {
                 throw new InvalidArgumentException("Max price must be greater than min price");
             }
-        }
-
-        if (isset($params["search"])) {
-            $search = $params["search"];
         }
 
         return [$limit, $offset, $brand, $min_price, $max_price, $search];
@@ -142,5 +206,4 @@ class PhoneController {
         return [$limit, $offset];
     }
 }
-
 ?>

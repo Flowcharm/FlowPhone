@@ -90,7 +90,7 @@ $title = $phoneName . " - FlowPhone";
 
         <div id="list-more-phones" class="phone-list">
             <a href="phone.php?id=15" class="phone-card">
-                <img src="/public/images/phones/apple_iphone11.webp" alt="iPhone 11 preview" class="phone-card__image">
+                <img src="/images/phones/apple_iphone11.webp" alt="iPhone 11 preview" class="phone-card__image">
                 <div class="phone-card__info">
                     <h3 class="phone-card__name">iPhone 11</h3>
                     <p class="phone-card__price">809€</p>
@@ -105,7 +105,7 @@ $title = $phoneName . " - FlowPhone";
                 </div>
             </a>
             <a href="phone.php?id=5" class="phone-card">
-                <img src="/public/images/phones/apple_iphone12.webp" alt="iPhone 12 preview" class="phone-card__image">
+                <img src="/images/phones/apple_iphone12.webp" alt="iPhone 12 preview" class="phone-card__image">
                 <div class="phone-card__info">
                     <h3 class="phone-card__name">iPhone 12</h3>
                     <p class="phone-card__price">809€</p>
