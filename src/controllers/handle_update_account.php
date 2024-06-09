@@ -3,7 +3,7 @@ require_once __DIR__ . "/../models/db_manager.php";
 require_once __DIR__ . "/../repositories/user_repository.php";
 require_once __DIR__ . "/../helpers/env.php";
 require_once __DIR__ . "/../helpers/bcrypt.php";
-require_once __DIR__ . "/../helpers/protect_route.php";
+require_once __DIR__ . "/../helpers/protect_api_route.php";
 
 function handle_update_account()
 {

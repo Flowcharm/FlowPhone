@@ -9,13 +9,16 @@ class Payments_manager implements IPayments_manager{
         $this->stripe = new \Stripe\StripeClient(env("STRIPE_PRIVATE_KEY"));
     }
 
-    function pay($amount){
-        $this->stripe->charges->create([
-            'amount' => $amount,
-            'currency' => 'usd',
-            'source' => 'tok_visa',
-            'description' => 'Shop FlowPhone'
+    function checkout($items){
+        $checkoutSession = $this->stripe->checkout->sessions->create([
+            'success_url' => 'https://example.com/success',
+            'cancel_url' => 'https://example.com/cancel',
+            "mode" => "payment",
         ]);
 
+        // Redirect to the URL returned by Stripe
+        header('HTTP/1.1 303 See Other');
+        header('Location: ' . $checkoutSession->url);
+        exit;
     }
 }

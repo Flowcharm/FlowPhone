@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/../interfaces/mail_manager_interface.php";
+require_once __DIR__ . "/cart.php";
 require_once __DIR__ . "/../helpers/jwt.php";
 require_once __DIR__ . "/../helpers/env.php";
 
@@ -29,6 +30,43 @@ class User
         $url = "$baseUrl/src/app/api/verify.php?token=$jwt";
 
         $mailManager->sendMail($this->email, "Verify your email", "Please verify your email by clicking the link below: <a href=\"$url\">$url</a>");
+    }
+
+    function add_to_cart(Cart_Repository $cart_repository, $phone_id, $quantity = 1)
+    {
+        $product_in_cart = $cart_repository->get_by_user_id_and_phone_id($this->id, $phone_id);
+
+        if ($product_in_cart) {
+            $cart_repository->update($product_in_cart, array(
+                "quantity" => $product_in_cart->get_quantity() + $quantity
+            )
+            );
+        } else {
+            $newCart = new Cart($this->id, $phone_id, 1);
+            $cart_repository->create($newCart);
+        }
+    }
+
+    function decrease_cart_item(Cart_Repository $cart_repository, $phone_id, $removeQuantity = 1)
+    {
+        $product_in_cart = $cart_repository->get_by_user_id_and_phone_id($this->id, $phone_id);
+
+        if ($product_in_cart->get_quantity() <= $removeQuantity) {
+            $cart_repository->delete($product_in_cart->get_id());
+        } else {
+            $cart_repository->update($product_in_cart, array(
+                "quantity" => $product_in_cart->get_quantity() - $removeQuantity
+            ));
+        }
+    }
+
+    function remove_from_cart(Cart_Repository $cart_repository, $phone_id)
+    {
+        $product_in_cart = $cart_repository->get_by_user_id_and_phone_id($this->id, $phone_id);
+
+        if ($product_in_cart) {
+            $cart_repository->delete($product_in_cart->get_id());
+        }
     }
 
     function send_forgot_password_email(IMail_Manager $mailManager)

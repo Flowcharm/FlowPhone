@@ -1,5 +1,5 @@
 <?php
 
 interface IPayments_manager{
-    function pay($amount);
+    function checkout($items);
 }

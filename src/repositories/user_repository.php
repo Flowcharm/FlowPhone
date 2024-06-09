@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . "/../interfaces/db_manager_interface.php";
-require_once __DIR__ . "/../interfaces/repository_interface.php";
 require_once __DIR__ . "/../helpers/bcrypt.php";
 require_once __DIR__ . "/../models/user.php";
 
