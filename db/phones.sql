@@ -41,6 +41,15 @@ CREATE TABLE
         googleId VARCHAR(100) UNIQUE
     );
 
+CREATE TABLE IF NOT EXISTS orders (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    user_id INT UNSIGNED,
+    total DECIMAL(10, 2),
+    status ENUM('pending', 'completed', 'cancelled') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users (id)
+);
+
 CREATE TABLE
     IF NOT EXISTS users_adress (
         id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,

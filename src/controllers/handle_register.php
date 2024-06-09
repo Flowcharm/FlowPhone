@@ -1,10 +1,10 @@
 <?php
-require_once __DIR__ . "/../models/db_manager.php";
 require_once __DIR__ . "/../models/mail_manager.php";
 require_once __DIR__ . "/../models/user.php";
+require_once __DIR__ . "/../models/db_manager.php";
 require_once __DIR__ . "/../repositories/user_repository.php";
 require_once __DIR__ . "/../helpers/env.php";
-require __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 

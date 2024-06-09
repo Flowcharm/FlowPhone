@@ -73,6 +73,16 @@ class User
         $this->isGoogleAccount = $isGoogleAccount;
     }
 
+    function set_email($email)
+    {
+        $this->email = $email;
+    }
+
+    function set_name($name)
+    {
+        $this->name = $name;
+    }
+
     function get_id()
     {
         return $this->id;

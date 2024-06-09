@@ -115,7 +115,9 @@ class User_Repository
 
         $stmt = $connection->prepare("INSERT INTO users (name, email, password, isVerified, isGoogleAccount, googleId) VALUES (?, ?, ?, ?, ?, ?)");
 
-        $hashedPassword = hashPassword($entity->get_password());
+        if (!$entity->get_isGoogleAccount()) {
+            $hashedPassword = hashPassword($entity->get_password());
+        }
 
         $stmt->bind_param("sssiis", $entity->get_name(), $entity->get_email(), $hashedPassword, $entity->get_isVerified(), $entity->get_isGoogleAccount(), $entity->get_googleId());
 
@@ -141,14 +143,14 @@ class User_Repository
         $isVerified = $fields["isVerified"] ?? $entity->get_isVerified();
         $isGoogleAccount = $fields["isGoogleAccount"] ?? $entity->get_isGoogleAccount();
 
-        if ($password) {
+        if (!empty($password)) {
             $password = hashPassword($password);
         }
 
         $connection = $this->db_manager->connect();
 
 
-        if ($password) {
+        if (!empty($password)) {
             $stmt = $connection->prepare("UPDATE users SET name = ?, email = ?, password = ?, isVerified = ?, isGoogleAccount = ? WHERE id = ?");
             $stmt->bind_param("sssiii", $name, $email, $password, $isVerified, $isGoogleAccount, $id);
         } else {

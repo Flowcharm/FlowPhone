@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../helpers/env.php';
 require_once __DIR__ . '/../../repositories/user_repository.php';
 require_once __DIR__ . '/../../models/db_manager.php';
 require_once __DIR__ . '/../../models/user.php';
-require __DIR__ . '/../../../vendor/autoload.php';
+require_once __DIR__ . '/../../../vendor/autoload.php';
 
 $client = new Google\Client();
 $client->setClientId(env("GOOGLE_OAUTH_CLIENT_ID"));
@@ -33,6 +33,7 @@ if (isset($_GET['code'])) {
         if(!$user){
             $newUser = new User($name, $email, null);
             $newUser->set_GoogleId($id);
+            $newUser->set_isGoogleAccount(true);
             $newUser->verify_email();
 
             $userRepository->create($newUser);
