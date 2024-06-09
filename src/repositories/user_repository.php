@@ -12,27 +12,6 @@ class User_Repository
         $this->db_manager = $db_manager;
     }
 
-    function get_all()
-    {
-        $connection = $this->db_manager->connect();
-        $result = $connection->query("SELECT * FROM users");
-
-        $users = array();
-        while ($row = $result->fetch_assoc()) {
-            $user = new User($row["name"], $row["email"], $row["password"]);
-
-            $user->set_id($row["id"]);
-            $user->set_isVerified($row["isVerified"]);
-            $user->set_isGoogleAccount($row["isGoogleAccount"]);
-            $user->set_googleId($row["googleId"]);
-
-            array_push($users, $user);
-        }
-
-        $connection->close();
-        return $users;
-    }
-
     function get_by_googleId($googleId)
     {
         $connection = $this->db_manager->connect();

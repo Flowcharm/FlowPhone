@@ -5,32 +5,11 @@ require_once __DIR__ . "/phone_repository.php";
 
 class Cart_Repository
 {
-    private $db_manager;
+    private IDb_Manager $db_manager;
 
     function __construct(IDb_Manager $db_manager)
     {
         $this->db_manager = $db_manager;
-    }
-
-    function get_all()
-    {
-        $connection = $this->db_manager->connect();
-        $query = "SELECT * FROM carts";
-        $result = $connection->query($query);
-        $carts = array();
-
-        while ($row = $result->fetch_assoc()) {
-            $id = $row["id"];
-            $user_id = $row["user_id"];
-            $phone_id = $row["phone_id"];
-            $quantity = $row["quantity"];
-
-            $cart = new Cart($user_id, $phone_id, $quantity);
-            $cart->id = $id;
-            array_push($carts, $cart);
-        }
-
-        return $carts;
     }
 
     function get_by_id($id)

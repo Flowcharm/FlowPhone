@@ -21,13 +21,14 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS reviews (
-        id INT UNSIGNED PRIMARY KEY,
+        id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
         phone_id INT UNSIGNED,
-        author VARCHAR(100),
+        user_id INT UNSIGNED,
         review TEXT,
-        rating INT,
+        rating INT UNSIGNED,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (phone_id) REFERENCES phones (id)
+        FOREIGN KEY (phone_id) REFERENCES phones (id),
+        FOREIGN KEY (user_id) REFERENCES users (id)
     );
 
 CREATE TABLE

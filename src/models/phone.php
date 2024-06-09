@@ -1,6 +1,4 @@
 <?php
-declare(strict_types=1);
-
 class PhoneBasicInfo {
     public function __construct(
         private int $id,
