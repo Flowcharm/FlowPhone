@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 
-require_once '../models/phone.php';
-require_once '../interfaces/phone_interface.php';
+require_once __DIR__ . '/../models/phone.php';
+require_once __DIR__ . '/../interfaces/phone_interface.php';
 
 class PhoneRepository implements IPhoneRepository
 {
