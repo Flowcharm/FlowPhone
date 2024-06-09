@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/../interfaces/mail_manager_interface.php";
+require_once __DIR__ . "/../interfaces/payments_manager_interface.php";
 require_once __DIR__ . "/cart.php";
 require_once __DIR__ . "/../helpers/jwt.php";
 require_once __DIR__ . "/../helpers/env.php";
@@ -21,6 +22,31 @@ class User
         $this->password = $password;
     }
 
+    function checkout(IPayments_manager $payments_manager, array $phones)
+    {
+        $items = array();
+
+        foreach ($phones as $phone) {
+            array_push(
+                $items,
+                array(
+                    [
+                        "price_data" => [
+                            "currency" => "usd",
+                            "product_data" => [
+                                "name" => $phone->get_name(),
+                            ],
+                            "unit_amount" => $phone->get_price() * 100 // convert to cents
+                        ],
+                        "quantity" => 1
+                    ]
+                )
+            );
+        }
+
+        $payments_manager->checkout($items);
+    }
+
     function send_verify_email(IMail_Manager $mailManager)
     {
         $payload = array("id" => $this->id);
@@ -37,9 +63,11 @@ class User
         $product_in_cart = $cart_repository->get_by_user_id_and_phone_id($this->id, $phone_id);
 
         if ($product_in_cart) {
-            $cart_repository->update($product_in_cart, array(
-                "quantity" => $product_in_cart->get_quantity() + $quantity
-            )
+            $cart_repository->update(
+                $product_in_cart,
+                array(
+                    "quantity" => $product_in_cart->get_quantity() + $quantity
+                )
             );
         } else {
             $newCart = new Cart($this->id, $phone_id, 1);
@@ -54,9 +82,12 @@ class User
         if ($product_in_cart->get_quantity() <= $removeQuantity) {
             $cart_repository->delete($product_in_cart->get_id());
         } else {
-            $cart_repository->update($product_in_cart, array(
-                "quantity" => $product_in_cart->get_quantity() - $removeQuantity
-            ));
+            $cart_repository->update(
+                $product_in_cart,
+                array(
+                    "quantity" => $product_in_cart->get_quantity() - $removeQuantity
+                )
+            );
         }
     }
 

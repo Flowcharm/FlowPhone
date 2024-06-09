@@ -4,13 +4,15 @@ declare(strict_types=1);
 require_once '../models/phone.php';
 require_once '../interfaces/phone_interface.php';
 
-class PhoneRepository implements IPhoneRepository {
+class PhoneRepository implements IPhoneRepository
+{
     public function __construct(
         private mysqli $connection
-    )
-    { }
+    ) {
+    }
 
-    public function get_by_id(int $searchId): ?Phone {
+    public function get_by_id(int $searchId): ?Phone
+    {
         $sql = "SELECT id, brand, model, release_year, screen_size, battery_capacity, ram, storage, camera_mp, price, os, ratings, image_url FROM phones WHERE id = ?";
 
         $stmt = $this->connection->prepare($sql);
@@ -46,7 +48,8 @@ class PhoneRepository implements IPhoneRepository {
         );
     }
 
-    public function get_all(?int $limit = null, ?int $offset = null, ?string $brand = null, ?int $min_price = null, ?int $max_price = null, ?string $search = null): array {
+    public function get_all(?int $limit = null, ?int $offset = null, ?string $brand = null, ?int $min_price = null, ?int $max_price = null, ?string $search = null): array
+    {
         $sql = "SELECT id, brand, model, release_year, screen_size, battery_capacity, ram, storage, camera_mp, price, os, ratings, image_url FROM phones WHERE 1=1";
 
         $sqlParams = [];
@@ -79,14 +82,14 @@ class PhoneRepository implements IPhoneRepository {
 
         if ($limit !== null) {
             $sql .= " LIMIT ?";
-            $sqlParams[] = $limit; 
+            $sqlParams[] = $limit;
             $types .= "i";
             if ($offset !== null) {
                 $sql .= " OFFSET ?";
                 $sqlParams[] = $offset;
                 $types .= "i";
             }
-        } 
+        }
 
         $stmt = $this->connection->prepare($sql);
         if (!empty($sqlParams)) {
@@ -101,7 +104,7 @@ class PhoneRepository implements IPhoneRepository {
             $screen_size = (float) $screen_size;
             $price = (int) $price;
 
-            $phones[] = 
+            $phones[] =
                 new Phone($id, $brand, $model, $release_year, $screen_size, $battery_capacity, $ram, $storage, $camera, $price, $os, $ratings, $image_url);
         }
         $stmt->close();
@@ -109,17 +112,18 @@ class PhoneRepository implements IPhoneRepository {
         return $phones;
     }
 
-    public function get_all_basic_info(?int $limit = null, ?int $offset = null): array {
+    public function get_all_basic_info(?int $limit = null, ?int $offset = null): array
+    {
         $sql = "SELECT id, brand, model, image_url FROM phones";
         $params = [];
         if ($limit !== null) {
             $sql .= " LIMIT ?";
-            $params[] = $limit; 
+            $params[] = $limit;
             if ($offset !== null) {
                 $sql .= " OFFSET ?";
                 $params[] = $offset;
             }
-        } 
+        }
 
         $stmt = $this->connection->prepare($sql);
         if (count($params) > 0) {
@@ -166,13 +170,13 @@ class PhoneRepository implements IPhoneRepository {
 
         $stmt->execute();
         $stmt->bind_result($id, $brand, $model, $release_year, $screen_size, $battery_capacity, $ram, $storage, $camera, $price, $os, $ratings, $image_url);
-        
+
         $phones = [];
         while ($stmt->fetch()) {
             $screen_size = (float) $screen_size;
             $price = (int) $price;
 
-            $phones[] = 
+            $phones[] =
                 new Phone($id, $brand, $model, $release_year, $screen_size, $battery_capacity, $ram, $storage, $camera, $price, $os, $ratings, $image_url);
         }
 
@@ -182,4 +186,4 @@ class PhoneRepository implements IPhoneRepository {
 
 
 }
-?>
+
