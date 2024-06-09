@@ -31,9 +31,12 @@ CREATE TABLE
         FOREIGN KEY (phone_id) REFERENCES phones (id)
     );
 
+CREATE TYPE user_role AS ENUM ('admin', 'user');
+
 CREATE TABLE
     IF NOT EXISTS users (
         id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+        role user_role DEFAULT 'user',
         name VARCHAR(50),
         email VARCHAR(100) UNIQUE,
         password VARCHAR(100),
