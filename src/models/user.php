@@ -9,6 +9,7 @@ class User
     private $name;
     private $email;
     private $password;
+    private $google_id;
     private $isVerified = false;
     private $isGoogleAccount = false;
 
@@ -42,7 +43,7 @@ class User
         $mailManager->sendMail($this->email, "Reset your password", "Please reset your password by clicking the link below: <a href=\"$url\">$url</a>");
     }
 
-    function verify()
+    function verify_email()
     {
         $this->isVerified = true;
     }
@@ -75,6 +76,16 @@ class User
     function get_id()
     {
         return $this->id;
+    }
+
+    function get_googleId()
+    {
+        return $this->google_id;
+    }
+
+    function set_googleId($google_id)
+    {
+        $this->google_id = $google_id;
     }
 
     function get_name()

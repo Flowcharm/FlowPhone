@@ -25,12 +25,38 @@ class User_Repository
             $user->set_id($row["id"]);
             $user->set_isVerified($row["isVerified"]);
             $user->set_isGoogleAccount($row["isGoogleAccount"]);
+            $user->set_googleId($row["googleId"]);
 
             array_push($users, $user);
         }
 
         $connection->close();
         return $users;
+    }
+
+    function get_by_googleId($googleId)
+    {
+        $connection = $this->db_manager->connect();
+        $stmt = $connection->prepare("SELECT * FROM users WHERE googleId = ?");
+        $stmt->bind_param("s", $googleId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        if ($result->num_rows === 0) {
+            return null;
+        }
+
+        $fields = $result->fetch_assoc();
+
+        $user = new User($fields["name"], $fields["email"], $fields["password"]);
+
+        $user->set_id($fields["id"]);
+        $user->set_isVerified($fields["isVerified"]);
+        $user->set_isGoogleAccount($fields["isGoogleAccount"]);
+        $user->set_googleId($fields["googleId"]);
+
+        return $user;
     }
 
     function get_by_id($id)
@@ -52,6 +78,7 @@ class User_Repository
         $user->set_id($fields["id"]);
         $user->set_isVerified($fields["isVerified"]);
         $user->set_isGoogleAccount($fields["isGoogleAccount"]);
+        $user->set_googleId($fields["googleId"]);
 
         return $user;
     }
@@ -77,6 +104,7 @@ class User_Repository
         $user->set_id($fields["id"]);
         $user->set_isVerified($fields["isVerified"]);
         $user->set_isGoogleAccount($fields["isGoogleAccount"]);
+        $user->set_googleId($fields["googleId"]);
 
         return $user;
     }
@@ -85,11 +113,11 @@ class User_Repository
     {
         $connection = $this->db_manager->connect();
 
-        $stmt = $connection->prepare("INSERT INTO users (name, email, password, isVerified, isGoogleAccount) VALUES (?, ?, ?, ?, ?)");
+        $stmt = $connection->prepare("INSERT INTO users (name, email, password, isVerified, isGoogleAccount, googleId) VALUES (?, ?, ?, ?, ?, ?)");
 
         $hashedPassword = hashPassword($entity->get_password());
 
-        $stmt->bind_param("sssii", $entity->get_name(), $entity->get_email(), $hashedPassword, $entity->get_isVerified(), $entity->get_isGoogleAccount());
+        $stmt->bind_param("sssiis", $entity->get_name(), $entity->get_email(), $hashedPassword, $entity->get_isVerified(), $entity->get_isGoogleAccount(), $entity->get_googleId());
 
         $stmt->execute();
 
@@ -100,6 +128,8 @@ class User_Repository
 
         // Set the ID of the entity
         $entity->set_id($id);
+
+        $entity->set_password($hashedPassword);
     }
 
     function update($entity, $fields)

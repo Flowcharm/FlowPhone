@@ -37,7 +37,8 @@ CREATE TABLE
         email VARCHAR(100) UNIQUE,
         password VARCHAR(100),
         isVerified BOOLEAN DEFAULT FALSE,
-        isGoogleAccount BOOLEAN DEFAULT FALSE
+        isGoogleAccount BOOLEAN DEFAULT FALSE,
+        googleId VARCHAR(100) UNIQUE
     );
 
 CREATE TABLE
