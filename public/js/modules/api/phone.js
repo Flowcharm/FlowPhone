@@ -2,13 +2,17 @@ export const API_PATH = '/src/app/api/phones.php';
 
 export const API_PARAMS = {
     id: 'id',
-    offset: 'offset',
     limit: 'limit',
+    offset: 'offset',
     basic: 'basic',
     similar: 'similar',
-}
+    search: 'search',
+    brand: 'brand',
+    minPrice: 'min_price',
+    maxPrice: 'max_price',
+};
 
-export const getPhone = async (id) => {
+export const getPhone = async id => {
     const API_URL = new URL(API_PATH, window.location.origin);
     API_URL.searchParams.set(API_PARAMS.id, id);
 
@@ -16,20 +20,34 @@ export const getPhone = async (id) => {
     const data = await response.json();
 
     return data.data;
-}
+};
 
-export const getPhones = async ({ offset, limit, basic } = {}) => {
+export const getPhones = async ({
+    limit,
+    offset,
+    basic,
+    similar,
+    search,
+    brand,
+    minPrice,
+    maxPrice,
+} = {}) => {
     const API_URL = new URL(API_PATH, window.location.origin);
     if (offset) API_URL.searchParams.set(API_PARAMS.offset, offset);
     if (limit) API_URL.searchParams.set(API_PARAMS.limit, limit);
     if (basic) API_URL.searchParams.set(API_PARAMS.basic, basic);
+    if (similar) API_URL.searchParams.set(API_PARAMS.similar, similar);
+    if (search) API_URL.searchParams.set(API_PARAMS.search, search);
+    if (brand) API_URL.searchParams.set(API_PARAMS.brand, brand);
+    if (minPrice) API_URL.searchParams.set(API_PARAMS.minPrice, minPrice);
+    if (maxPrice) API_URL.searchParams.set(API_PARAMS.maxPrice, maxPrice);
 
     const response = await fetch(API_URL);
     const data = await response.json();
 
     return data.data;
-}
+};
 
 export const getBasicPhonesInfo = async ({ offset, limit } = {}) => {
     return getPhones({ offset, limit, basic: true });
-}
+};

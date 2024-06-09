@@ -66,7 +66,7 @@ class Phone {
         return $this->model;
     }
 
-    public function get_sreen_size_inch(): float {
+    public function get_screen_size_inch(): float {
         return $this->screen_size_inch;
     }
 
@@ -78,7 +78,7 @@ class Phone {
         return $this->price_eur;
     }
 
-    public function getOs(): string {
+    public function get_os(): string {
         return $this->os;
     }
 
@@ -87,8 +87,9 @@ class Phone {
     }
 
     public function get_image_url(): string {
+        // return "/public/" . $this->image_url;
         // return $this->image_url;
-        return "/public/" . $this->image_url;
+        return "/" . $this->image_url;    
     }
 
     public function get_release_year(): int {

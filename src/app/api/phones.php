@@ -16,7 +16,7 @@ try {
     $method = $_SERVER['REQUEST_METHOD']; // TODO: Use the request method to determine the action
     
     $params = $_GET;
-    $response = $phone_controller->handle_request($params);
+    $response = $phone_controller->handle_get_request($params);
 
     echo json_encode(["data" => $response ?? [], "error" => null]);
 } catch (Exception $e) {
