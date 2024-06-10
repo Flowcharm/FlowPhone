@@ -7,6 +7,9 @@ require_once __DIR__ . "/../models/db_manager.php";
 
 if (!isset($_SESSION['user_id'])) {
     http_response_code(403);
+    echo json_encode([
+        "error" => "Unauthorized"
+    ]);
     die;
 }
 
@@ -17,5 +20,8 @@ $user = $userRepository->get_by_id($_SESSION['user_id']);
 
 if (!$user || !$user->get_isVerified()) {
     http_response_code(403);
+    echo json_encode([
+        "error" => "Unauthorized"
+    ]);
     die;
 }

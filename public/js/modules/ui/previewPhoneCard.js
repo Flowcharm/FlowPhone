@@ -34,7 +34,7 @@ export const createPreviewPhoneCard = ({ phone, classContainer = "", isSimple = 
     cardInfo.appendChild(cardName);
 
     const cardPrice = document.createElement("p");
-    cardPrice.textContent = `EUR ${phone.price_eur}`;
+    cardPrice.textContent = `$ ${phone.price_eur}`;
     cardPrice.classList.add(`${classMain}__phone-price`);
 
     const cardPriceSpan = document.createElement("span");

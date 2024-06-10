@@ -17,12 +17,36 @@ const phonesFetched = [principalPhone];
 let selectPage = 0;
 const selectLimit = 10;
 
-const dropdownSelect = document.getElementById('dropdown-select');
-const dropdownToggle = document.getElementById('dropdown-toggle');
-const dropdownMenu = document.getElementById('dropdown-menu');
-const dropdownText = document.getElementById('dropdown-text');
-const dropdownList = document.getElementById('dropdown-list');
-const dropdownLoadingElement = document.getElementById('dropdown-list-loading');
+const dropdownToggle = document.getElementById("dropdown-toggle");
+const dropdownMenu = document.getElementById("dropdown-menu");
+const dropdownText = document.getElementById("dropdown-text");
+const dropdownList = document.getElementById("dropdown-list");
+const dropdownLoadingElement = document.getElementById("dropdown-list-loading");
+const btnBuy = document.getElementById("btn-buy");
+
+btnBuy.addEventListener("click", () => {
+    proceedCheckout(principalPhone.id);
+});
+
+async function proceedCheckout(phoneId) {
+    try {
+      const resp = await fetch("/src/app/api/checkout.php", {
+        method: "POST",
+        body: JSON.stringify({
+          items: [
+            {
+              id: phoneId,
+              quantity: 1
+            }
+          ]
+        })
+      });
+      const data = await resp.json();
+      window.location.href = data.url;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 const listSimilarPhones = document.getElementById('list-similar-phones');
 
@@ -34,8 +58,8 @@ const compareButton = document.getElementById('compare-button');
 const similarPhonesLimit = listSimilarPhones.childElementCount;
 const similarPhonesMinimum = similarPhonesLimit;
 
-dropdownToggle.addEventListener('click', () => {
-    dropdownMenu.classList.toggle('show');
+dropdownMenu.addEventListener("blur", () => {
+    dropdownMenu.classList.remove("show");
 });
 
 loadSimilarPhones();

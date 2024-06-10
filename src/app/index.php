@@ -87,7 +87,7 @@ $phones = $phone_repository->get_all($limit = $charged_default_phones);
             </section>
 
             <section id="phones-container" class="phones-container">
-                <div>
+                <div class="title">
                     <h2>Top Phones</h2>
                     <p>Check out our top phones</p>
                 </div>
@@ -105,7 +105,7 @@ $phones = $phone_repository->get_all($limit = $charged_default_phones);
                                         <h3 class="preview-phone-card__phone-name">
                                             <?= $phone->get_brand() . " " . $phone->get_model() ?>
                                         </h3>
-                                        <p class="preview-phone-card__phone-price">EUR <?= $phone->get_price_eur() ?><span
+                                        <p class="preview-phone-card__phone-price">$ <?= $phone->get_price_eur() ?><span
                                                 class="preview-phone-card__phone-price-span">Taxes Included</span></p>
                                         <div class="preview-phone-card__phone-other-info">
                                             <p class="preview-phone-card__phone-screen-size">Screen:
@@ -123,7 +123,7 @@ $phones = $phone_repository->get_all($limit = $charged_default_phones);
                                     </div>
                                 </a>
                                 <div class="preview-phone-card__phone-buttons">
-                                    <a class="preview-phone-card__phone-btn-buy">Buy</a>
+                                    <a class="preview-phone-card__phone-btn-buy" data-id="<?= $phone->get_id() ?>"">Buy</a>
                                     <button class="preview-phone-card__phone-btn-cart">
                                         <span
                                             class="preview-phone-card__shop-cart"><?php include "../includes/icons/shopping_cart.php"; ?></span>

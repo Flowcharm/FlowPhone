@@ -38,7 +38,7 @@ class Cart_Repository
     function get_by_user_id($user_id)
     {
         $connection = $this->db_manager->connect();
-        $phoneRepo = new PhoneRepository($connection);
+        $phoneRepo = new PhoneRepository($this->db_manager);
         $stmt = $connection->prepare("SELECT * FROM carts WHERE user_id = ?");
         $stmt->bind_param("i", $user_id);
         $stmt->execute();

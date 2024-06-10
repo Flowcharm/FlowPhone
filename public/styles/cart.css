@@ -1,0 +1,113 @@
+.total-price,
+h1 {
+  margin-top: 100px;
+  font-size: 3.5rem;
+  text-align: center;
+}
+
+.cart img {
+  object-fit: cover;
+  height: 150px;
+}
+
+.phone {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.cart button svg {
+  width: 36px;
+  height: 36px;
+
+  transition: transform 0.2s ease-in;
+}
+
+.cart button {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.checkout{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#payment-login,
+#payment {
+  margin: 100px auto;
+  color: var(--background-color);
+  background-color: var(--first-color);
+  padding: 10px;
+  font-size: 1.5rem;
+  outline: none;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: transform 0.2s ease-in-out;
+}
+
+#payment-login{
+    display: inline-block;
+}
+
+#payment-login:hover,
+#payment:hover,
+.cart button:hover svg {
+  transform: scale(1.1);
+}
+
+#payment-login:active,
+#payment:active,
+.cart button:active svg {
+  transform: scale(0.9);
+}
+
+ul.cart {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  max-width: 1200px;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+
+.phone-title {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.cart li {
+  width: 100%;
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.cart li h2 {
+  font-size: 2rem;
+}
+
+.phone-details {
+  display: flex;
+  gap: 50px;
+  align-items: center;
+}
+
+.cart li span {
+  font-size: 1.5rem;
+}
