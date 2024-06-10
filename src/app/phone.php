@@ -62,7 +62,7 @@ $title = $phoneName . " - FlowPhone";
         <section>
             <div class="action-btns">
                 <p>Price: <span><?= $phone->get_price_eur() ?>€</span></p>
-                <button type="button" class="card">Buy</button>
+                <button type="button" class="card" id="btn-buy">Buy</button>
                 <button type="button" class="card">
                     <span class="action-btns__icon action-btns__icon-car">
                         <?php include "../includes/icons/shopping_cart.php"; ?>

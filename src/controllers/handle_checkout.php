@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . "/../models/db_manager.php";
 require_once __DIR__ . "/../models/payments_manager.php";
-require_once __DIR__ . "/../models/cart_repository.php";
+require_once __DIR__ . "/../repositories/cart_repository.php";
 require_once __DIR__ . "/../repositories/phone_repository.php";
 
 function handle_checkout()
@@ -35,7 +35,7 @@ function handle_checkout()
         $user->remove_from_cart($cart_repo, $phone_id);
 
         if ($phone) {
-            array_push($phones, $phone);
+            array_push($phones, ["phone" => $phone, "quantity" => $item['quantity']]);
         }
     }
 

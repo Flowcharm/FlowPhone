@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+require_once __DIR__ . "/../helpers/protect_route.php";
 require_once __DIR__ . "/../helpers/env.php";
 require_once __DIR__ . "/../repositories/user_repository.php";
 require_once __DIR__ . "/../repositories/cart_repository.php";
@@ -49,13 +50,13 @@ foreach ($items as $item) {
                         </span>
                     </div>
                     <div class="actions">
-                        <button class="minus" class="btn-decrease" data-quantity="<?= $item["quantity"] ?>"
+                        <button class="btn-decrease" data-quantity="<?= $item["quantity"] ?>" data-id="<?= $item["phone"]["id"] ?>"
                             data-price="<?= $item["phone"]["price_eur"] ?>">
-                            <?php include_once "../includes/icons/minus.php" ?>
+                            <?php include "../includes/icons/minus.php" ?>
                         </button>
-                        <button class="trash" class="btn-remove" data-id="<?= $item["phone"]["id"] ?>"
+                        <button class="btn-remove" data-id="<?= $item["phone"]["id"] ?>"
                             data-quantity="<?= $item["quantity"] ?>" data-price="<?= $item["phone"]["price_eur"] ?>">
-                            <?php include_once "../includes/icons/trash.php" ?>
+                            <?php include "../includes/icons/trash.php" ?>
                         </button>
                     </div>
                 </div>
@@ -63,10 +64,10 @@ foreach ($items as $item) {
         <?php endforeach; ?>
     </ul>
 
-    <h3 class="total-price">Total: <span id="total"><?= $total_price ?></span>€</h3>
+    <h3 class="total-price">Total: <span id="total"><?= number_format((float) $total_price, 0, "", "") ?></span>€</h3>
 
     <div class="checkout">
-        <?php if ($user): ?>
+        <?php if ($user_id): ?>
             <button id="payment">Proceed to payment</button>
         <?php else: ?>
             <a href="/src/app/login.php" id="payment-login">Login to proceed to payment</a>
