@@ -24,7 +24,7 @@ function handle_checkout()
 
     $phones = array();
     $db = new Db_Manager(env("DB_HOST"), env("DB_USER"), env("DB_PASSWORD"), env("DB_NAME"), env("DB_PORT"));
-    $phone_repo = new PhoneRepository($db->connect());
+    $phone_repo = new PhoneRepository($db);
     $cart_repo = new Cart_Repository($db);
 
     foreach ($items as $item) {
