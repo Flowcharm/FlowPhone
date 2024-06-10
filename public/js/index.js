@@ -1,7 +1,10 @@
 import { getPhones } from './modules/api/phone.js';
 import { observeNewElement } from './modules/helpers/observer.js';
 import { debounce } from './modules/helpers/debounce.js';
-import { createPreviewPhoneCard, createPreviewPhoneCardSkeleton } from './modules/ui/previewPhoneCard.js';
+import {
+    createPreviewPhoneCard,
+    createPreviewPhoneCardSkeleton,
+} from './modules/ui/previewPhoneCard.js';
 
 let isSearch = false;
 
@@ -16,11 +19,15 @@ const listPhonesSearch = document.getElementById('list-phones-search');
 const searchForm = document.getElementById('search-form');
 const searchInput = document.getElementById('search-input');
 const phonesContainer = document.getElementById('phones-container');
-const searchResultsContainer = document.getElementById('search-results-container');
+const searchResultsContainer = document.getElementById(
+    'search-results-container'
+);
 
-const chargedPhonesCards = document.querySelectorAll('.preview-phone-card:not(.skeleton)');
+const chargedPhonesCards = document.querySelectorAll(
+    '.preview-phone-card:not(.skeleton)'
+);
 
-searchForm.addEventListener('submit', (event) => {
+searchForm.addEventListener('submit', event => {
     event.preventDefault();
     handleForm();
 });
@@ -69,7 +76,7 @@ function handleSearchChange(event) {
 async function searchPhones(formValues) {
     try {
         const phones = await getPhones({
-            ...formValues, 
+            ...formValues,
         });
 
         populatePhones(phones, listPhonesSearch);
@@ -96,6 +103,7 @@ function populatePhones(phonesToCreate, container) {
                 root: root,
                 toObserve: card,
                 callback: loadMorePhones,
+                threshold: 0.1,
             });
         }
     });
@@ -109,20 +117,24 @@ async function initPhones() {
 
         chargedPhonesCards.forEach((card, index) => {
             const phone = phones[index];
-            const button = card.querySelector('.preview-phone-card__phone-btn-cart');
+            const button = card.querySelector(
+                '.preview-phone-card__phone-btn-cart'
+            );
             button.addEventListener('click', () => handleAddCart(phone));
         });
 
         observeNewElement({
             root: document,
-            toObserve: listPhonesMain.children[listPhonesMain.children.length - 1],
+            toObserve:
+                listPhonesMain.children[listPhonesMain.children.length - 1],
             callback: loadMorePhones,
+            threshold: 0.1,
         });
 
         offset += limit;
     } catch (error) {
         console.error('Error initializing phones:', error);
-    } 
+    }
 }
 
 async function loadMorePhones() {
@@ -150,7 +162,7 @@ function setIsSearch(value) {
     if (value) {
         searchResultsContainer.classList.remove('hidden');
     } else {
-        if (!searchResultsContainer.classList.contains('hidden')) 
+        if (!searchResultsContainer.classList.contains('hidden'))
             searchResultsContainer.classList.add('hidden');
     }
     isSearch = value;

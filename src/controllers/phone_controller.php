@@ -11,12 +11,14 @@ class PhoneController {
 
         if (isset($params["basic"]) && $params["basic"] !== "false") {
             $phones = $this->get_all_basic_info($params);
-        } else if (isset($params["id"])) {
-            if (isset($params["similar"]) && $params["similar"] !== "false") {
-                $phones = $this->get_similar((int)$params["id"], (int)($params["limit"] ?? 3));
+        } else if (isset($params["similar"]) && $params["similar"] !== "false") {
+            if (!isset($params["id"])) {
+                $phones = $this->get_similar((int)$params["similar"], (int)($params["limit"] ?? 3));
             } else {
-                $phones[] = $this->get_by_id((int)$params["id"]);
+                $phones = $this->get_similar((int)$params["id"], (int)($params["limit"] ?? 3));
             }
+        } else if (isset($params["id"])) {
+            $phones[] = $this->get_by_id((int)$params["id"]);
         } else {
             $phones = $this->get_all($params);
         }         

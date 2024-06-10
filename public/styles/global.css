@@ -237,6 +237,10 @@ a {
 }
 
 @media (width <= 768px) {
+  .main-container {
+    padding: 0 10px;
+  }
+
   .header {
     height: 0;
   }
@@ -324,5 +328,11 @@ a {
 
   .footer {
     padding-bottom: 70px;
+  }
+}
+
+@media (width <= 1024px) {
+  .main-container {
+    padding: 0 10px;
   }
 }

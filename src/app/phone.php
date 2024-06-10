@@ -29,6 +29,8 @@ try {
 
 $phoneName = $phone->get_brand() . " " . $phone->get_model();
 $title = $phoneName . " - FlowPhone";
+
+$isLogged = isset($_SESSION['user_id']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,16 +52,16 @@ $title = $phoneName . " - FlowPhone";
                 <h1 class="hero__name"><?= $phoneName ?></h1>
                 <div class="hero__stars">
                     <?php for ($i = 0; $i < $phone->get_ratings(); $i++): ?>
-                        <span class="hero__star star filled"><?php include "..\includes\icons\star.php"; ?></span>
+                    <span class="hero__star star filled"><?php include "..\includes\icons\star.php"; ?></span>
                     <?php endfor; ?>
                     <?php for ($i = $phone->get_ratings(); $i < 5; $i++): ?>
-                        <span class="hero__star star"><?php include "../includes/icons/star.php"; ?></span>
+                    <span class="hero__star star"><?php include "../includes/icons/star.php"; ?></span>
                     <?php endfor; ?>
                     <span class="hero__rating rating"><?= $phone->get_ratings(); ?></span>
                 </div>
             </div>
         </main>
-        <section>
+        <section class="content-phone">
             <div class="action-btns">
                 <p>Price: <span><?= $phone->get_price_eur() ?>€</span></p>
                 <button type="button" class="card">Buy</button>
@@ -87,39 +89,30 @@ $title = $phoneName . " - FlowPhone";
         </section>
         <section id="more-phones" class="more-phones">
             <h2 class="section-title">Similar devices</h2>
-            <!-- TODO: Generate phone cards via JS -->
-    
-            <div id="list-more-phones" class="phone-list">
-                <a href="phone.php?id=15" class="phone-card">
-                    <img src="/images/phones/apple_iphone11.webp" alt="iPhone 11 preview" class="phone-card__image">
-                    <div class="phone-card__info">
-                        <h3 class="phone-card__name">iPhone 11</h3>
-                        <p class="phone-card__price">809€</p>
-                        <div class="phone-card__stars">
-                            <?php for ($i = 0; $i < 4; $i++): ?>
-                                <span class="phone-card__star star filled"> <?php include "../includes/icons/star.php"; ?></span>
-                            <?php endfor; ?>
-                            <span class="phone-card__star star"> 
-                                <?php include "../includes/icons/star.php"; ?>
-                            </span>
+            <div id="list-similar-phones" class="phone-list">
+                <?php for ($i = 0; $i < 4; $i++): ?>
+                <div class="preview-phone-card skeleton">
+                    <div class="preview-phone-card__phone-image"></div>
+                    <div class="preview-phone-card__phone-info">
+                        <h3 class="preview-phone-card__phone-name"></h3>
+                        <p class="preview-phone-card__phone-price"></p>
+                        <div class="preview-phone-card__phone-other-info">
+                            <p class="preview-phone-card__phone-screen-size"></p>
+                            <p class="preview-phone-card__phone-ram"></p>
+                        </div>
+                        <div class="preview-phone-card__stars stars">
+
                         </div>
                     </div>
-                </a>
-                <a href="phone.php?id=5" class="phone-card">
-                    <img src="/images/phones/apple_iphone12.webp" alt="iPhone 12 preview" class="phone-card__image">
-                    <div class="phone-card__info">
-                        <h3 class="phone-card__name">iPhone 12</h3>
-                        <p class="phone-card__price">809€</p>
-                        <div class="phone-card__stars">
-                            <?php for ($i = 0; $i < 4; $i++): ?>
-                                <span class="phone-card__star star filled"> <?php include "../includes/icons/star.php"; ?></span>
-                            <?php endfor; ?>
-                            <span class="phone-card__star star"> 
-                                <?php include "../includes/icons/star.php"; ?>
-                            </span>
-                        </div>
+                    <div class="preview-phone-card__phone-buttons">
+                        <button class="preview-phone-card__phone-btn-buy"></button>
+                        <button class="preview-phone-card__phone-btn-cart">
+                            <span class="preview-phone-card__shop-cart"></span>
+                            <span></span>
+                        </button>
                     </div>
-                </a>
+                </div>
+                <?php endfor; ?>
             </div>
         </section>
         <section id="comparator" class="comparator">
@@ -178,7 +171,7 @@ $title = $phoneName . " - FlowPhone";
                     </table>
                 </div>
             </div>
-    
+
             <div class="comparator__table-root card">
                 <div class="comparator__table-container">
                     <table class="table-product" id="table-second-phone">
@@ -192,7 +185,8 @@ $title = $phoneName . " - FlowPhone";
                                     </button>
                                     <div id="dropdown-menu" class="dropdown__content">
                                         <ul id="dropdown-list" class="dropdown__list">
-                                            <li id="dropdown-list-loading" class="dropdown__option dropdown__option-loading"></li>
+                                            <li id="dropdown-list-loading"
+                                                class="dropdown__option dropdown__option-loading"></li>
                                         </ul>
                                     </div>
                                 </th>
@@ -240,39 +234,68 @@ $title = $phoneName . " - FlowPhone";
                                 <td id="second-phone-price"></td>
                             </tr>
                         </tbody>
+                        <tfoot>
+                            <tr class="compare__row">
+                                <td class="compare__div">Comparison</td>
+                                <td class="compare__div">
+                                    <button id="compare-button" class="compare__button">
+                                        Compare
+                                    </button>
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
         </section>
         <section id="commentaries" class="commentaries">
             <h2 class="section-title">Commentaries</h2>
+            <?php if ($isLogged): ?>
+            <form action="/src/app/api/review.php" method="post" class="comment-form">
+                <label for="comment">Give us your opinion: </label>
+                <textarea name="com" id="comment" cols="30" rows="5" required>
+
+                </textarea>
+                <input type="hidden" name="phone_id" value="<?= $phone->get_id() ?>">
+                <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'] ?>">
+                <label for="rating">Rate the phone:</label>
+                <input type="number" name="rating" id="rating" min="1" max="5" required>
+
+                <button type="submit" class="btn">Comment</button>
+            </form>
+            <?php endif; ?>
             <div class="commentaries__container">
                 <!-- TODO: Generate commentaries via JS -->
+                <!-- Commentaries example
                 <div class="commentary">
                     <div class="commentary__row">
                         <div class="commentary__header">
-                            <h3 class="commentary__author">John Doe</h3>
+                            <h3 class="commentary__author">Unknown User</h3>
                             <span class="commentary__date">
                                 <time datetime="2021-03-15T12:00:00">15/03/2021</time>
                             </span>
-                            <div class="commentary_stars stars">
-                                <?php for ($i = 0; $i < 4; $i++): ?>
-                                    <span class="star filled"><?php include "../includes/icons/star.php"; ?></span>
-                                <?php endfor; ?>
-                                <span class="star"><?php include "../includes/icons/star.php"; ?></span>
+                            <div class="commentary__stars stars">
+                                <?php //for ($i = 0; $i < 4; $i++): 
+                                    ?>
+                                <span
+                                    class="commentary__star star filled"><?php // include "../includes/icons/star.php"; ?></span>
+                                <?php //endfor; ?>
+                                <span
+                                    class="commentary__star star"><?php // include "../includes/icons/star.php"; ?></span>
                             </div>
                         </div>
-                        <div class="commentary__row">
-                            <p class="commentary__review">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                                Nullam
-                            </p>
-                        </div>
+                    </div>
+                    <div class="commentary__row">
+                        <p class="commentary__review">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            Nullam
+                        </p>
                     </div>
                 </div>
             </div>
-        </section>
     </div>
-    <?php include_once "../includes/footer.php"; ?>    
+    </section>
+    </div>
+    <?php include_once "../includes/footer.php"; ?>
 </body>
 </html>

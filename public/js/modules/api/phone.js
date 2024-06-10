@@ -39,10 +39,10 @@ export const getPhones = async ({
     skipPhones,
 } = {}) => {
     const API_URL = new URL(API_GET_PATH, window.location.origin);
+    if (similar) API_URL.searchParams.set(API_PARAMS.similar, similar);
     if (offset) API_URL.searchParams.set(API_PARAMS.offset, offset);
     if (limit) API_URL.searchParams.set(API_PARAMS.limit, limit);
     if (basic) API_URL.searchParams.set(API_PARAMS.basic, basic);
-    if (similar) API_URL.searchParams.set(API_PARAMS.similar, similar);
     if (search) API_URL.searchParams.set(API_PARAMS.search, search);
     if (brand) API_URL.searchParams.set(API_PARAMS.brand, brand);
     if (minPrice) API_URL.searchParams.set(API_PARAMS.minPrice, minPrice);
@@ -60,7 +60,7 @@ export const getBasicPhonesInfo = async ({ offset, limit } = {}) => {
 };
 
 export const getSimilarPhones = async ({ id, limit, minimumResults = 0  } = {}) => {
-    const phones = await getPhones({ limit, similar: id, limit });
+    const phones = await getPhones({ similar: id, limit });
 
     if (phones.length < minimumResults) {
         const skipPhones = phones.map(phone => phone.id);
