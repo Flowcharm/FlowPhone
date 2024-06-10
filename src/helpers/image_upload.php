@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 require __DIR__ . '/../../vendor/autoload.php';
 
+// ! Need to uncomment ;extension=gd in php.ini
+
 function upload_converted_image(array $image, string $upload_dir): string
 {
     if (strpos($upload_dir, "/images") === false) {
