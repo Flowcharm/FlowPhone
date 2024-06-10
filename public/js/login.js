@@ -1,9 +1,13 @@
 import vanillaToast from "https://esm.sh/vanilla-toast@0.5.0";
 
 const form = document.querySelector("#login-form");
+const submit = document.querySelector("#login-form-submit");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
+
+  submit.disabled = true;
+
   const formData = new FormData(form);
 
   const email = formData.get("email");
@@ -21,10 +25,13 @@ form.addEventListener("submit", async (e) => {
     if (json.error) {
       vanillaToast.error(json.error);
     } else {
+      vanillaToast.success("Login successful!");
       window.location = "/src/app/";
     }
   } catch (error) {
     console.log(error);
     vanillaToast.error("Something went wrong...");
+  } finally {
+    submit.disabled = false;
   }
 });

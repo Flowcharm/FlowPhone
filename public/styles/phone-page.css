@@ -1,31 +1,36 @@
 * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 html {
-    scroll-behavior: smooth;
-    font-size: 16px;
+  scroll-behavior: smooth;
+  font-size: 16px;
 }
 
 body {
-    margin: auto;
+  margin: auto;
+  width: 100%;
+  max-width: 1200px;
+  overflow-x: hidden;
+  gap: 1rem;
+  padding: 0.5rem 1rem 0;
 }
 
 a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
 img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 }
 
 svg {
-    color: inherit;
+  color: inherit;
 }
 
 .preview-phone-card { }
@@ -62,475 +67,475 @@ svg {
 .preview-phone-card__phone-btn-cart { }
 
 .card {
-    position: relative;
-    width: 100%;
-    padding: 1rem;
-    text-align: left;
-    border: 1px solid lightgray;
-    background-color: white;
-    border-radius: 1rem;
+  position: relative;
+  width: 100%;
+  padding: 1rem;
+  text-align: left;
+  border: 1px solid lightgray;
+  background-color: white;
+  border-radius: 1rem;
 }
 
 .phone {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero {
-    grid-area: hero;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+  grid-area: hero;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .hero__image {
-    aspect-ratio: 4/3;
-    height: 100%;
-    max-height: 20rem;
+  aspect-ratio: 4/3;
+  height: 100%;
+  max-height: 20rem;
 }
 
 .hero__title {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.5rem;
 }
 
 .hero__name {
-    padding-bottom: 0.5rem;  
-    font-size: 1.5rem;
-    font-weight: 500;
-    text-align: left;
-    border-bottom: 1px solid lightgray;
+  padding-bottom: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  text-align: left;
+  border-bottom: 1px solid lightgray;
 }
 
 .hero__stars {
-    height: 1.5rem;
-    display: flex;
-    align-content: center;
-    justify-content: flex-start;
-    font-size: 1.25rem;
-    color: lightgray;
+  height: 1.5rem;
+  display: flex;
+  align-content: center;
+  justify-content: flex-start;
+  font-size: 1.25rem;
+  color: lightgray;
 }
 
 .star svg {
-    width: 100%;
-    height: 100%;
-    stroke-width: 1;
-    fill: none;
+  width: 100%;
+  height: 100%;
+  stroke-width: 1;
+  fill: none;
 }
 
 .star.filled svg {
-    color: gold;
-    fill: gold;
+  color: gold;
+  fill: gold;
 }
 
 .hero__rating {
-    margin-left: 0.5rem;
-    font-size: 1rem;
-    font-weight: 400;
+  margin-left: 0.5rem;
+  font-size: 1rem;
+  font-weight: 400;
 }
 
 .action-btns {
-    grid-area: action-btns;
-    display: flex;
-    gap: 1rem;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-top: 1rem;
+  grid-area: action-btns;
+  display: flex;
+  gap: 1rem;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 1rem;
 }
 
 .action-btns span {
-    font-weight: 500;
+  font-weight: 500;
 }
 
 .action-btns button {
-    width: initial;
-    flex: 1 1 auto;
-    display: flex;
-    gap: 0.1rem;
-    justify-content: center;
-    align-items: center;
-    padding: 0.5rem 1rem;
-    color: inherit;
-    height: 100%;
-    border-radius: 0.5rem;
-    cursor: pointer;
+  width: initial;
+  flex: 1 1 auto;
+  display: flex;
+  gap: 0.1rem;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  color: inherit;
+  height: 100%;
+  border-radius: 0.5rem;
+  cursor: pointer;
 }
 
 .action-btns__icon {
-    height: 1rem;
-    width: 1rem;
-    color: inherit;
+  height: 1rem;
+  width: 1rem;
+  color: inherit;
 }
 
 .action-btns__icon svg {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .section-title {
-    font-size: 1.25rem;
-    font-weight: 500;
-    margin: 1rem 0 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin: 1rem 0 0.5rem;
 }
 
 .info-section {
-    position: relative;
-    width: 100%;
+  position: relative;
+  width: 100%;
 }
 
 .info-list {
-    margin-left: 1.5rem;
+  margin-left: 1.5rem;
 }
 
 .info-section a {
-    position: relative;
-    text-decoration: none;
-    color: inherit;
-    font-weight: 600;
-    transition: color 0.2s;
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+  font-weight: 600;
+  transition: color 0.2s;
 }
 
 .info-section a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: currentColor;
-    transition: width 0.3s;
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: currentColor;
+  transition: width 0.3s;
 }
 
 .info-section:hover a::after,
 .info-section a:hover::after {
-    width: 100%;
+  width: 100%;
 }
 
 .phone-list {
-    display: flex;
-    flex-flow: row nowrap;
-    gap: 1rem;
-    justify-content: center;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1rem;
+  justify-content: center;
 }
 
 .phone-card {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 20rem;
-    border: 1px solid lightgray;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    background-color: white;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 20rem;
+  border: 1px solid lightgray;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background-color: white;
 }
 
 .phone-card__stars {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    font-size: 1rem;
-    color: lightgray;
-    height: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1rem;
+  color: lightgray;
+  height: 1rem;
 }
 
 .phone-card__star {
-    width: 1rem;
-    height: 1rem;
+  width: 1rem;
+  height: 1rem;
 }
 
 .comparator {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .comparator__table-root {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .comparator__table-container {
-    width: 100%;
-    overflow: auto;
+  width: 100%;
+  overflow: auto;
 }
 
 .table-product {
-    width: 100%;
-    text-indent: 0;
-    border-collapse: collapse;
-    line-height: 1.25rem;
-    font-size: 0.875rem;
+  width: 100%;
+  text-indent: 0;
+  border-collapse: collapse;
+  line-height: 1.25rem;
+  font-size: 0.875rem;
 }
 
 .table-product__head {
-    text-align: left;
+  text-align: left;
 }
 
 .table-product__body {
-    vertical-align: top;
+  vertical-align: top;
 }
 
 .table-product__body tr {
-    width: 100%;
-    border-bottom: 1px solid lightgray;
+  width: 100%;
+  border-bottom: 1px solid lightgray;
 }
 
 .table-product th,
 .table-product td {
-    padding: 0.875rem 1rem;
+  padding: 0.875rem 1rem;
 }
 
 .table-product th {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .table-product td {
-    vertical-align: middle;
-    text-align: left;
-    padding: 0.875rem 1rem;
-    white-space: nowrap;
+  vertical-align: middle;
+  text-align: left;
+  padding: 0.875rem 1rem;
+  white-space: nowrap;
 }
 
 .table-product__dropdown {
-    max-width: 100%;
-    position: relative;
-    padding: 0 !important;
+  max-width: 100%;
+  position: relative;
+  padding: 0 !important;
 }
 
 .dropdown__btn {
-    position: relative;
-    display: flex;
-    overflow: auto;
-    width: 100%;
-    max-width: 100%;
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-    text-align: left;
-    padding: 0.5rem 2rem 0.5rem 0.75rem;
-    background-color: white;
-    border: 1px solid lightgray;
-    border-radius: 0.5rem;
-    cursor: pointer;
+  position: relative;
+  display: flex;
+  overflow: auto;
+  width: 100%;
+  max-width: 100%;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  text-align: left;
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  background-color: white;
+  border: 1px solid lightgray;
+  border-radius: 0.5rem;
+  cursor: pointer;
 }
 
 .dropdown__text {
-    display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-transform: none;
-    max-width: calc(100% - 1rem);
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: none;
+  max-width: calc(100% - 1rem);
 }
 
 .dropdown__btn svg {
-    position: absolute;
-    top: 50%;
-    right: 0.5rem;
-    transform: translateY(-50%);
-    width: 1rem;
-    height: 1rem;
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-50%);
+  width: 1rem;
+  height: 1rem;
 }
 
 .dropdown__content {
-    width: 100%;
-    display: none;
-    position: absolute;
-    z-index: 10;
-    right: 0;
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-    background-color: white;
-    border: 1px solid lightgray;
-    border-radius: 0.5rem;
-    max-height: 15rem;
-    margin-top: 0.25rem;
-    overflow: auto;
-    overflow-x: hidden;
+  width: 100%;
+  display: none;
+  position: absolute;
+  z-index: 10;
+  right: 0;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  background-color: white;
+  border: 1px solid lightgray;
+  border-radius: 0.5rem;
+  max-height: 15rem;
+  margin-top: 0.25rem;
+  overflow: auto;
+  overflow-x: hidden;
 }
 
 .dropdown__content.show {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 /* We modify the scrollbar */
 .dropdown__content::-webkit-scrollbar {
-    width: 0.5rem;
+  width: 0.5rem;
 }
 
 .dropdown__content::-webkit-scrollbar-thumb {
-    background-color: lightgray;
-    border-radius: 0.25rem;
-    border-left: 1px solid white;
+  background-color: lightgray;
+  border-radius: 0.25rem;
+  border-left: 1px solid white;
 }
 
 .dropdown__content::-webkit-scrollbar-track {
-    background-color: white;
+  background-color: white;
 }
 
 .dropdown__list {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .dropdown__option {
-    overflow: hidden;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    text-align: left;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  overflow: hidden;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  text-align: left;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .dropdown__option-loading {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: /* 160px in rem */ 2rem;
-    order: 1;
-    cursor: default;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: /* 160px in rem */ 2rem;
+  order: 1;
+  cursor: default;
 }
 
 .dropdown__option-loading::after {
-    content: '';
-    position: absolute;
-    width: 1rem;
-    height: 1rem;
-    border: 2px solid lightgray;
-    border-top-color: transparent;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+  content: "";
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid lightgray;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
 .dropdown__option:hover {
-    background-color: lightgray;
+  background-color: lightgray;
 }
 
 @media (width >= 768px) {
-    body {
-        padding: 1rem;
-    }
+  body {
+    padding: 1rem;
+  }
 
-    .phone {
-        display: grid;
-        grid-template-areas: 
-            "hero info-section"
-            "hero action-btns";
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-    }
+  .phone {
+    display: grid;
+    grid-template-areas:
+      "hero info-section"
+      "hero action-btns";
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
 
-    .hero {
-        grid-area: hero;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-    }
+  .hero {
+    grid-area: hero;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
 
-    .hero__image {
-        order: 1;
-    }
+  .hero__image {
+    order: 1;
+  }
 
-    .info-section {
-        grid-area: info-section;
-        padding: 2.5rem 1rem 1rem;
-    }
+  .info-section {
+    grid-area: info-section;
+    padding: 2.5rem 1rem 1rem;
+  }
 
-    .info-list {
-        padding: 0 0 0.5rem;
-    }
+  .info-list {
+    padding: 0 0 0.5rem;
+  }
 
-    .action-btns {
-        flex-flow: row wrap;
-        padding: 1rem;
-    }
+  .action-btns {
+    flex-flow: row wrap;
+    padding: 1rem;
+  }
 
-    .action-btns p {
-        width: 100%;
-    }
+  .action-btns p {
+    width: 100%;
+  }
 
-    .action-btns button {
-        flex: 1;
-    }
+  .action-btns button {
+    flex: 1;
+  }
 
-    .phone-list {
-        justify-content: flex-start;
-    }
+  .phone-list {
+    justify-content: flex-start;
+  }
 
-    .comparator {
-        display: flex;
-        flex-flow: row wrap;
-        gap: 1rem;
-    }
+  .comparator {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1rem;
+  }
 
-    .comparator__title {
-        min-width: 100%;
-        flex: 2;
-    }
+  .comparator__title {
+    min-width: 100%;
+    flex: 2;
+  }
 
-    .comparator__table-root {
-        flex: 1;
-        width: auto;
-        display: flex;
-        flex-direction: row;
-        gap: 1rem;
-    }
+  .comparator__table-root {
+    flex: 1;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
 
-    .comparator__table-container {
-        width: 100%;
-        overflow: auto
-    }
+  .comparator__table-container {
+    width: 100%;
+    overflow: auto;
+  }
 }
 
 @media (width >= 1024px) {
-    body {
-        display: grid;
-        grid-template-areas: 
-            "phone more-phones"
-            "comparator comparator";
-    }
+  body {
+    display: grid;
+    grid-template-areas:
+      "phone more-phones"
+      "comparator comparator";
+  }
 
-    .phone {
-        grid-area: phone;
-    }
+  .phone {
+    grid-area: phone;
+  }
 
-    .more-phones {
-        grid-area: more-phones;
-        flex-direction: column;
-    }
+  .more-phones {
+    grid-area: more-phones;
+    flex-direction: column;
+  }
 
-    .comparator {
-        grid-area: comparator;
-    }
+  .comparator {
+    grid-area: comparator;
+  }
 
-    .phone-list {
-        overflow: auto;
-        flex-direction: column;
-        gap: 1rem;
-    }
+  .phone-list {
+    overflow: auto;
+    flex-direction: column;
+    gap: 1rem;
+  }
 
-    .phone-card {
-        max-width: 50%;
-    }
+  .phone-card {
+    max-width: 50%;
+  }
 }
 
 @keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

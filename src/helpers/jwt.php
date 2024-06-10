@@ -2,12 +2,12 @@
 
 use Firebase\JWT\Key;
 
-require __DIR__ . '/../../vendor/autoload.php';
-require_once __DIR__ . "/../helpers/get_env.php";
+require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . "/../helpers/env.php";
 
 function generateJwt($payload)
 {
-    $jwt = \Firebase\JWT\JWT::encode($payload, env("JWT_SECRET"), 'RS256');
+    $jwt = \Firebase\JWT\JWT::encode($payload, env("JWT_SECRET"), 'HS256');
     return $jwt;
 }
 

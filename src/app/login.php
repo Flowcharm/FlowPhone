@@ -11,13 +11,12 @@
 </head>
 
 <body>
-
     <div class="login">
         <h1>Log in</h1>
         <form id="login-form">
             <input type="email" name="email" placeholder="example@email.com" required>
             <input type="password" name="password" placeholder="*****" required>
-            <input type="submit" value="Log in">
+            <input type="submit" id="login-form-submit" value="Log in">
         </form>
         <a href="/src/app/api/google-oauth.php" class="google-oauth">
             Log in with Google
@@ -25,10 +24,9 @@
         </a>
         <div class="action-links">
             <a href="./forgot-password.php">Forgot your password?</a>
-            <a href="./register.php">Don't have an account? Sign up!</a>
+            <a href="./register.php">Don't have an account? Register!</a>
         </div>
     </div>
-
 </body>
 
 </html>

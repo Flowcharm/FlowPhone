@@ -6,7 +6,8 @@ require_once __DIR__.'/../interfaces/phone_interface.php';
 
 require_once __DIR__.'/../models/phone.php';
 
-class PhoneRepository implements IPhoneRepository {
+class PhoneRepository implements IPhoneRepository
+{
     public function __construct(
         private IDb_Manager $db_manager
     )
@@ -49,7 +50,6 @@ class PhoneRepository implements IPhoneRepository {
 
     public function get_all(?int $limit = null, ?int $offset = null, ?string $brand = null, ?int $min_price = null, ?int $max_price = null, ?string $search = null, ?array $skip_phones = null): array {
         $connection = $this->db_manager->connect();
-
         $sql = "SELECT id, brand, model, release_year, screen_size, battery_capacity, ram, storage, camera_mp, price, os, ratings, image_url FROM phones WHERE 1=1";
 
         $sqlParams = [];
@@ -88,7 +88,7 @@ class PhoneRepository implements IPhoneRepository {
 
         if ($limit !== null) {
             $sql .= " LIMIT ?";
-            $sqlParams[] = $limit; 
+            $sqlParams[] = $limit;
             $types .= "i";
             if ($offset !== null) {
                 $sql .= " OFFSET ?";
@@ -308,4 +308,4 @@ class PhoneRepository implements IPhoneRepository {
     }
 
 }
-?>
+

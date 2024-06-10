@@ -3,9 +3,12 @@ import vanillaToast from "https://esm.sh/vanilla-toast@0.5.0";
 const REDIRECT_TIMEOUT = 2000; // ms
 
 const form = document.querySelector("#register-form");
+const submit = document.querySelector("#register-form-submit");
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
+
+  submit.disabled = true;
 
   const formData = new FormData(form);
 
@@ -35,5 +38,7 @@ form.addEventListener("submit", async (event) => {
   } catch (error) {
     console.log(error);
     vanillaToast.error("Something went wrong...");
+  } finally {
+    submit.disabled = false;
   }
 });

@@ -22,13 +22,14 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS reviews (
-        id INT PRIMARY KEY,
+        id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
         phone_id INT UNSIGNED,
-        author VARCHAR(100),
+        user_id INT UNSIGNED,
         review TEXT,
-        rating INT,
+        rating INT UNSIGNED,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (phone_id) REFERENCES phones (id)
+        FOREIGN KEY (phone_id) REFERENCES phones (id),
+        FOREIGN KEY (user_id) REFERENCES users (id)
     );
 
 CREATE TABLE
@@ -39,8 +40,18 @@ CREATE TABLE
         email VARCHAR(100) UNIQUE,
         password VARCHAR(100),
         isVerified BOOLEAN DEFAULT FALSE,
-        isGoogleAccount BOOLEAN DEFAULT FALSE
+        isGoogleAccount BOOLEAN DEFAULT FALSE,
+        googleId VARCHAR(100) UNIQUE
     );
+
+CREATE TABLE IF NOT EXISTS orders (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    user_id INT UNSIGNED,
+    total DECIMAL(10, 2),
+    status ENUM('pending', 'completed', 'cancelled') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users (id)
+);
 
 CREATE TABLE
     IF NOT EXISTS users_adress (
@@ -62,16 +73,6 @@ CREATE TABLE
         quantity INT,
         FOREIGN KEY (user_id) REFERENCES users (id),
         FOREIGN KEY (phone_id) REFERENCES phones (id)
-    );
-
-CREATE TABLE
-    IF NOT EXISTS cards_details (
-        id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-        user_id INT UNSIGNED,
-        card_number VARCHAR(16),
-        expiry_date DATE,
-        cvv INT,
-        FOREIGN KEY (user_id) REFERENCES users (id)
     );
 
 -- Insert 20 records into the 'phones' table
