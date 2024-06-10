@@ -1,11 +1,4 @@
-import { createStarRating } from '../../icons/star.js';
-
-$id = $row['id'];
-            $phone_id = $row['phone_id'];
-            $user_id = $row['user_id'];
-            $rating = $row['rating'];
-            $review = $row['review'];
-            $created_at = $row['created_at'];
+import { createStarRating } from './icons/star.js';
 
 export const createCommentary = ({ review, author = "Unknown User" }) => {
     const commentary = document.createElement('div');
@@ -32,7 +25,7 @@ export const createCommentary = ({ review, author = "Unknown User" }) => {
 
     const commentaryStars = createStarRating({
         classContainer: 'commentary',
-        rating: review.rating, // !
+        rating: review.review, // !
         showRating: false,
     });
 
@@ -45,7 +38,7 @@ export const createCommentary = ({ review, author = "Unknown User" }) => {
 
     const reviewText = document.createElement('p');
     reviewText.classList.add('commentary__review');
-    reviewText.textContent = review.review; // !
+    reviewText.textContent = review.rating; // !
 
     commentaryReview.appendChild(reviewText);
 

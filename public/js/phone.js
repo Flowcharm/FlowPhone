@@ -7,6 +7,7 @@ import {
     getBasicPhonesInfo,
     getSimilarPhones,
 } from './modules/api/phone.js';
+import { createCommentary } from './modules/ui/commentary.js';   
 import { getReviews } from './modules/api/reviews.js';
 
 const principalPhone = await getPhone(
@@ -50,7 +51,7 @@ async function proceedCheckout(phoneId) {
 
 const listSimilarPhones = document.getElementById('list-similar-phones');
 
-const commentariesList = document.getElementById('commentaries');
+const commentariesList = document.getElementById('commentaries-list');
 
 const compareButton = document.getElementById('compare-button');
 // const compareModal = document.getElementById('compare-modal');
@@ -69,8 +70,10 @@ loadCommentaries();
 async function loadCommentaries() {
     try {
         const commentaries = await getReviews(principalPhone.id);
+        console.log(commentaries);
         commentariesList.innerHTML = '';
         commentaries.forEach(commentary => {
+            console.log(commentary);
             const card = createCommentary({
                 review: commentary,
             });

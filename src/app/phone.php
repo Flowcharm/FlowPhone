@@ -1,10 +1,11 @@
 <?php
 declare(strict_types=1);
+session_start();
 
-require_once __DIR__."/../models/db_manager.php";
-require_once __DIR__."/../repositories/phone_repository.php";
-require_once __DIR__."/../controllers/phone_controller.php";
-require_once __DIR__."/../helpers/env.php";
+require_once __DIR__ . "/../models/db_manager.php";
+require_once __DIR__ . "/../repositories/phone_repository.php";
+require_once __DIR__ . "/../controllers/phone_controller.php";
+require_once __DIR__ . "/../helpers/env.php";
 
 $db = new Db_Manager(env("DB_HOST"), env("DB_USER"), env("DB_PASSWORD"), env("DB_NAME"), env("DB_PORT"));
 
@@ -18,7 +19,7 @@ try {
     if (!isset($id)) {
         throw new Exception("Phone id is required", 400);
     }
-    $phone = $phone_controller->get_by_id((int)$id);
+    $phone = $phone_controller->get_by_id((int) $id);
     if (!$phone) {
         throw new Exception("Phone not found", 404);
     }
@@ -29,11 +30,11 @@ try {
 
 $phoneName = $phone->get_brand() . " " . $phone->get_model();
 $title = $phoneName . " - FlowPhone";
-
-$isLogged = isset($_SESSION['user_id']);
+$user_id = $_SESSION['user_id'] ?? null;
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,6 +43,7 @@ $isLogged = isset($_SESSION['user_id']);
     <link rel="stylesheet" href="/public/styles/phone-page.css">
     <script type="module" src="/public/js/phone.js" defer></script>
 </head>
+
 <body>
     <?php include_once "..\includes\header.php"; ?>
     <div class="main-container">
@@ -52,10 +54,10 @@ $isLogged = isset($_SESSION['user_id']);
                 <h1 class="hero__name"><?= $phoneName ?></h1>
                 <div class="hero__stars">
                     <?php for ($i = 0; $i < $phone->get_ratings(); $i++): ?>
-                    <span class="hero__star star filled"><?php include "..\includes\icons\star.php"; ?></span>
+                        <span class="hero__star star filled"><?php include "..\includes\icons\star.php"; ?></span>
                     <?php endfor; ?>
                     <?php for ($i = $phone->get_ratings(); $i < 5; $i++): ?>
-                    <span class="hero__star star"><?php include "../includes/icons/star.php"; ?></span>
+                        <span class="hero__star star"><?php include "../includes/icons/star.php"; ?></span>
                     <?php endfor; ?>
                     <span class="hero__rating rating"><?= $phone->get_ratings(); ?></span>
                 </div>
@@ -91,27 +93,27 @@ $isLogged = isset($_SESSION['user_id']);
             <h2 class="section-title">Similar devices</h2>
             <div id="list-similar-phones" class="phone-list">
                 <?php for ($i = 0; $i < 4; $i++): ?>
-                <div class="preview-phone-card skeleton">
-                    <div class="preview-phone-card__phone-image"></div>
-                    <div class="preview-phone-card__phone-info">
-                        <h3 class="preview-phone-card__phone-name"></h3>
-                        <p class="preview-phone-card__phone-price"></p>
-                        <div class="preview-phone-card__phone-other-info">
-                            <p class="preview-phone-card__phone-screen-size"></p>
-                            <p class="preview-phone-card__phone-ram"></p>
-                        </div>
-                        <div class="preview-phone-card__stars stars">
+                    <div class="preview-phone-card skeleton">
+                        <div class="preview-phone-card__phone-image"></div>
+                        <div class="preview-phone-card__phone-info">
+                            <h3 class="preview-phone-card__phone-name"></h3>
+                            <p class="preview-phone-card__phone-price"></p>
+                            <div class="preview-phone-card__phone-other-info">
+                                <p class="preview-phone-card__phone-screen-size"></p>
+                                <p class="preview-phone-card__phone-ram"></p>
+                            </div>
+                            <div class="preview-phone-card__stars stars">
 
+                            </div>
+                        </div>
+                        <div class="preview-phone-card__phone-buttons">
+                            <button class="preview-phone-card__phone-btn-buy"></button>
+                            <button class="preview-phone-card__phone-btn-cart">
+                                <span class="preview-phone-card__shop-cart"></span>
+                                <span></span>
+                            </button>
                         </div>
                     </div>
-                    <div class="preview-phone-card__phone-buttons">
-                        <button class="preview-phone-card__phone-btn-buy"></button>
-                        <button class="preview-phone-card__phone-btn-cart">
-                            <span class="preview-phone-card__shop-cart"></span>
-                            <span></span>
-                        </button>
-                    </div>
-                </div>
                 <?php endfor; ?>
             </div>
         </section>
@@ -248,23 +250,21 @@ $isLogged = isset($_SESSION['user_id']);
                 </div>
             </div>
         </section>
-        <section id="commentaries" class="commentaries">
+        <section class="commentaries">
             <h2 class="section-title">Commentaries</h2>
-            <?php if ($isLogged): ?>
-            <form action="/src/app/api/review.php" method="post" class="comment-form">
-                <label for="comment">Give us your opinion: </label>
-                <textarea name="com" id="comment" cols="30" rows="5" required>
+            <?php if ($user_id): ?>
+                <form action="/src/app/api/review.php" method="post" class="comment-form">
+                    <label for="comment">Give us your opinion: </label>
+                    <textarea name="review" id="comment" cols="30" rows="5" required></textarea>
+                    <input type="hidden" name="phone_id" value="<?= $phone->get_id() ?>">
+                    <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'] ?>">
+                    <label for="review">Rate the phone:</label>
+                    <input type="number" name="rating" id="rating" min="1" max="5" required>
 
-                </textarea>
-                <input type="hidden" name="phone_id" value="<?= $phone->get_id() ?>">
-                <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'] ?>">
-                <label for="rating">Rate the phone:</label>
-                <input type="number" name="rating" id="rating" min="1" max="5" required>
-
-                <button type="submit" class="btn">Comment</button>
-            </form>
+                    <button type="submit" class="btn">Comment</button>
+                </form>
             <?php endif; ?>
-            <div class="commentaries__container">
+            <div  id="commentaries-list" class="commentaries__container">
                 <!-- TODO: Generate commentaries via JS -->
                 <!-- Commentaries example
                 <div class="commentary">
@@ -276,7 +276,7 @@ $isLogged = isset($_SESSION['user_id']);
                             </span>
                             <div class="commentary__stars stars">
                                 <?php //for ($i = 0; $i < 4; $i++): 
-                                    ?>
+                                ?>
                                 <span
                                     class="commentary__star star filled"><?php // include "../includes/icons/star.php"; ?></span>
                                 <?php //endfor; ?>

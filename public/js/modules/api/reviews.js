@@ -1,4 +1,4 @@
-export const API_PATH = '/api/review.php';
+export const API_PATH = '/src/app/api/review.php';
 
 export const API_PARAMS = {
     phoneId: 'phone_id',
@@ -12,5 +12,5 @@ export const getReviews = async phoneId => {
     const reviews = await response.json();
     // Reviews doesn't have users data
 
-    return reviews.data;
+    return reviews;
 };
