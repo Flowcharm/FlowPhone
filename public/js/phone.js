@@ -59,6 +59,9 @@ const compareButton = document.getElementById('compare-button');
 const similarPhonesLimit = listSimilarPhones.childElementCount;
 const similarPhonesMinimum = similarPhonesLimit;
 
+dropdownToggle.addEventListener("click", () => {
+    dropdownMenu.classList.toggle("show");
+});
 dropdownMenu.addEventListener("blur", () => {
     dropdownMenu.classList.remove("show");
 });
@@ -70,7 +73,7 @@ loadCommentaries();
 async function loadCommentaries() {
     try {
         const commentaries = await getReviews(principalPhone.id);
-        console.log(commentaries);
+        
         commentariesList.innerHTML = '';
         commentaries.forEach(commentary => {
             console.log(commentary);
@@ -142,11 +145,11 @@ function populateSimilarPhones(phones) {
 function populateSelect(phones) {
     phones.forEach((phone, index) => {
         const option = createDropdownOption(phone, async () => {
-            const currentPhone = await handleOptionClick(phone);
-            compareButton.addEventListener('click', () => {
+            await handleOptionClick(phone);
+            /*compareButton.addEventListener('click', () => {
                 createChart(principalPhone, currentPhone);
-            });
-        });
+            }); */
+        }); 
         dropdownList.appendChild(option);
 
         if (index === phones.length - 1) {
@@ -169,7 +172,6 @@ async function handleOptionClick(phone) {
     if (!phonesFetched.includes(phoneData)) {
         phonesFetched.push(phoneData);
     }
-    return phoneData;
 }
 
 function createChart(principalPhone, currentPhone) {

@@ -236,7 +236,7 @@ $user_id = $_SESSION['user_id'] ?? null;
                                 <td id="second-phone-price"></td>
                             </tr>
                         </tbody>
-                        <tfoot>
+                        <!-- <tfoot>
                             <tr class="compare__row">
                                 <td class="compare__div">Comparison</td>
                                 <td class="compare__div">
@@ -245,7 +245,7 @@ $user_id = $_SESSION['user_id'] ?? null;
                                     </button>
                                 </td>
                             </tr>
-                        </tfoot>
+                        </tfoot> -->
                     </table>
                 </div>
             </div>

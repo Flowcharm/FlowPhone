@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . "/../../helpers/protect_api_route.php";
+
 require_once __DIR__."/../../../models/db_manager.php";
 require_once __DIR__."/../../../repositories/phone_repository.php";
 require_once __DIR__."/../../../controllers/phone_controller.php";
