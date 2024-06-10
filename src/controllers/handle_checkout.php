@@ -35,7 +35,7 @@ function handle_checkout()
         $user->remove_from_cart($cart_repo, $phone_id);
 
         if ($phone) {
-            array_push($phones, $phone);
+            array_push($phones, ["phone" => $phone, "quantity" => $item['quantity']]);
         }
     }
 

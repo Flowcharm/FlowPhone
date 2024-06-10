@@ -124,7 +124,7 @@ $phones = $phone_repository->get_all($limit = $charged_default_phones);
                                     </div>
                                 </a>
                                 <div class="preview-phone-card__phone-buttons">
-                                    <a class="preview-phone-card__phone-btn-buy">Buy</a>
+                                    <a class="preview-phone-card__phone-btn-buy" data-id="<?= $phone->get_id() ?>"">Buy</a>
                                     <button class="preview-phone-card__phone-btn-cart">
                                         <span
                                             class="preview-phone-card__shop-cart"><?php include "../includes/icons/shopping_cart.php"; ?></span>

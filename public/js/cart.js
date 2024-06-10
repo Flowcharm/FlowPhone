@@ -22,7 +22,11 @@ btnRemove.forEach((btn) => {
     const price = btn.dataset.price;
 
     ev.target.closest("li").remove();
-    total.textContent = +total.textContent - +price * +quantity;
+    total.textContent = (+total.textContent - +price * +quantity).toFixed(2);
+
+    if (+total.textContent < 0.01) {
+      total.textContent = 0;
+    }
 
     await removeItemFromCart(id, quantity);
   });
@@ -31,10 +35,14 @@ btnRemove.forEach((btn) => {
 btnDecrease.forEach((btn) => {
   btn.addEventListener("click", async (ev) => {
     const id = btn.dataset.id;
-    const quantity = btn.dataset.quantity;
+    const quantity = +btn.dataset.quantity;
     const price = btn.dataset.price;
 
     total.textContent = +total.textContent - +price;
+
+    if (+total.textContent < 0.01) {
+      total.textContent = 0;
+    }
 
     if (quantity === 1) {
       ev.target.closest("li").remove();
@@ -43,7 +51,7 @@ btnDecrease.forEach((btn) => {
 
       phoneQuantitySpan.textContent = quantity - 1;
       btn.dataset.quantity = quantity - 1;
-      btnDecrease.dataset.quantity = quantity - 1;
+      btn.dataset.quantity = quantity - 1;
     }
 
     await removeItemFromCart(id, 1);
@@ -55,12 +63,16 @@ payment.addEventListener("click", async () => {
 });
 
 async function proceedCheckout() {
+  payment.textContent = "Processing...";
   const userCart = await getUserCart();
   try {
     const resp = await fetch("/src/app/api/checkout.php", {
       method: "POST",
       body: JSON.stringify({
-        items: userCart.map((el) => ({ id: el.phone.id }))
+        items: userCart.map((el) => ({
+          id: el.phone.id,
+          quantity: el.quantity
+        }))
       })
     });
     const data = await resp.json();

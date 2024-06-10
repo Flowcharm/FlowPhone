@@ -6,9 +6,12 @@ import {
   createPreviewPhoneCard,
   createPreviewPhoneCardSkeleton
 } from "./modules/ui/previewPhoneCard.js";
-import { addToLocalCart, getCartFromLocalStorage } from "./modules/helpers/localCart.js";
+import {
+  addToLocalCart,
+  getCartFromLocalStorage
+} from "./modules/helpers/localCart.js";
 import { isUserAuthenticated } from "./modules/helpers/isUserAuthenticated.js";
-import { addToCart } from "./modules/api/cart.js";
+import { addToCart, getUserCart } from "./modules/api/cart.js";
 
 const isUserAuth = await isUserAuthenticated();
 
@@ -24,7 +27,6 @@ const phones = [];
 const listPhonesSearch = document.getElementById("list-phones-search");
 const searchForm = document.getElementById("search-form");
 const searchInput = document.getElementById("search-input");
-const phonesContainer = document.getElementById("phones-container");
 const searchResultsContainer = document.getElementById(
   "search-results-container"
 );
@@ -32,6 +34,35 @@ const searchResultsContainer = document.getElementById(
 const chargedPhonesCards = document.querySelectorAll(
   ".preview-phone-card:not(.skeleton)"
 );
+
+const buyBtns = document.querySelectorAll(".preview-phone-card__phone-btn-buy");
+
+buyBtns.forEach((btn) => {
+  btn.addEventListener("click", async (event) => {
+    const phoneId = event.target.dataset.id;
+    proceedCheckout(phoneId);
+  });
+});
+
+async function proceedCheckout(phoneId) {
+  try {
+    const resp = await fetch("/src/app/api/checkout.php", {
+      method: "POST",
+      body: JSON.stringify({
+        items: [
+          {
+            id: phoneId,
+            quantity: 1
+          }
+        ]
+      })
+    });
+    const data = await resp.json();
+    window.location.href = data.url;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();

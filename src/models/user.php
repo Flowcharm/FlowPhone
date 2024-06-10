@@ -22,27 +22,27 @@ class User
         $this->password = $password;
     }
 
-    function checkout(IPayments_manager $payments_manager, array $phones)
+    function checkout(IPayments_manager $payments_manager, array $items)
     {
-        $items = array();
+        $items_pay = array();
 
-        foreach ($phones as $phone) {
+        foreach ($items as $item) {
             array_push(
-                $items,
+                $items_pay,
                 array(
                     "price_data" => [
                         "currency" => "usd",
                         "product_data" => [
-                            "name" => $phone->get_brand(),
+                            "name" => $item["phone"]->get_brand(),
                         ],
-                        "unit_amount" => $phone->get_price_eur() * 100 // convert to cents
+                        "unit_amount" => $item["phone"]->get_price_eur() * 100 // convert to cents
                     ],
-                    "quantity" => 1
+                    "quantity" => (int) $item["quantity"]
                 )
             );
         }
 
-        $payments_manager->checkout($items);
+        $payments_manager->checkout($items_pay);
     }
 
     function send_verify_email(IMail_Manager $mailManager)
