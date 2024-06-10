@@ -1,5 +1,3 @@
-/* TODO: Styles are broken in big screens, i need to refactor html and css to make it work */
-/* And i need to add button and lateral phone hover effect */
 * {
   box-sizing: border-box;
   padding: 0;
@@ -28,12 +26,45 @@ a {
 img {
   width: 100%;
   height: auto;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 svg {
   color: inherit;
 }
+
+.preview-phone-card { }
+
+.preview-phone-card__phone-image { }
+
+.preview-phone-card__phone-info { }
+
+.preview-phone-card__phone-name { }
+
+.preview-phone-card__phone-price { }
+
+.preview-phone-card__phone-price-span { }
+
+.preview-phone-card__phone-other-info { }
+
+.preview-phone-card__phone-screen-size { }
+
+.preview-phone-card__phone-ram { }
+
+.stars { }
+
+.star { }
+
+.star.filled { }
+
+.preview-phone-card__stars { }
+
+.preview-phone-card__star { }
+
+.preview-phone-card__phone-buttons { }
+
+.preview-phone-card__phone-btn-buy,
+.preview-phone-card__phone-btn-cart { }
 
 .card {
   position: relative;

@@ -36,7 +36,7 @@ class PhoneBasicInfo {
 
 class Phone { 
     public function __construct(
-        private int $id,
+        private ?int $id = null,
         private string $brand,
         private string $model,
         private int $release_year,
@@ -48,7 +48,7 @@ class Phone {
         private float $price_eur,
         private string $os,
         private int $ratings,
-        private string $image_url
+        private ?string $image_url
     )
     { }
 
@@ -64,7 +64,7 @@ class Phone {
         return $this->model;
     }
 
-    public function get_sreen_size_inch(): float {
+    public function get_screen_size_inch(): float {
         return $this->screen_size_inch;
     }
 
@@ -76,7 +76,7 @@ class Phone {
         return $this->price_eur;
     }
 
-    public function getOs(): string {
+    public function get_os(): string {
         return $this->os;
     }
 
@@ -85,8 +85,9 @@ class Phone {
     }
 
     public function get_image_url(): string {
-        // return $this->image_url;
-        return "/public/" . $this->image_url;
+        // return "/public/" . $this->image_url;
+        // return "/" . $this->image_url;    
+        return $this->image_url;
     }
 
     public function get_release_year(): int {
@@ -103,6 +104,61 @@ class Phone {
 
     public function get_camera_mp(): int {
         return $this->camera_mp;
+    }
+
+    public function set_id(int $id): void {
+        if ($this->id !== null) {
+            throw new Exception("Id is already set");
+        }
+        $this->id = $id;
+    }
+
+    public function set_image_url(string $image_url): void {
+        $this->image_url = $image_url;
+    }
+
+    public function set_brand(string $brand): void {
+        $this->brand = $brand;
+    }
+
+    public function set_model(string $model): void {
+        $this->model = $model;
+    }
+
+    public function set_screen_size_inch(float $screen_size_inch): void {
+        $this->screen_size_inch = $screen_size_inch;
+    }
+
+    public function set_storage_gb(int $storage_gb): void {
+        $this->storage_gb = $storage_gb;
+    }
+
+    public function set_price_eur(float $price_eur): void {
+        $this->price_eur = $price_eur;
+    }
+
+    public function set_os(string $os): void {
+        $this->os = $os;
+    }
+
+    public function set_ratings(int $ratings): void {
+        $this->ratings = $ratings;
+    }
+
+    public function set_release_year(int $release_year): void {
+        $this->release_year = $release_year;
+    }
+
+    public function set_battery_capacity_mah(int $battery_capacity_mah): void {
+        $this->battery_capacity_mah = $battery_capacity_mah;
+    }
+
+    public function set_ram_gb(int $ram_gb): void {
+        $this->ram_gb = $ram_gb;
+    }
+
+    public function set_camera_mp(int $camera_mp): void {
+        $this->camera_mp = $camera_mp;
     }
 
     public function toArray(): array {
