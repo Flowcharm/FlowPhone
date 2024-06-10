@@ -161,18 +161,6 @@ button.hero-search__btn-search {
     color: var(--second-color);
 }
 
-.preview-phone-card__phone-screen-size {
-}
-
-.preview-phone-card__phone-ram {
-}
-
-.preview-phone-card__stars {
-}
-
-.preview-phone-card__star {
-}
-
 .preview-phone-card__phone-buttons {
     display: flex;
     font-size: 1rem;

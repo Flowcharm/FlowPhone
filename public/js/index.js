@@ -6,14 +6,7 @@ import {
   createPreviewPhoneCard,
   createPreviewPhoneCardSkeleton
 } from "./modules/ui/previewPhoneCard.js";
-import {
-  addToLocalCart,
-  getCartFromLocalStorage
-} from "./modules/helpers/localCart.js";
-import { isUserAuthenticated } from "./modules/helpers/isUserAuthenticated.js";
-import { addToCart, getUserCart } from "./modules/api/cart.js";
-
-const isUserAuth = await isUserAuthenticated();
+import { addToCart } from "./modules/api/cart.js";
 
 let isSearch = false;
 
@@ -78,14 +71,8 @@ initPhones();
 function handleAddCart(phone) {
   console.log("Adding to cart:", phone);
 
-  if (isUserAuth) {
-    addToCart(phone.id);
-  } else {
-    const localCart = getCartFromLocalStorage();
-    const item = localCart.find((item) => item.id === phone.id);
-    const quantity = item ? item.quantity + 1 : 1;
-    addToLocalCart(phone.id, quantity);
-  }
+  addToCart(phone.id);
+
   vanillaToast.success("Added to cart!");
 }
 
@@ -120,7 +107,6 @@ function handleSearchChange(event) {
 }
 
 async function searchPhones(formValues) {
-
   try {
     const phones = await getPhones({
       ...formValues
@@ -144,45 +130,41 @@ function populatePhones(phonesToCreate, container) {
 
     container.insertBefore(card, lastChild);
 
-        if (index === phonesToCreate.length - 1) {
-            const root = document;
-            observeNewElement({
-                root: root,
-                toObserve: card,
-                callback: loadMorePhones,
-                threshold: 0.1,
-            });
-        }
-    });
+    if (index === phonesToCreate.length - 1) {
+      const root = document;
+      observeNewElement({
+        root: root,
+        toObserve: card,
+        callback: loadMorePhones,
+        threshold: 0.1
+      });
+    }
+  });
 }
 
 async function initPhones() {
-    try {
-        const newPhones = await getPhones({ limit, offset });
+  try {
+    const newPhones = await getPhones({ limit, offset });
 
-        phones.push(...newPhones);
+    phones.push(...newPhones);
 
-        chargedPhonesCards.forEach((card, index) => {
-            const phone = phones[index];
-            const button = card.querySelector(
-                '.preview-phone-card__phone-btn-cart'
-            );
-            button.addEventListener('click', () => handleAddCart(phone));
-        });
+    chargedPhonesCards.forEach((card, index) => {
+      const phone = phones[index];
+      const button = card.querySelector(".preview-phone-card__phone-btn-cart");
+      button.addEventListener("click", () => handleAddCart(phone));
+    });
 
-        observeNewElement({
-            root: document,
-            toObserve:
-                listPhonesMain.children[listPhonesMain.children.length - 1],
-            callback: loadMorePhones,
-            threshold: 0.1,
-        });
+    observeNewElement({
+      root: document,
+      toObserve: listPhonesMain.children[listPhonesMain.children.length - 1],
+      callback: loadMorePhones,
+      threshold: 0.1
+    });
 
-        offset += limit;
-    } catch (error) {
-        console.error('Error initializing phones:', error);
-    }
-
+    offset += limit;
+  } catch (error) {
+    console.error("Error initializing phones:", error);
+  }
 }
 
 async function loadMorePhones() {

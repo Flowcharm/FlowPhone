@@ -1,3 +1,4 @@
+import vanillaToast from "https://esm.sh/vanilla-toast@0.5.0";
 import { createDropdownOption } from './modules/ui/dropdown.js';
 import { observeNewElement } from './modules/helpers/observer.js';
 import { populateTable } from './modules/ui/table.js';
@@ -9,6 +10,7 @@ import {
 } from './modules/api/phone.js';
 import { createCommentary } from './modules/ui/commentary.js';   
 import { getReviews } from './modules/api/reviews.js';
+import { addToCart } from './modules/api/cart.js';
 
 const principalPhone = await getPhone(
     new URLSearchParams(window.location.search).get('id')
@@ -24,6 +26,13 @@ const dropdownText = document.getElementById("dropdown-text");
 const dropdownList = document.getElementById("dropdown-list");
 const dropdownLoadingElement = document.getElementById("dropdown-list-loading");
 const btnBuy = document.getElementById("btn-buy");
+const btnCart = document.getElementById("btn-cart");
+
+
+btnCart.addEventListener("click", () => {
+    addToCart(principalPhone.id);
+    vanillaToast.success("Added to cart!");
+});
 
 btnBuy.addEventListener("click", () => {
     proceedCheckout(principalPhone.id);

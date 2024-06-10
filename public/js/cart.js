@@ -1,14 +1,5 @@
 import vanillaToast from "https://esm.sh/vanilla-toast@0.5.0";
-import { getPhone } from "./modules/api/phone.js";
-import { isUserAuthenticated } from "./modules/helpers/isUserAuthenticated.js";
-import { getCartFromLocalStorage } from "./modules/helpers/localCart.js";
 import { getUserCart } from "./modules/api/cart.js";
-
-const isUserAuth = await isUserAuthenticated();
-
-if (!isUserAuth) {
-  loadLocalCart();
-}
 
 const btnRemove = document.querySelectorAll(".btn-remove");
 const btnDecrease = document.querySelectorAll(".btn-decrease");
@@ -80,56 +71,6 @@ async function proceedCheckout() {
   } catch (error) {
     console.log(error);
   }
-}
-
-function loadLocalCart() {
-  const cart = getCartFromLocalStorage();
-
-  Promise.all(
-    cart.map(async ({ id, quantity }) => {
-      const phone = await getPhone(id);
-      return { ...phone, quantity };
-    })
-  ).then((phones) => {
-    const total = phones.reduce(
-      (acc, phone) => acc + phone.price * phone.quantity,
-      0
-    );
-    document.querySelector("#total").textContent = total;
-
-    const cartList = document.querySelector("#cart-list");
-    console.log(phones);
-    // cartList.innerHTML = phones.map(({id, price_eur, brand, img_url})=>cartItemTemplate({id, price: price_eur, brand, img: img_url })).join("");
-  });
-}
-
-function cartItemTemplate({ id, img, brand, price, quantity }) {
-  return `
-    <li>
-        <img src="${img}" alt="${brand}">
-        <div class="phone">
-            <div class="phone-details">
-                <div class="phone-title">
-                    <h2>${brand}</h2>
-                    <span>price: ${price}€</span>
-                </div>
-                <span>
-                    x<span id="phone-quantity-${id}">${quantity}</span>
-                </span>
-            </div>
-            <div class="actions">
-                <button class="minus" id="btn-decrease" data-quantity="${quantity}"
-                    data-price="${price}">
-                    <?php include_once "../includes/icons/minus.php" ?>
-                </button>
-                <button class="trash" id="btn-remove" data-id="${id}"
-                    data-quantity="${quantity}" data-price="${price}>
-                    <?php include_once "../includes/icons/trash.php" ?>
-                </button>
-            </div>
-        </div>
-    </li>
-    `;
 }
 
 async function removeItemFromCart(phone_id, quantity) {
