@@ -1,10 +1,5 @@
 body {
-  margin: auto;
-  width: 100%;
-  max-width: 1200px;
-  overflow-x: hidden;
-  gap: 1rem;
-  padding: 0.5rem 1rem 0;
+  position: relative;
 }
 
 a {
@@ -15,45 +10,30 @@ a {
 img {
   width: 100%;
   height: auto;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 svg {
   color: inherit;
 }
 
-.preview-phone-card { }
+.star {
+  aspect-ratio: 1;
+  width: 1rem;
+  display: inline-block;
+}
 
-.preview-phone-card__phone-image { }
+.star svg {
+  width: 100%;
+  height: 100%;
+  stroke-width: 1;
+  fill: none;
+}
 
-.preview-phone-card__phone-info { }
-
-.preview-phone-card__phone-name { }
-
-.preview-phone-card__phone-price { }
-
-.preview-phone-card__phone-price-span { }
-
-.preview-phone-card__phone-other-info { }
-
-.preview-phone-card__phone-screen-size { }
-
-.preview-phone-card__phone-ram { }
-
-.stars { }
-
-.star { }
-
-.star.filled { }
-
-.preview-phone-card__stars { }
-
-.preview-phone-card__star { }
-
-.preview-phone-card__phone-buttons { }
-
-.preview-phone-card__phone-btn-buy,
-.preview-phone-card__phone-btn-cart { }
+.star.filled svg {
+  color: gold;
+  fill: gold;
+}
 
 .card {
   position: relative;
@@ -109,18 +89,6 @@ svg {
   justify-content: flex-start;
   font-size: 1.25rem;
   color: lightgray;
-}
-
-.star svg {
-  width: 100%;
-  height: 100%;
-  stroke-width: 1;
-  fill: none;
-}
-
-.star.filled svg {
-  color: gold;
-  fill: gold;
 }
 
 .hero__rating {
@@ -193,7 +161,7 @@ svg {
 }
 
 .info-section a::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 0;
   left: 0;
@@ -215,29 +183,212 @@ svg {
   justify-content: center;
 }
 
-.phone-card {
+.phone-list >*:nth-child(4) {
+  display: none;
+}
+
+.preview-phone-card {
+  font-size: 1rem;
   display: flex;
   flex-direction: column;
   width: 100%;
   max-width: 20rem;
   border: 1px solid lightgray;
   border-radius: 0.5rem;
-  padding: 1rem;
   background-color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.phone-card__stars {
+.preview-phone-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.preview-phone-card__phone-link {
+  display: block;
+  cursor: inherit;
+  padding: 1rem 1rem 0;
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.preview-phone-card--simple
+.preview-phone-card__phone-link {
+  padding: 1rem;
+  gap: 0.5rem;
+}
+
+.preview-phone-card__phone-image {
+  aspect-ratio: 1;
+  width: 100%;
+  object-fit: contain;
+}
+
+.preview-phone-card__phone-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.preview-phone-card__phone-name {
+  position: relative;
+  width: 100%;
+  height: 3.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.preview-phone-card--simple
+.preview-phone-card__phone-name {
+  margin-bottom: 0;
+}
+
+.preview-phone-card__phone-price {
+  font-size: 1.2rem;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  gap: 0.5rem;
+  font-weight: 400;
+  text-wrap: balance;
+}
+
+.preview-phone-card--simple
+.preview-phone-card__phone-price {
+  flex-direction: column;
+  gap: 0;
+}
+
+.preview-phone-card__phone-price-span {
+  font-size: 0.75rem;
+  color: var(--second-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+}
+
+.preview-phone-card__phone-other-info {
   font-size: 1rem;
-  color: lightgray;
+  color: var(--second-color);
+}
+
+.preview-phone-card__phone-screen-size {
+}
+
+.preview-phone-card__phone-ram {
+}
+
+.preview-phone-card__stars {
+  display: flex;
   height: 1rem;
 }
 
-.phone-card__star {
-  width: 1rem;
-  height: 1rem;
+.preview-phone-card__star {
+  display: block;
+}
+
+.preview-phone-card__phone-buttons {
+  display: flex;
+  font-size: 1rem;
+  padding: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn,
+.preview-phone-card__phone-btn-buy,
+.preview-phone-card__phone-btn-cart {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 0.1rem;
+  padding: 0.5rem 1rem;
+  font-size: inherit;
+  background-color: white;
+  color: black;
+  border: 1px solid var(--second-color);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.preview-phone-card__phone-btn-buy:hover {
+  color: white;
+  background-color: #28a745;
+  border-color: #28a745;
+  cursor: pointer;
+}
+
+.preview-phone-card__phone-btn-cart:hover {
+  color: white;
+  background-color: #007bff;
+  border-color: #007bff;
+  cursor: pointer;
+}
+
+.preview-phone-card.skeleton {
+  padding: 1rem;
+  justify-content: space-between;
+
+  background-color: #f5f5f5;
+  border-color: #f5f5f5;
+  box-shadow: none;
+  filter: drop-shadow(0 0 0.5rem #f5f5f5);
+
+  cursor: default;
+  animation: skeleton-loading 1.5s infinite linear;
+}
+
+.preview-phone-card.skeleton:hover {
+  transform: none;
+}
+
+.preview-phone-card.skeleton .preview-phone-card__phone-image {
+  aspect-ratio: 1;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  height: auto;
+}
+
+.preview-phone-card.skeleton .preview-phone-card__phone-name {
+  width: 100%;
+  height: 3rem;
+  background-color: #f5f5f5;
+  margin-bottom: 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.preview-phone-card.skeleton .preview-phone-card__phone-buttons {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  height: 3.5rem;
+}
+
+.preview-phone-card.skeleton .preview-phone-card__phone-btn-buy,
+.preview-phone-card.skeleton .preview-phone-card__phone-btn-cart {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  background-color: #f5f5f5;
+  border-radius: 0.5rem;
+  border-color: #f5f5f5;
 }
 
 .comparator {
@@ -398,7 +549,7 @@ svg {
 }
 
 .dropdown__option-loading::after {
-  content: "";
+  content: '';
   position: absolute;
   width: 1rem;
   height: 1rem;
@@ -412,18 +563,100 @@ svg {
   background-color: lightgray;
 }
 
+.compare__row {
+  text-align: center;
+}
+
+.compare__row td {
+  padding: 0.5rem;
+}
+
+.compare__row td:first-child {
+  text-decoration: underline;
+}
+
+.compare__button {
+  position: relative;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: var(--first-color);
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.compare__button::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--first-color);
+  transition: width 0.3s;
+}
+
+.compare__button:hover::after {
+  width: 100%;
+}
+
+.commentaries {
+  width: 100%;
+}
+
+.commentaries__container {
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.commentary__review {
+  width: 100%;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.comment-form label {
+  font-weight: 500;
+}
+
+.comment-form textarea {
+  padding: 0.5rem;
+  border: 1px solid lightgray;
+  border-radius: 0.5rem;
+}
+
+.comment-form input {
+  padding: 0.5rem;
+  border: 1px solid lightgray;
+  border-radius: 0.5rem;
+  width: min-content;
+}
+
+.comment-form button {
+  padding: 0.5rem;
+  border: 1px solid lightgray;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  width: min-content;
+}
+
 @media (width >= 768px) {
-  body {
-    padding: 1rem;
+  .phone {
+    display: flex;
   }
 
-  .phone {
-    display: grid;
-    grid-template-areas:
-      "hero info-section"
-      "hero action-btns";
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+  .phone-list >*:nth-child(4) {
+    display: flex;
   }
 
   .hero {
@@ -438,7 +671,6 @@ svg {
   }
 
   .info-section {
-    grid-area: info-section;
     padding: 2.5rem 1rem 1rem;
   }
 
@@ -484,39 +716,52 @@ svg {
 
   .comparator__table-container {
     width: 100%;
-    overflow: auto;
   }
 }
 
 @media (width >= 1024px) {
-  body {
-    display: grid;
-    grid-template-areas:
-      "phone more-phones"
-      "comparator comparator";
+  .main-container {
+    display: flex;
+    flex-flow: row wrap;
   }
 
-  .phone {
-    grid-area: phone;
+  .hero {
+    width: 40%;
+  }
+
+  .action-btns {
+    margin: 0;
+    order: 1;
+  }
+  .content-phone {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    justify-content: space-evenly;
   }
 
   .more-phones {
-    grid-area: more-phones;
-    flex-direction: column;
+    width: 30%;
   }
 
-  .comparator {
-    grid-area: comparator;
+  .preview-phone-card__phone-name {
+    line-clamp: 1;
+    height: 2rem;
+  }
+
+  .preview-phone-card__phone-price {
+    align-items: flex-start;
+    text-align: left;
+    font-size: 1rem;
+  }
+  .action-btns button {
+    height: 3rem;
   }
 
   .phone-list {
-    overflow: auto;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .phone-card {
-    max-width: 50%;
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -526,5 +771,19 @@ svg {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: #f5f5f5;
+  }
+
+  50% {
+    background-color: #e5e5e5;
+  }
+
+  100% {
+    background-color: #f5f5f5;
   }
 }

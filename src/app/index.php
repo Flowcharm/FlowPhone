@@ -9,7 +9,6 @@ $phone_repository = new PhoneRepository($db);
 
 $charged_default_phones = 10;
 $phones = $phone_repository->get_all($limit = $charged_default_phones);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +27,7 @@ $phones = $phone_repository->get_all($limit = $charged_default_phones);
         <?php include_once "../includes/header.php" ?>
         <div class="main-container">
             <section class="hero-search">
-                <form action="" class="hero-search__form" id="search-form">
+                <form class="hero-search__form" id="search-form">
                     <div class="hero-search__input-container">
                         <label for="search-input">Search Phone: </label>
                         <input type="text" name="search" class="hero-search__input" placeholder="Search for phones"
@@ -161,5 +160,5 @@ $phones = $phone_repository->get_all($limit = $charged_default_phones);
         </div>
         <?php include_once "../includes/footer.php" ?>
     </body>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
 </html>
