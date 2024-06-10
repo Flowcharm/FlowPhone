@@ -70,6 +70,7 @@ h1 {
 ul.cart {
   list-style: none;
   display: flex;
+  flex-direction: column;
   gap: 50px;
   max-width: 1200px;
   width: 90%;

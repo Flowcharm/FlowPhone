@@ -17,12 +17,10 @@ class Payments_manager implements IPayments_manager{
         $checkoutSession = $this->stripe->checkout->sessions->create([
             'success_url' => "$base_url/src/app/",
             'cancel_url' => "$base_url/src/app/",
+            "line_items" => $items,
             "mode" => "payment",
         ]);
-
-        // Redirect to the URL returned by Stripe
-        header('HTTP/1.1 303 See Other');
-        header('Location: ' . $checkoutSession->url);
-        exit;
+        
+        echo json_encode($checkoutSession);
     }
 }

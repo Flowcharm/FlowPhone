@@ -26,6 +26,7 @@
                 <li class="header__login-links">
                     <?php if ($user_id): ?>
                     <a class="header__link header__link--logout" href="/src/app/api/logout.php">Logout</a>
+                    <a class="header__link header__link" href="/src/app/account.php"><?php include "icons/user.php" ?></a>
                     <?php else: ?>
                     <a class="header__link header__link--register" href="/src/app/register.php">Register</a>
                     <a class="header__link header__link--login" href="/src/app/login.php">Log in</a>

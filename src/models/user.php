@@ -30,16 +30,14 @@ class User
             array_push(
                 $items,
                 array(
-                    [
-                        "price_data" => [
-                            "currency" => "usd",
-                            "product_data" => [
-                                "name" => $phone->get_name(),
-                            ],
-                            "unit_amount" => $phone->get_price() * 100 // convert to cents
+                    "price_data" => [
+                        "currency" => "usd",
+                        "product_data" => [
+                            "name" => $phone->get_brand(),
                         ],
-                        "quantity" => 1
-                    ]
+                        "unit_amount" => $phone->get_price_eur() * 100 // convert to cents
+                    ],
+                    "quantity" => 1
                 )
             );
         }

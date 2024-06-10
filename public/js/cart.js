@@ -1,23 +1,22 @@
 import vanillaToast from "https://esm.sh/vanilla-toast@0.5.0";
 import { getPhone } from "./modules/api/phone.js";
+import { isUserAuthenticated } from "./modules/helpers/isUserAuthenticated.js";
+import { getCartFromLocalStorage } from "./modules/helpers/localCart.js";
+import { getUserCart } from "./modules/api/cart.js";
 
-try {
-  const account = await fetch("/src/app/api/account.php");
-  const json = await account.json();
+const isUserAuth = await isUserAuthenticated();
 
-  if (json.error) {
-    loadLocalCart();
-  }
-} catch (error) {
+if (!isUserAuth) {
   loadLocalCart();
 }
 
 const btnRemove = document.querySelectorAll(".btn-remove");
 const btnDecrease = document.querySelectorAll(".btn-decrease");
+const payment = document.querySelector("#payment");
 const total = document.querySelector("#total");
 
 btnRemove.forEach((btn) => {
-  btn.addEventListener("click", (ev) => {
+  btn.addEventListener("click", async (ev) => {
     const id = btn.dataset.id;
     const quantity = btn.dataset.quantity;
     const price = btn.dataset.price;
@@ -25,12 +24,12 @@ btnRemove.forEach((btn) => {
     ev.target.closest("li").remove();
     total.textContent = +total.textContent - +price * +quantity;
 
-    removeItemFromCart(id, quantity);
+    await removeItemFromCart(id, quantity);
   });
 });
 
 btnDecrease.forEach((btn) => {
-  btn.addEventListener("click", (ev) => {
+  btn.addEventListener("click", async (ev) => {
     const id = btn.dataset.id;
     const quantity = btn.dataset.quantity;
     const price = btn.dataset.price;
@@ -45,10 +44,31 @@ btnDecrease.forEach((btn) => {
       phoneQuantitySpan.textContent = quantity - 1;
       btn.dataset.quantity = quantity - 1;
       btnDecrease.dataset.quantity = quantity - 1;
-      removeItemFromCart(id, 1);
     }
+
+    await removeItemFromCart(id, 1);
   });
 });
+
+payment.addEventListener("click", async () => {
+  await proceedCheckout();
+});
+
+async function proceedCheckout() {
+  const userCart = await getUserCart();
+  try {
+    const resp = await fetch("/src/app/api/checkout.php", {
+      method: "POST",
+      body: JSON.stringify({
+        items: userCart.map((el) => ({ id: el.phone.id }))
+      })
+    });
+    const data = await resp.json();
+    window.location.href = data.url;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 function loadLocalCart() {
   const cart = getCartFromLocalStorage();
@@ -66,7 +86,8 @@ function loadLocalCart() {
     document.querySelector("#total").textContent = total;
 
     const cartList = document.querySelector("#cart-list");
-    cartList.innerHTML = phones.map(cartItemTemplate).join("");
+    console.log(phones);
+    // cartList.innerHTML = phones.map(({id, price_eur, brand, img_url})=>cartItemTemplate({id, price: price_eur, brand, img: img_url })).join("");
   });
 }
 
@@ -97,11 +118,6 @@ function cartItemTemplate({ id, img, brand, price, quantity }) {
         </div>
     </li>
     `;
-}
-
-function getCartFromLocalStorage() {
-  const cart = localStorage.getItem("cart");
-  return cart ? JSON.parse(cart) : [];
 }
 
 async function removeItemFromCart(phone_id, quantity) {
