@@ -133,8 +133,8 @@ class PhoneController {
     }
 
     public function get_all(array $params): array {
-        [$limit, $offset, $brand, $min_price, $max_price, $search] = $this->validate_search_params($params);
-        return $this->phone_repository->get_all($limit, $offset, $brand, $min_price, $max_price, $search);
+        [$limit, $offset, $brand, $min_price, $max_price, $search, $skip_phones] = $this->validate_search_params($params);
+        return $this->phone_repository->get_all($limit, $offset, $brand, $min_price, $max_price, $search, $skip_phones);
     }
 
     public function get_all_basic_info(array $params): array {
@@ -142,7 +142,7 @@ class PhoneController {
         return $this->phone_repository->get_all_basic_info($limit, $offset);
     }
 
-    public function get_similar(int $id, int $limit) {
+    public function get_similar(int $id, int $limit): array {
         if (!is_numeric($id)) {
             throw new InvalidArgumentException("Phone id must be a number");
         }
@@ -159,6 +159,7 @@ class PhoneController {
         $min_price = null;
         $max_price = null;
         $search = null;
+        $skip_phones = null;
 
         if (isset($params["brand"])) {
             $brand = $params["brand"];
@@ -180,7 +181,15 @@ class PhoneController {
             }
         }
 
-        return [$limit, $offset, $brand, $min_price, $max_price, $search];
+        if (isset($params["search"])) {
+            $search = $params["search"];
+        }
+
+        if (isset($params["skip_phones"])) {
+            $skip_phones = explode(",", $params["skip_phones"]); // array of phone ids: [1, 2, 3]
+        }
+
+        return [$limit, $offset, $brand, $min_price, $max_price, $search, $skip_phones];
     }
 
     private function validate_limit_offset(array $params): array {
