@@ -25,10 +25,12 @@ body {
 
 .hero-search__form {
     display: flex;
+    max-width: 1200px;
+    width: 90%;
     justify-content: center;
     align-items: flex-end;
     gap: 1rem;
-    margin: 2rem 0;
+    margin: 2rem auto;
 }
 
 .hero-search__form > div {
@@ -263,6 +265,12 @@ button.hero-search__btn-search {
     border-color: #f5f5f5;
 }
 
+.title{
+    max-width: 1200px;
+    width: 90%;
+    margin: 0 auto;
+}
+
 @keyframes skeleton-loading {
     0% {
         background-color: #f5f5f5;
@@ -285,5 +293,15 @@ button.hero-search__btn-search {
     .preview-phone-card__phone-btn-buy,
     .preview-phone-card__phone-btn-cart {
         font-size: 0.9rem;
+    }
+
+    .preview-phone-card{
+        grid-column: span 4;
+    }
+    
+    .hero-search__form {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 }

@@ -88,7 +88,7 @@ $phones = $phone_repository->get_all($limit = $charged_default_phones);
             </section>
 
             <section id="phones-container" class="phones-container">
-                <div>
+                <div class="title">
                     <h2>Top Phones</h2>
                     <p>Check out our top phones</p>
                 </div>
