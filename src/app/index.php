@@ -1,9 +1,9 @@
 <?php
-require_once __DIR__.'/../repositories/phone_repository.php';
-require_once __DIR__.'/../models/db_manager.php';
-require_once __DIR__.'/../helpers/get_env.php';
+require_once __DIR__ . '/../repositories/phone_repository.php';
+require_once __DIR__ . '/../models/db_manager.php';
+require_once __DIR__ . '/../helpers/env.php';
 
-$db = new Db_Manager(env("DB_HOST"), env("DB_USER"), env("DB_PASSWORD"), env("DB_NAME") );
+$db = new Db_Manager(env("DB_HOST"), env("DB_USER"), env("DB_PASSWORD"), env("DB_NAME"), env("DB_PORT"));
 
 $phone_repository = new PhoneRepository($db);
 
@@ -21,6 +21,7 @@ $phones = $phone_repository->get_all($limit = $charged_default_phones);
     <link rel="stylesheet" href="/public/styles/index-page.css">
     <?php include_once "../includes/common_head.php" ?>
     <script src="/public/js/index.js" type="module" defer></script>
+
     <head>
 
     <body>
@@ -45,7 +46,8 @@ $phones = $phone_repository->get_all($limit = $charged_default_phones);
                     </div>
                     <div class="hero-search__input-container">
                         <label for="search-limit">Limit: </label>
-                        <input type="number" name="limit" class="hero-search__input" placeholder="Limit" id="search-limit">
+                        <input type="number" name="limit" class="hero-search__input" placeholder="Limit"
+                            id="search-limit">
                     </div>
 
                     <div class="hero-search__buttons">
@@ -92,65 +94,65 @@ $phones = $phone_repository->get_all($limit = $charged_default_phones);
                 </div>
                 <div id="list-phones-main" class="list-phones">
                     <?php if (empty($phones)): ?>
-                    <h1>No phones available</h1>
+                        <h1>No phones available</h1>
                     <?php else: ?>
-                    <?php foreach ($phones as $phone): ?>
-                    <a href="/src/app/phone.php?id=<?= $phone->get_id() ?>" class="preview-phone-card">
-                        <img src="<?= $phone->get_image_url() ?>"
-                            alt="<?= $phone->get_brand() . " " . $phone->get_model() ?>"
-                            class="preview-phone-card__phone-image">
-                        <div class="preview-phone-card__phone-info">
-                            <h3 class="preview-phone-card__phone-name">
-                                <?= $phone->get_brand() . " " . $phone->get_model() ?>
-                            </h3>
-                            <p class="preview-phone-card__phone-price">EUR <?= $phone->get_price_eur() ?><span
-                                    class="preview-phone-card__phone-price-span">Taxes Included</span></p>
-                            <div class="preview-phone-card__phone-other-info">
-                                <p class="preview-phone-card__phone-screen-size">Screen:
-                                    <?= $phone->get_screen_size_inch() ?> in
-                                </p>
-                                <p class="preview-phone-card__phone-ram">RAM: <?= $phone->get_ram_gb() ?>GB</p>
-                            </div>
-                            <div class="preview-phone-card__stars stars">
-                                <?php for ($i = 0; $i < 5; $i++): ?>
-                                <span
-                                    class="preview-phone-card__star star <?= $i < $phone->get_ratings() ? "filled" : "" ?>"><?php include "../includes/icons/star.php"; ?></span>
-                                <?php endfor; ?>
-                                <span class="preview-phone-card__rating rating"><?= $phone->get_ratings() ?></span>
-                            </div>
-                        </div>
-                        <div class="preview-phone-card__phone-buttons">
-                            <button class="preview-phone-card__phone-btn-buy">Buy</button>
-                            <button class="preview-phone-card__phone-btn-cart">
-                                <span
-                                    class="preview-phone-card__shop-cart"><?php include "../includes/icons/shopping_cart.php"; ?></span>
-                                <span>Add to Cart</span>
-                            </button>
-                        </div>
-                    </a>
-                    <?php endforeach; ?>
-                    <!-- Loading skeleton -->
-                    <a href="#" class="preview-phone-card skeleton">
-                        <div class="preview-phone-card__phone-image"></div>
-                        <div class="preview-phone-card__phone-info">
-                            <h3 class="preview-phone-card__phone-name"></h3>
-                            <p class="preview-phone-card__phone-price"></p>
-                            <div class="preview-phone-card__phone-other-info">
-                                <p class="preview-phone-card__phone-screen-size"></p>
-                                <p class="preview-phone-card__phone-ram"></p>
-                            </div>
-                            <div class="preview-phone-card__stars stars">
+                        <?php foreach ($phones as $phone): ?>
+                            <a href="/src/app/phone.php?id=<?= $phone->get_id() ?>" class="preview-phone-card">
+                                <img src="<?= $phone->get_image_url() ?>"
+                                    alt="<?= $phone->get_brand() . " " . $phone->get_model() ?>"
+                                    class="preview-phone-card__phone-image">
+                                <div class="preview-phone-card__phone-info">
+                                    <h3 class="preview-phone-card__phone-name">
+                                        <?= $phone->get_brand() . " " . $phone->get_model() ?>
+                                    </h3>
+                                    <p class="preview-phone-card__phone-price">EUR <?= $phone->get_price_eur() ?><span
+                                            class="preview-phone-card__phone-price-span">Taxes Included</span></p>
+                                    <div class="preview-phone-card__phone-other-info">
+                                        <p class="preview-phone-card__phone-screen-size">Screen:
+                                            <?= $phone->get_screen_size_inch() ?> in
+                                        </p>
+                                        <p class="preview-phone-card__phone-ram">RAM: <?= $phone->get_ram_gb() ?>GB</p>
+                                    </div>
+                                    <div class="preview-phone-card__stars stars">
+                                        <?php for ($i = 0; $i < 5; $i++): ?>
+                                            <span
+                                                class="preview-phone-card__star star <?= $i < $phone->get_ratings() ? "filled" : "" ?>"><?php include "../includes/icons/star.php"; ?></span>
+                                        <?php endfor; ?>
+                                        <span class="preview-phone-card__rating rating"><?= $phone->get_ratings() ?></span>
+                                    </div>
+                                </div>
+                                <div class="preview-phone-card__phone-buttons">
+                                    <button class="preview-phone-card__phone-btn-buy">Buy</button>
+                                    <button class="preview-phone-card__phone-btn-cart">
+                                        <span
+                                            class="preview-phone-card__shop-cart"><?php include "../includes/icons/shopping_cart.php"; ?></span>
+                                        <span>Add to Cart</span>
+                                    </button>
+                                </div>
+                            </a>
+                        <?php endforeach; ?>
+                        <!-- Loading skeleton -->
+                        <a href="#" class="preview-phone-card skeleton">
+                            <div class="preview-phone-card__phone-image"></div>
+                            <div class="preview-phone-card__phone-info">
+                                <h3 class="preview-phone-card__phone-name"></h3>
+                                <p class="preview-phone-card__phone-price"></p>
+                                <div class="preview-phone-card__phone-other-info">
+                                    <p class="preview-phone-card__phone-screen-size"></p>
+                                    <p class="preview-phone-card__phone-ram"></p>
+                                </div>
+                                <div class="preview-phone-card__stars stars">
 
+                                </div>
                             </div>
-                        </div>
-                        <div class="preview-phone-card__phone-buttons">
-                            <button class="preview-phone-card__phone-btn-buy"></button>
-                            <button class="preview-phone-card__phone-btn-cart">
-                                <span class="preview-phone-card__shop-cart"></span>
-                                <span></span>
-                            </button>
-                        </div>
-                    </a>
+                            <div class="preview-phone-card__phone-buttons">
+                                <button class="preview-phone-card__phone-btn-buy"></button>
+                                <button class="preview-phone-card__phone-btn-cart">
+                                    <span class="preview-phone-card__shop-cart"></span>
+                                    <span></span>
+                                </button>
+                            </div>
+                        </a>
                     <?php endif; ?>
                 </div>
             </section>

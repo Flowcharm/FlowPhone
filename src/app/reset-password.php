@@ -20,6 +20,7 @@ if (!$token) {
 </head>
 
 <body>
+    <?php include_once "../includes/header.php" ?>
     <div class="login">
         <h1>Reset Password</h1>
         <form id="reset-password-form">
@@ -31,6 +32,7 @@ if (!$token) {
             <a href="./login.php">Remember your password? Log in!</a>
         </div>
     </div>
+    <?php include_once "../includes/footer.php" ?>
 </body>
 
 </html>

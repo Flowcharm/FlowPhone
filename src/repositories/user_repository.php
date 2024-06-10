@@ -16,7 +16,7 @@ class User_Repository
     {
         $connection = $this->db_manager->connect();
         $stmt = $connection->prepare("SELECT * FROM users WHERE googleId = ?");
-        $stmt->bind_param("s", $googleId);
+        $stmt->bind_param("i", $googleId);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();

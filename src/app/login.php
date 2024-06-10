@@ -11,6 +11,8 @@
 </head>
 
 <body>
+    <?php include_once "../includes/header.php" ?>
+
     <div class="login">
         <h1>Log in</h1>
         <form id="login-form">
@@ -27,6 +29,8 @@
             <a href="./register.php">Don't have an account? Register!</a>
         </div>
     </div>
+
+    <?php include_once "../includes/footer.php" ?>
 </body>
 
 </html>
