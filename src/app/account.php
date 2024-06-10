@@ -8,7 +8,7 @@ require_once __DIR__ . "/../helpers/protect_route.php";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account | <?php echo $user->get_name() ?></title>
+    <title>Account | <?= $user->get_name() ?></title>
     <link rel="stylesheet" href="/public/styles/account.css">
     <script src="/public/js/account.js" defer type="module"></script>
     <?php include_once "../includes/common_head.php" ?>
@@ -18,18 +18,18 @@ require_once __DIR__ . "/../helpers/protect_route.php";
     <?php include_once "../includes/header.php" ?>
     <div class="presentation-header">
         <h1>Account details</h1>
-        <h2>Hi, <span id="account-title"><?php echo $user->get_name() ?></span>!</h2>
+        <h2>Hi, <span id="account-title"><?= $user->get_name() ?></span>!</h2>
         <p>Here are your account details:</p>
     </div>
     <form id="account-form">
         <div class="field">
             <label for="name">Name:</label>
-            <input type="text" id="account-form-name" name="name" value="<?php echo $user->get_name() ?>">
+            <input type="text" id="account-form-name" name="name" value="<?= $user->get_name() ?>">
         </div>
         <?php if (!$user->get_isGoogleAccount()): ?>
             <div class="field">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="account-form-email" value="<?php echo $user->get_email() ?>">
+                <input type="email" id="email" name="account-form-email" value="<?= $user->get_email() ?>">
             </div>
             <div class="field">
                 <label for="password">Password:</label>
