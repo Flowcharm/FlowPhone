@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    <?php include_once "../includes/header.php" ?>
     <div class="login">
         <h1>Forgot Password</h1>
         <form id="forgot-password-form">
@@ -21,6 +22,7 @@
             <a href="./login.php">Remember your password? Log in!</a>
         </div>
     </div>
+    <?php include_once "../includes/footer.php" ?>
 </body>
 
 </html>

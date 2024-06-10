@@ -1,4 +1,4 @@
-header {
+.presentation-header {
   margin-top: 100px;
   gap: 15px;
   display: flex;
@@ -7,7 +7,7 @@ header {
   align-items: center;
 }
 
-header p {
+.presentation-header p {
   font-size: 24px;
 }
 

@@ -15,11 +15,12 @@ require_once __DIR__ . "/../helpers/protect_route.php";
 </head>
 
 <body>
-    <header>
+    <?php include_once "../includes/header.php" ?>
+    <div class="presentation-header">
         <h1>Account details</h1>
         <h2>Hi, <span id="account-title"><?php echo $user->get_name() ?></span>!</h2>
         <p>Here are your account details:</p>
-    </header>
+    </div>
     <form id="account-form">
         <div class="field">
             <label for="name">Name:</label>
@@ -39,6 +40,7 @@ require_once __DIR__ . "/../helpers/protect_route.php";
         <?php endif; ?>
         <input type="submit" value="Update" id="account-form-submit">
     </form>
+    <?php include_once "../includes/footer.php" ?>
 </body>
 
 </html>

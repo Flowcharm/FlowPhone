@@ -1,4 +1,3 @@
-/* DROP DATABASE IF EXISTS flowphone; */
 CREATE DATABASE IF NOT EXISTS flowphone;
 
 USE flowphone;
@@ -20,17 +19,6 @@ CREATE TABLE
         image_url VARCHAR(255) -- Image URL
     );
 
-CREATE TABLE
-    IF NOT EXISTS reviews (
-        id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-        phone_id INT UNSIGNED,
-        user_id INT UNSIGNED,
-        review TEXT,
-        rating INT UNSIGNED,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (phone_id) REFERENCES phones (id),
-        FOREIGN KEY (user_id) REFERENCES users (id)
-    );
 
 CREATE TABLE
     IF NOT EXISTS users (
@@ -42,6 +30,18 @@ CREATE TABLE
         isVerified BOOLEAN DEFAULT FALSE,
         isGoogleAccount BOOLEAN DEFAULT FALSE,
         googleId VARCHAR(100) UNIQUE
+    );
+    
+CREATE TABLE
+    IF NOT EXISTS reviews (
+        id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+        phone_id INT UNSIGNED,
+        user_id INT UNSIGNED,
+        review TEXT,
+        rating INT UNSIGNED,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (phone_id) REFERENCES phones (id),
+        FOREIGN KEY (user_id) REFERENCES users (id)
     );
 
 CREATE TABLE IF NOT EXISTS orders (

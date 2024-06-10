@@ -2,6 +2,7 @@
     session_start();
 
     $role_user = $_SESSION['role'] ?? null;
+    $user_id = $_SESSION['user_id'] ?? null;
 ?>
 
 <header class="header">
@@ -23,11 +24,11 @@
                 <?php endif; ?>
     
                 <li class="header__login-links">
-                    <?php if ($role_user): ?>
-                    <a class="header__link header__link--logout" href="/logout.php">Logout</a>
+                    <?php if ($user_id): ?>
+                    <a class="header__link header__link--logout" href="/src/app/api/logout.php">Logout</a>
                     <?php else: ?>
-                    <a class="header__link header__link--register" href="/src/app/register.php">Sign Up</a>
-                    <a class="header__link header__link--login" href="/src/app/login.php">Sign In</a>
+                    <a class="header__link header__link--register" href="/src/app/register.php">Register</a>
+                    <a class="header__link header__link--login" href="/src/app/login.php">Log in</a>
                     <?php endif; ?>
                 </li>
             </ul>

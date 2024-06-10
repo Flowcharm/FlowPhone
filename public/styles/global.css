@@ -1,11 +1,11 @@
-:root{
+:root {
   --font-color: #343a40;
   --background-color: #f8f9fa;
   --first-color: #00385b;
   --second-color: #d3d3d3;
 }
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -22,6 +22,8 @@ body {
 html {
   color: var(--font-color);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  scroll-behavior: smooth;
+  font-size: 16px;
 }
 
 .main-container {
@@ -83,7 +85,7 @@ html {
   opacity: 0.9;
   z-index: -1;
   border-bottom-left-radius: 1rem;
-  border-bottom-right-radius: 1rem; 
+  border-bottom-right-radius: 1rem;
 }
 
 .header__brand {
@@ -93,6 +95,11 @@ html {
   font-weight: 700;
   align-items: center;
   padding: 15px 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 .header__logo {
@@ -281,7 +288,7 @@ html {
     transition: all 0.3s ease-in-out 0s;
   }
 
-  .header__link:hover:not(.header__link--register) { 
+  .header__link:hover:not(.header__link--register) {
     border-radius: 0;
     background-color: transparent;
     color: var(--background-color);
@@ -305,7 +312,6 @@ html {
   .header__link--logout:hover {
     background-color: var(--first-color);
   }
-
 
   .header__link--register:hover {
     border-radius: 5px;

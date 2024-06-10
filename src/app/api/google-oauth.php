@@ -28,9 +28,11 @@ if (isset($_GET['code'])) {
         $email = $google_account_info->email;
         $id = $google_account_info->id;
 
-        $user = $userRepository->get_by_googleId($email);
-
-        if(!$user){
+        $user = $userRepository->get_by_googleId($id);
+        
+        if ($user) {
+            $_SESSION["user_id"] = $user->get_id();
+        } else {
             $newUser = new User($name, $email, null);
             $newUser->set_GoogleId($id);
             $newUser->set_isGoogleAccount(true);
@@ -39,8 +41,6 @@ if (isset($_GET['code'])) {
             $userRepository->create($newUser);
 
             $_SESSION["user_id"] = $newUser->get_id();
-        }else{
-            $_SESSION["user_id"] = $user->get_id();
         }
 
         header('Location: ../index.php');
