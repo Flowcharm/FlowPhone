@@ -5,16 +5,3 @@ export const createDropdownOption = (phone, handleClick) => {
     liOption.addEventListener("click", handleClick);
     return liOption;
 }
-
-export const observeLastOption = (option, callback) => {
-    const observer = new IntersectionObserver(entries => {
-        const entry = entries[0];
-        if (entry.isIntersecting) {
-            console.log(entry)
-            observer.unobserve(entry.target);
-            callback();
-        }
-    }, { root: option.parentNode.parentNode, rootMargin: "0px", threshold: 0.5 });
-
-    observer.observe(option);
-}

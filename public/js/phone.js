@@ -1,5 +1,6 @@
 import { getPhone, getBasicPhonesInfo } from "./modules/api/phone.js";
-import { createDropdownOption, observeLastOption } from "./modules/ui/dropdown.js";
+import { createDropdownOption } from "./modules/ui/dropdown.js";
+import { observeNewElement } from "./modules/helpers/observer.js";
 import { populateTable } from "./modules/ui/table.js";
 
 const principalPhone = await getPhone(new URLSearchParams(window.location.search).get("id")); 
@@ -32,7 +33,6 @@ async function loadMoreOptions() {
         if (phones.length === 0) {
             dropdownList.removeChild(dropdownLoadingElement);
         } 
-        
 
         const filteredPhones = phones.filter(phone => phone.id !== principalPhone.id);
         populateSelect(filteredPhones);
@@ -50,7 +50,7 @@ function populateSelect(phones) {
         dropdownList.appendChild(option);
 
         if (index === phones.length - 1) {
-            observeLastOption(option, loadMoreOptions);
+            observeNewElement({ root: option.parentNode.parentNode, toObserve: option, callback: loadMoreOptions });
         }
     });
 }

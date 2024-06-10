@@ -20,9 +20,10 @@ interface IPhoneRepository {
      * @param int|null $min_price
      * @param int|null $max_price
      * @param string|null $search
+     * @param array|null $skip_phones
      * @return Phone[]
      */
-    public function get_all(?int $limit = null, ?int $offset = null, ?string $brand = null, ?int $min_price = null, ?int $max_price = null, ?string $search = null): array;
+    public function get_all(?int $limit = null, ?int $offset = null, ?string $brand = null, ?int $min_price = null, ?int $max_price = null, ?string $search = null, ?array $skip_phones = null): array;
 
     /**
      * Get all phones basic info with optional limit and offset, return empty array if not found

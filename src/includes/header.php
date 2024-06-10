@@ -8,10 +8,10 @@
     <nav class="header__nav">
         <div class="header__background"></div>
         <div class="header__container">
-            <div class="header__brand">
+            <a class="header__brand" href="/src/app/">
                 <img src="/public/images/icon-no-bg.webp" alt="Flowphone logo" class="header__logo">
                 <h2 class="header__title">Flowphone</h2>
-            </div>
+            </a>
     
             <ul class="header__links">
                 <li><a class="header__link" href="/src/app/#">Home</a></li>

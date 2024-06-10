@@ -9,12 +9,22 @@ body {
   position: relative;
   margin: 0;
   padding: 0;
+  width: 100%;
   background-color: var(--background-color);
 }
 
 html {
   color: var(--font-color);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto 1rem;
 }
 
 .footer,
@@ -148,12 +158,12 @@ html {
 .footer {
   background-color: #e9ecef;
   width: 100%;
-  margin: auto;
   font-size: 16px;
 }
 
 .footer__container {
-  max-width: 1024px;
+  width: 100%;
+  max-width: 1280px;
   margin: auto;
 }
 

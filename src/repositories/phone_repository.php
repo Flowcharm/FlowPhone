@@ -47,7 +47,7 @@ class PhoneRepository implements IPhoneRepository {
         );
     }
 
-    public function get_all(?int $limit = null, ?int $offset = null, ?string $brand = null, ?int $min_price = null, ?int $max_price = null, ?string $search = null): array {
+    public function get_all(?int $limit = null, ?int $offset = null, ?string $brand = null, ?int $min_price = null, ?int $max_price = null, ?string $search = null, ?array $skip_phones = null): array {
         $connection = $this->db_manager->connect();
 
         $sql = "SELECT id, brand, model, release_year, screen_size, battery_capacity, ram, storage, camera_mp, price, os, ratings, image_url FROM phones WHERE 1=1";
@@ -80,6 +80,12 @@ class PhoneRepository implements IPhoneRepository {
             $types .= "ss";
         }
 
+        if ($skip_phones !== null) {
+            $sql .= " AND id NOT IN (".implode(",", array_fill(0, count($skip_phones), "?")).")";
+            $sqlParams = array_merge($sqlParams, $skip_phones);
+            $types .= str_repeat("i", count($skip_phones));
+        } 
+
         if ($limit !== null) {
             $sql .= " LIMIT ?";
             $sqlParams[] = $limit; 
@@ -89,7 +95,7 @@ class PhoneRepository implements IPhoneRepository {
                 $sqlParams[] = $offset;
                 $types .= "i";
             }
-        } 
+        }
 
         $stmt = $connection->prepare($sql);
         if (count($sqlParams) > 0) {
@@ -162,7 +168,7 @@ class PhoneRepository implements IPhoneRepository {
         return $phones;
     }
 
-    public function get_similar(Phone|int $phone, int $limit): array
+    public function get_similar(Phone|int $phone, int $limit, ?int $minimum = null): array
     {
         if (is_int($phone)) {
             $phone = $this->get_by_id($phone);
