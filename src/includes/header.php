@@ -17,7 +17,9 @@
             <ul class="header__links">
                 <li><a class="header__link" href="/src/app/#">Home</a></li>
                 <li><a class="header__link" href="/src/app/#phones">Phones</a></li>
-                <li><a class="header__link" href="/src/app/cart.php">Your Cart</a></li>
+                <?php if ($user_id): ?>
+                    <li><a class="header__link" href="/src/app/cart.php">Your Cart</a></li>
+                <?php endif; ?>
     
                 <?php if ($role_user === "admin"): ?>
                 <li><a class="header__link" href="/admin.php">Admin Panel</a></li>

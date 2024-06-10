@@ -106,7 +106,7 @@ $phones = $phone_repository->get_all($limit = $charged_default_phones);
                                         <h3 class="preview-phone-card__phone-name">
                                             <?= $phone->get_brand() . " " . $phone->get_model() ?>
                                         </h3>
-                                        <p class="preview-phone-card__phone-price">EUR <?= $phone->get_price_eur() ?><span
+                                        <p class="preview-phone-card__phone-price">$ <?= $phone->get_price_eur() ?><span
                                                 class="preview-phone-card__phone-price-span">Taxes Included</span></p>
                                         <div class="preview-phone-card__phone-other-info">
                                             <p class="preview-phone-card__phone-screen-size">Screen:
