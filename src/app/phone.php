@@ -4,9 +4,9 @@ declare(strict_types=1);
 require_once __DIR__."/../models/db_manager.php";
 require_once __DIR__."/../repositories/phone_repository.php";
 require_once __DIR__."/../controllers/phone_controller.php";
-require_once __DIR__."/../helpers/get_env.php";
+require_once __DIR__."/../helpers/env.php";
 
-$db = new Db_Manager(env("DB_HOST"), env("DB_USER"), env("DB_PASSWORD"), env("DB_NAME"));
+$db = new Db_Manager(env("DB_HOST"), env("DB_USER"), env("DB_PASSWORD"), env("DB_NAME"), env("DB_PORT"));
 
 $phone_repository = new PhoneRepository($db);
 $phone_controller = new PhoneController($phone_repository);
