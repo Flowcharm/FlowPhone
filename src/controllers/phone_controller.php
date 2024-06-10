@@ -172,6 +172,10 @@ class PhoneController {
             }
         }
 
+        if (isset($params["max_price"])) {
+            $max_price = (int)$params["max_price"];
+        }
+
         if ($max_price !== null) {
             if ($max_price < 0) {
                 throw new InvalidArgumentException("Max price must be a positive number");

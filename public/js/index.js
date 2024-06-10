@@ -12,13 +12,13 @@ let offset = 0;
 
 const phones = [];
 
-let firstLoad = true;
-
 const listPhonesSearch = document.getElementById('list-phones-search');
 const searchForm = document.getElementById('search-form');
 const searchInput = document.getElementById('search-input');
 const phonesContainer = document.getElementById('phones-container');
 const searchResultsContainer = document.getElementById('search-results-container');
+
+const chargedPhonesCards = document.querySelectorAll('.preview-phone-card:not(.skeleton)');
 
 searchForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -29,7 +29,12 @@ searchForm.addEventListener('reset', () => {
     setIsSearch(false);
 });
 
-loadMorePhones();
+initPhones();
+
+function handleAddCart(phone) {
+    console.log('Adding to cart:', phone);
+    // TODO
+}
 
 function handleForm() {
     const formData = new FormData(searchForm);
@@ -79,7 +84,7 @@ async function searchPhones(formValues) {
 
 function populatePhones(phonesToCreate, container) {
     phonesToCreate.forEach((phone, index) => {
-        const card = createPreviewPhoneCard({ phone });
+        const card = createPreviewPhoneCard({ phone, handleAddCart });
 
         const lastChild = container.children[container.children.length - 1];
 
@@ -96,10 +101,35 @@ function populatePhones(phonesToCreate, container) {
     });
 }
 
+async function initPhones() {
+    try {
+        const newPhones = await getPhones({ limit, offset });
+
+        phones.push(...newPhones);
+
+        chargedPhonesCards.forEach((card, index) => {
+            const phone = phones[index];
+            const button = card.querySelector('.preview-phone-card__phone-btn-cart');
+            button.addEventListener('click', () => handleAddCart(phone));
+        });
+
+        observeNewElement({
+            root: document,
+            toObserve: listPhonesMain.children[listPhonesMain.children.length - 1],
+            callback: loadMorePhones,
+        });
+
+        offset += limit;
+    } catch (error) {
+        console.error('Error initializing phones:', error);
+    } 
+}
+
 async function loadMorePhones() {
     try {
         const newPhones = await getPhones({ limit, offset });
-        console.log(newPhones);
+
+        phones.push(...newPhones);
 
         if (newPhones.length === 0) {
             listPhonesMain.removeChild(
@@ -107,16 +137,7 @@ async function loadMorePhones() {
             );
         }
 
-        if (firstLoad) {
-            firstLoad = false;
-            observeNewElement({
-                root: document,
-                toObserve: listPhonesMain.children[listPhonesMain.children.length - 1],
-                callback: loadMorePhones,
-            });
-        } else {
-            populatePhones(newPhones, listPhonesMain);
-        }
+        populatePhones(newPhones, listPhonesMain);
 
         offset += limit;
     } catch (error) {

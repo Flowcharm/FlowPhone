@@ -1,24 +1,28 @@
 import { createStarRating } from "./icons/star.js";
 import { createShopCart } from "./icons/shopCart.js";
 
-export const createPreviewPhoneCard = ({ phone, classContainer = "", isSimple = false }) => {
+export const createPreviewPhoneCard = ({ phone, classContainer = "", isSimple = false, handleAddCart = () => {} }) => {
     const classMain = classContainer || "preview-phone-card"; 
 
     const className = classContainer ? `${classMain}__preview-phone-card` : classMain;
 
-    const cardContainer = document.createElement("a");
+    const cardContainer = document.createElement("div");
     cardContainer.href = `/src/app/phone.php?id=${phone.id}`;
     cardContainer.classList.add(className);
     if (isSimple) {
         cardContainer.classList.add(className + "--simple");
     }
 
+    const cardLink = document.createElement("a");
+    cardLink.href = `/src/app/phone.php?id=${phone.id}`;
+    cardLink.classList.add(`${classMain}__phone-link`);
+
     const cardImage = document.createElement("img");
     cardImage.src = phone.image_url;
     cardImage.alt = `${phone.brand} ${phone.model}`;
     cardImage.classList.add(`${classMain}__phone-image`);
     
-    cardContainer.appendChild(cardImage);
+    cardLink.appendChild(cardImage);
 
     const cardInfo = document.createElement("div");
     cardInfo.classList.add(`${classMain}__phone-info`);
@@ -61,14 +65,21 @@ export const createPreviewPhoneCard = ({ phone, classContainer = "", isSimple = 
 
     cardInfo.appendChild(cardRating);
 
-    cardContainer.appendChild(cardInfo);
+    cardLink.appendChild(cardInfo);
+    cardContainer.appendChild(cardLink);
+
+    if (isSimple) {
+        return cardContainer;
+    }
 
     const cardButtons = document.createElement("div");
     cardButtons.classList.add(`${classMain}__phone-buttons`);
 
-    const cardBtnBuy = document.createElement("button");
+    const cardBtnBuy = document.createElement("a");
+    cardBtnBuy.href = `/src/app/phone.php?id=${phone.id}`; // TODO
     cardBtnBuy.textContent = "Buy";
     cardBtnBuy.classList.add(`${classMain}__phone-btn-buy`);
+
     cardButtons.appendChild(cardBtnBuy);
 
     const cardBtnCart = document.createElement("button");
@@ -79,6 +90,9 @@ export const createPreviewPhoneCard = ({ phone, classContainer = "", isSimple = 
 
     const cardBtnCartText = document.createElement("span");
     cardBtnCartText.textContent = "Add to Cart";
+
+    cardBtnCart.addEventListener("click", () => handleAddCart(phone));
+    
     cardBtnCart.appendChild(cardBtnCartText);
 
     cardButtons.appendChild(cardBtnCart);
@@ -93,7 +107,7 @@ export const createPreviewPhoneCardSkeleton = ({ classContainer = "" } = {}) => 
 
     const className = classContainer ? `${classMain}__preview-phone-card` : classMain;
 
-    const cardContainer = document.createElement("a");
+    const cardContainer = document.createElement("div");
     cardContainer.href = "#";
     cardContainer.classList.add(className);
     cardContainer.classList.add("skeleton");
